@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:movies_app/ui/screens/splash/splash.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+
   runApp(const MainApp());
 }
 

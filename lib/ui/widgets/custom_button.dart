@@ -4,6 +4,7 @@ import 'package:movies_app/ui/utils/app_text_styles.dart';
 
 class CustomButton extends StatelessWidget {
   final Color backgroundColor;
+  final Color borderColor;
   final String text;
   final TextStyle textStyle;
   final Function() onClick;
@@ -16,6 +17,7 @@ class CustomButton extends StatelessWidget {
     required this.onClick,
     this.icon,
     this.backgroundColor = AppColors.yellow,
+    this.borderColor = AppColors.yellow,
     this.textStyle = AppTextStyles.blackRegular20,
     this.textColor = AppColors.black,
   });
@@ -27,7 +29,10 @@ class CustomButton extends StatelessWidget {
       style: ElevatedButton.styleFrom(
         backgroundColor: backgroundColor,
         padding: EdgeInsets.symmetric(vertical: 14),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16),
+          side: BorderSide(color: borderColor, width: 2),
+        ),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
