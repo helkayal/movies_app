@@ -1,6 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:movies_app/ui/screens/home/widgets/custom_movie_image.dart';
+import 'package:movies_app/ui/widgets/custom_movie_image.dart';
 import 'package:movies_app/ui/utils/app_assets.dart';
 
 class CarouselSliderSection extends StatelessWidget {

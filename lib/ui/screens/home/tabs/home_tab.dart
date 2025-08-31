@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:movies_app/ui/screens/home/widgets/carousel_slider_section.dart';
-import 'package:movies_app/ui/screens/home/widgets/custom_movie_image.dart';
+import 'package:movies_app/ui/widgets/custom_movie_image.dart';
 import 'package:movies_app/ui/utils/app_assets.dart';
 import 'package:movies_app/ui/utils/app_colors.dart';
 
