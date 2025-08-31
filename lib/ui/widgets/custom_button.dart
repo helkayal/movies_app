@@ -1,0 +1,41 @@
+import 'package:flutter/material.dart';
+import 'package:movies_app/ui/utils/app_colors.dart';
+import 'package:movies_app/ui/utils/app_text_styles.dart';
+
+class CustomButton extends StatelessWidget {
+  final Color backgroundColor;
+  final String text;
+  final TextStyle textStyle;
+  final Function() onClick;
+  final Color textColor;
+  final Icon? icon;
+
+  const CustomButton({
+    super.key,
+    required this.text,
+    required this.onClick,
+    this.icon,
+    this.backgroundColor = AppColors.yellow,
+    this.textStyle = AppTextStyles.blackRegular20,
+    this.textColor = AppColors.black,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+      onPressed: onClick,
+      style: ElevatedButton.styleFrom(
+        backgroundColor: backgroundColor,
+        padding: EdgeInsets.symmetric(vertical: 14),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          if (icon != null) icon!,
+          Text(text, style: textStyle.copyWith(color: textColor)),
+        ],
+      ),
+    );
+  }
+}
