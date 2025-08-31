@@ -9,11 +9,16 @@ abstract final class AppAssets {
   static const String onBoarding5 = 'assets/images/onboarding5.png';
   static const String icAr = 'assets/images/ic_ar.png';
   static const String icEn = 'assets/images/ic_en.png';
-  static const String icHome = 'assets/images/ic_home.png';
-  static const String icSearch = 'assets/images/ic_search.png';
-  static const String icBrowse = 'assets/images/ic_browse.png';
-  static const String icProfile = 'assets/images/ic_profile.png';
-  static const String empty = 'assets/images/empty.png';
+  static const String star = 'assets/images/star.png';
+  static const String availableNow = 'assets/images/available_now.png';
+  static const String categoryIcon = 'assets/images/category_icon.png';
+  static const String emptyList = 'assets/images/empty_list.png';
+  static const String homeIcon = 'assets/images/home_icon.png';
+  static const String pic1 = 'assets/images/pic1.jpg';
+  static const String pic2 = 'assets/images/pic2.jpg';
+  static const String profile = 'assets/images/profile.png';
+  static const String searchIcon = 'assets/images/search_icon.png';
+  static const String watchNow = 'assets/images/watch_now.png';
   static const String forgetPasswordBanner =
       'assets/images/forgot_password_banner.png';
   static const String avatar1 = 'assets/images/avatar1.png';
@@ -25,7 +30,4 @@ abstract final class AppAssets {
   static const String avatar7 = 'assets/images/avatar7.png';
   static const String avatar8 = 'assets/images/avatar8.png';
   static const String avatar9 = 'assets/images/avatar9.png';
-  static const String homeBackground = 'assets/images/home_bg.png';
-  static const String availableNow = 'assets/images/available_now.png';
-  static const String watchNow = 'assets/images/watch_now.png';
 }
