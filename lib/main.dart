@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:movies_app/ui/screens/home/home_screen.dart';
 import 'package:movies_app/ui/screens/splash/splash.dart';
 
 void main() {
@@ -16,7 +17,7 @@ class MainApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       themeMode: ThemeMode.dark,
       darkTheme: ThemeData.dark(),
-      home: Splash(),
+      home: HomeScreen(),
     );
   }
 }
