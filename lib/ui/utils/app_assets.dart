@@ -6,6 +6,7 @@ abstract final class AppAssets {
   static const String onBoarding2 = 'assets/images/onboarding2.png';
   static const String onBoarding3 = 'assets/images/onboarding3.png';
   static const String onBoarding4 = 'assets/images/onboarding4.png';
+  static const String onBoarding5 = 'assets/images/onboarding5.png';
   static const String icAr = 'assets/images/ic_ar.png';
   static const String icEn = 'assets/images/ic_en.png';
   static const String icHome = 'assets/images/ic_home.png';
