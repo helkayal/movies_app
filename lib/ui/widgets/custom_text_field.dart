@@ -5,7 +5,7 @@ class CustomTextField extends StatefulWidget {
   final String hint;
   final Color hintColor;
   final Color backgroundColor;
-  final IconData? prefixIcon;
+  final Widget? prefixIcon;
   final Color? prefixIconColor;
   final double? prefixIconSize;
   final bool isPassword;
@@ -43,11 +43,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
             ? null
             : Container(
                 margin: EdgeInsets.symmetric(horizontal: 12),
-                child: Icon(
-                  widget.prefixIcon,
-                  color: widget.prefixIconColor,
-                  size: widget.prefixIconSize,
-                ),
+                child: widget.prefixIcon
               ),
         suffixIcon: widget.isPassword
             ? InkWell(
