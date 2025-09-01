@@ -80,6 +80,7 @@
 import 'package:flutter/material.dart';
 import 'package:movies_app/ui/utils/app_assets.dart';
 import 'package:movies_app/ui/utils/app_colors.dart';
+import 'package:movies_app/ui/utils/app_routes.dart';
 import 'package:movies_app/ui/utils/app_text_styles.dart';
 import 'package:movies_app/ui/utils/context_extension.dart';
 import 'package:movies_app/ui/widgets/custom_button.dart';
@@ -138,7 +139,12 @@ class ProfileTab extends StatelessWidget {
               children: [
                 SizedBox(
                   width: context.width * 0.62,
-                  child: CustomButton(text: 'Edit Profile', onClick: () {}),
+                  child: CustomButton(
+                    text: 'Edit Profile',
+                    onClick: () {
+                      Navigator.push(context, AppRoutes.editProfile);
+                    },
+                  ),
                 ),
                 SizedBox(
                   width: context.width * 0.32,
