@@ -28,7 +28,7 @@ class _SplashState extends State<Splash> {
   }
 
   Future<void> _navigate() async {
-    _repository.clearOnboardingData(); // For testing purposes
+    // _repository.clearOnboardingData(); // For testing purposes
     await Future.delayed(const Duration(seconds: 2));
     final completed = await _repository.isOnboardingCompleted();
     if (!mounted) return;

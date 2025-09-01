@@ -6,13 +6,15 @@ class CustomMovieImage extends StatelessWidget {
   final double? width;
   final double? height;
   final String image;
+  final String rating;
   final EdgeInsetsGeometry? margin;
   const CustomMovieImage({
     super.key,
     required this.image,
+    this.rating = '0.0',
     this.width,
     this.height,
-    this.margin
+    this.margin,
   });
 
   @override
@@ -41,7 +43,7 @@ class CustomMovieImage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                '7.7',
+                rating,
                 style: TextStyle(color: AppColors.white, fontSize: 16),
               ),
               const SizedBox(width: 4),

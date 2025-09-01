@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:movies_app/ui/screens/home/tabs/category_tab.dart';
 import 'package:movies_app/ui/screens/home/tabs/home_tab.dart';
-import 'package:movies_app/ui/screens/home/tabs/profile_tab.dart';
+import 'package:movies_app/ui/screens/home/tabs/profile_tab/profile_tab.dart';
 import 'package:movies_app/ui/screens/home/tabs/search_tab.dart';
 import 'package:movies_app/ui/utils/app_assets.dart';
 import 'package:movies_app/ui/utils/app_colors.dart';
