@@ -30,4 +30,7 @@ abstract final class AppAssets {
   static const String avatar7 = 'assets/images/avatar7.png';
   static const String avatar8 = 'assets/images/avatar8.png';
   static const String avatar9 = 'assets/images/avatar9.png';
+  static const String icExit = 'assets/images/ic_exit.png';
+  static const String icWishList = 'assets/images/ic_wish_list.png';
+  static const String icHistory = 'assets/images/ic_history.png';
 }

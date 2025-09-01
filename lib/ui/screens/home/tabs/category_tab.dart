@@ -11,7 +11,6 @@ class CategoryTab extends StatefulWidget {
 }
 
 class _CategoryTabState extends State<CategoryTab> {
-  
   @override
   Widget build(BuildContext context) {
     List<String> images = [
@@ -26,14 +25,28 @@ class _CategoryTabState extends State<CategoryTab> {
       AppAssets.pic1,
       AppAssets.pic1,
     ];
+    List<String> ratings = [
+      '7.0',
+      '6.5',
+      '8.0',
+      '6.8',
+      '8.2',
+      '5.9',
+      '4.4',
+      '9.2',
+      '8.8',
+      '7.7',
+    ];
     return Column(
       spacing: 8,
       children: [
         FilterBar(),
-        Expanded(child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: CustomGrideView(images: images),
-        ))
+        Expanded(
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: CustomGrideView(images: images, ratingd: ratings),
+          ),
+        ),
       ],
     );
   }

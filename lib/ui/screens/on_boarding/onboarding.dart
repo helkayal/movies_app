@@ -28,7 +28,7 @@ class Onboarding extends StatelessWidget {
               context.read<OnboardingCubit>().currentPage,
             );
           } else if (state is OnboardingFinished) {
-            Navigator.pushReplacement(context, AppRoutes.login);
+            Navigator.pushReplacement(context, AppRoutes.home);
           }
         },
         builder: (context, state) {
