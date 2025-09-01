@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:movies_app/ui/screens/forget_password/forget_password.dart';
-import 'package:movies_app/ui/screens/home/home.dart';
+import 'package:movies_app/ui/screens/home/home_screen.dart';
 import 'package:movies_app/ui/screens/login/login.dart';
 import 'package:movies_app/ui/screens/on_boarding/onboarding.dart';
 import 'package:movies_app/ui/screens/on_boarding/onboarding_intro.dart';
@@ -28,6 +28,6 @@ abstract final class AppRoutes {
   }
 
   static Route get home {
-    return MaterialPageRoute(builder: (_) => const Home());
+    return MaterialPageRoute(builder: (_) => const HomeScreen());
   }
 }
