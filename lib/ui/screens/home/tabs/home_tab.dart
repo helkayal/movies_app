@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:movies_app/ui/screens/home/widgets/carousel_slider_section.dart';
+import 'package:movies_app/ui/utils/context_extension.dart';
 import 'package:movies_app/ui/widgets/custom_movie_image.dart';
 import 'package:movies_app/ui/utils/app_assets.dart';
 import 'package:movies_app/ui/utils/app_colors.dart';
@@ -27,8 +28,6 @@ class _HomeTabState extends State<HomeTab> {
 
   @override
   Widget build(BuildContext context) {
-    var height = MediaQuery.sizeOf(context).height;
-    var width = MediaQuery.sizeOf(context).width;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -44,8 +43,8 @@ class _HomeTabState extends State<HomeTab> {
             child: Container(
               decoration: BoxDecoration(
                 gradient: LinearGradient(
-                  begin: AlignmentGeometry.topCenter,
-                  end: AlignmentGeometry.bottomCenter,
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
                   colors: [
                     AppColors.black.withValues(alpha: 0.8),
                     AppColors.black.withValues(alpha: 0.6),
@@ -54,18 +53,18 @@ class _HomeTabState extends State<HomeTab> {
                 ),
               ),
               child: Column(
-                spacing: height * 0.01,
+                spacing: context.height * 0.01,
                 children: [
-                  Image.asset(AppAssets.availableNow, height: height * 0.1),
+                  Image.asset(AppAssets.availableNow, height: context.height * 0.1),
                   Expanded(child: CarouselSliderSection()),
-                  Image.asset(AppAssets.watchNow,width: width* 0.76,),
+                  Image.asset(AppAssets.watchNow,width: context.width * 0.76,),
                 ],
               ),
             ),
           ),
         ),
         SizedBox(
-          height: height * 0.28,
+          height: context.height * 0.28,
           child: Column(
             children: [
               seeMoreSection(),
@@ -80,7 +79,7 @@ class _HomeTabState extends State<HomeTab> {
                       child: CustomMovieImage(
                         image: images[index],
                         margin: EdgeInsets.only(left: 16),
-                        width: width * 0.32,
+                        width: context.width * 0.32,
                       ),
                     );
                   },
@@ -89,7 +88,7 @@ class _HomeTabState extends State<HomeTab> {
             ],
           ),
         ),
-        SizedBox(height: height * 0.02,)
+        SizedBox(height: context.height * 0.02,)
       ],
     );
   }
