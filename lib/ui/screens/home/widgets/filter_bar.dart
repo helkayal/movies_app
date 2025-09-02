@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:movies_app/ui/utils/app_colors.dart';
-import 'package:movies_app/ui/utils/app_text_styles.dart';
-import 'package:movies_app/ui/utils/context_extension.dart';
+import 'package:movies_app/core/utils/app_colors.dart';
+import 'package:movies_app/core/utils/app_text_styles.dart';
+import 'package:movies_app/core/utils/context_extension.dart';
 
 class FilterBar extends StatefulWidget {
 

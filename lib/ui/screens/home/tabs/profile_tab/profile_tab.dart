@@ -78,16 +78,18 @@
 // }
 
 import 'package:flutter/material.dart';
-import 'package:movies_app/ui/utils/app_assets.dart';
-import 'package:movies_app/ui/utils/app_colors.dart';
-import 'package:movies_app/ui/utils/app_routes.dart';
-import 'package:movies_app/ui/utils/app_text_styles.dart';
-import 'package:movies_app/ui/utils/context_extension.dart';
+import 'package:movies_app/core/utils/app_assets.dart';
+import 'package:movies_app/core/utils/app_colors.dart';
+import 'package:movies_app/core/utils/app_routes.dart';
+import 'package:movies_app/core/utils/app_text_styles.dart';
+import 'package:movies_app/core/utils/context_extension.dart';
+import 'package:movies_app/model/movie_dm.dart';
 import 'package:movies_app/ui/widgets/custom_button.dart';
 import 'package:movies_app/ui/widgets/custom_gride_view.dart';
 
 class ProfileTab extends StatelessWidget {
-  const ProfileTab({super.key});
+  final List<Movies> movie;
+  const ProfileTab({super.key, required this.movie});
 
   @override
   Widget build(BuildContext context) {
@@ -203,28 +205,7 @@ class ProfileTab extends StatelessWidget {
                   ),
                   child: CustomGrideView(
                     rowItemCount: 3,
-                    images: [
-                      AppAssets.pic1,
-                      AppAssets.pic2,
-                      AppAssets.onBoarding1,
-                      AppAssets.onBoarding2,
-                      AppAssets.onBoarding3,
-                      AppAssets.onBoarding4,
-                      AppAssets.onBoarding5,
-                      AppAssets.pic2,
-                      AppAssets.moviesPosters,
-                    ],
-                    ratingd: [
-                      '7.0',
-                      '6.5',
-                      '8.0',
-                      '6.8',
-                      '8.2',
-                      '5.9',
-                      '4.4',
-                      '9.2',
-                      '8.8',
-                    ],
+                    movie: movie,
                   ),
                 ),
               ],

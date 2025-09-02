@@ -1,16 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:movies_app/model/movie_dm.dart';
 import 'package:movies_app/ui/widgets/custom_movie_image.dart';
 
 class CustomGrideView extends StatelessWidget {
-  final List images;
-  final List ratingd;
+  final List<Movies>? movie;
   final int rowItemCount;
-  const CustomGrideView({
-    super.key,
-    required this.images,
-    required this.ratingd,
-    this.rowItemCount = 2,
-  });
+  const CustomGrideView({super.key, required this.movie,  this.rowItemCount = 2});
 
   @override
   Widget build(BuildContext context) {
@@ -21,15 +16,16 @@ class CustomGrideView extends StatelessWidget {
         crossAxisSpacing: 20,
         childAspectRatio: 4 / 6,
       ),
-      itemCount: images.length,
+      itemCount: movie?.length,
       itemBuilder: (context, index) {
         return InkWell(
           onTap: () {
             //ToDO: go to movie details
             // Navigator.pushNamed(context, MovieDetailsRouteName, arguments: index);
           },
-          child: CustomMovieImage(image: images[index], rating: ratingd[index]),
-        );
+          child: CustomMovieImage(
+            image: movie?[index].mediumCoverImage ?? '',
+            rating:movie?[index].rating.toString() ?? '',));
       },
     );
   }
