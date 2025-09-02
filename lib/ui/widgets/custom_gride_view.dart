@@ -3,8 +3,14 @@ import 'package:movies_app/ui/widgets/custom_movie_image.dart';
 
 class CustomGrideView extends StatelessWidget {
   final List images;
+  final List ratingd;
   final int rowItemCount;
-  const CustomGrideView({super.key, required this.images,  this.rowItemCount = 2});
+  const CustomGrideView({
+    super.key,
+    required this.images,
+    required this.ratingd,
+    this.rowItemCount = 2,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +28,8 @@ class CustomGrideView extends StatelessWidget {
             //ToDO: go to movie details
             // Navigator.pushNamed(context, MovieDetailsRouteName, arguments: index);
           },
-          child: CustomMovieImage(image: images[index]));
+          child: CustomMovieImage(image: images[index], rating: ratingd[index]),
+        );
       },
     );
   }
