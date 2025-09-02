@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:movies_app/data/datasources/onborading_ds_impl.dart';
-import 'package:movies_app/data/repositories/onboarding_repository/onboarding_repository.dart';
-import 'package:movies_app/data/repositories/onboarding_repository/onboarding_repository_impl.dart';
 import 'package:movies_app/core/utils/app_assets.dart';
 import 'package:movies_app/core/utils/app_routes.dart';
 import 'package:movies_app/core/utils/app_text_styles.dart';
+import 'package:movies_app/data/datasources/onbording/onborading_ds_impl.dart';
+import 'package:movies_app/data/repositories/onboarding/onboarding_repository.dart';
+import 'package:movies_app/data/repositories/onboarding/onboarding_repository_impl.dart';
 
 class Splash extends StatefulWidget {
   const Splash({super.key});
@@ -28,7 +28,7 @@ class _SplashState extends State<Splash> {
   }
 
   Future<void> _navigate() async {
-    _repository.clearOnboardingData(); // For testing purposes
+    // _repository.clearOnboardingData(); // For testing purposes
     await Future.delayed(const Duration(seconds: 2));
     final completed = await _repository.isOnboardingCompleted();
     if (!mounted) return;

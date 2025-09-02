@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:movies_app/core/utils/app_theme.dart';
 import 'package:movies_app/data/bloc/movie_bloc/movie_bloc.dart';
 import 'package:movies_app/ui/screens/home/home_screen.dart';
 import 'package:movies_app/ui/screens/splash/splash.dart';
@@ -22,7 +23,7 @@ class MainApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       themeMode: ThemeMode.dark,
-      darkTheme: ThemeData.dark(),
+      darkTheme: AppTheme.darkTheme,
       home: HomeScreen(),
     );
   }

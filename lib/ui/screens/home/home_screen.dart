@@ -48,7 +48,7 @@ class _HomeScreenState extends State<HomeScreen> {
               HomeTab(movie: movieList!),
               SearchTab(movie: movieList!),
               CategoryTab(movie: movieList!),
-              ProfileTab(),
+              ProfileTab(movie: movieList!,),
             ];
             return _buildHomeBody(screens);
           } else {
