@@ -1,36 +1,28 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:movies_app/core/utils/context_extension.dart';
+import 'package:movies_app/model/movie_dm.dart';
 import 'package:movies_app/ui/widgets/custom_movie_image.dart';
-import 'package:movies_app/ui/utils/app_assets.dart';
 
 class CarouselSliderSection extends StatelessWidget {
-  const CarouselSliderSection({super.key});
+  final List<Movies>? movie;
+  const CarouselSliderSection({super.key, required this.movie});
 
   @override
   Widget build(BuildContext context) {
-    var height = MediaQuery.sizeOf(context).height;
-    final List<String> images = [
-      AppAssets.pic1,
-      AppAssets.pic2,
-      AppAssets.pic1,
-      AppAssets.pic2,
-      AppAssets.pic1,
-      AppAssets.pic2,
-      AppAssets.pic1,
-      AppAssets.pic2,
-      AppAssets.pic1,
-      AppAssets.pic1,
-    ];
     return CarouselSlider.builder(
-      itemCount: images.length,
+      itemCount: movie?.length,
       itemBuilder: (context, index, realIndex) {
         return InkWell(
           onTap: () {},
-          child: CustomMovieImage(image: images[index]),
+          child: CustomMovieImage(
+            image: movie?[index].mediumCoverImage ?? '',
+            rating: movie?[index].rating.toString() ?? '',
+          ),
         );
       },
       options: CarouselOptions(
-        height: height * 0.5,
+        height: context.height * 0.5,
         viewportFraction: 0.53, //width
         // autoPlay: true,
         enlargeCenterPage: true,
