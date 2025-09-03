@@ -75,11 +75,11 @@
 //   }
 // }
 import 'package:flutter/material.dart';
-import 'package:movies_app/ui/utils/app_assets.dart';
-import 'package:movies_app/ui/utils/app_colors.dart';
-import 'package:movies_app/ui/utils/app_routes.dart';
-import 'package:movies_app/ui/utils/app_text_styles.dart';
-import 'package:movies_app/ui/utils/context_extension.dart';
+import 'package:movies_app/core/utils/app_assets.dart';
+import 'package:movies_app/core/utils/app_colors.dart';
+import 'package:movies_app/core/utils/app_routes.dart';
+import 'package:movies_app/core/utils/app_text_styles.dart';
+import 'package:movies_app/core/utils/context_extension.dart';
 import 'package:movies_app/ui/widgets/custom_button.dart';
 import 'package:movies_app/ui/widgets/custom_text_field.dart';
 

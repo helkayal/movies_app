@@ -1,96 +1,95 @@
 import 'package:flutter/material.dart';
+import 'package:movies_app/model/movie_dm.dart';
 import 'package:movies_app/ui/screens/home/widgets/carousel_slider_section.dart';
-import 'package:movies_app/ui/utils/context_extension.dart';
+import 'package:movies_app/core/utils/context_extension.dart';
 import 'package:movies_app/ui/widgets/custom_movie_image.dart';
-import 'package:movies_app/ui/utils/app_assets.dart';
-import 'package:movies_app/ui/utils/app_colors.dart';
+import 'package:movies_app/core/utils/app_assets.dart';
+import 'package:movies_app/core/utils/app_colors.dart';
 
 class HomeTab extends StatefulWidget {
-  const HomeTab({super.key});
+  final List<Movies> movie;
+  const HomeTab({super.key,required this.movie,});
 
   @override
   State<HomeTab> createState() => _HomeTabState();
 }
 
 class _HomeTabState extends State<HomeTab> {
-  List<String> images = [
-    AppAssets.pic1,
-    AppAssets.pic2,
-    AppAssets.pic1,
-    AppAssets.pic2,
-    AppAssets.pic1,
-    AppAssets.pic2,
-    AppAssets.pic1,
-    AppAssets.pic2,
-    AppAssets.pic1,
-    AppAssets.pic1,
-  ];
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        Expanded(
-          flex: 3,
-          child: Container(
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage(images[0]),
-                fit: BoxFit.cover,
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                flex: 3,
+                child: Container(
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: NetworkImage(widget.movie[0].mediumCoverImage ??''),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: [
+                          AppColors.black.withValues(alpha: 0.8),
+                          AppColors.black.withValues(alpha: 0.6),
+                          AppColors.black,
+                        ],
+                      ),
+                    ),
+                    child: Column(
+                      spacing: context.height * 0.01,
+                      children: [
+                        Image.asset(
+                          AppAssets.availableNow,
+                          height: context.height * 0.1,
+                        ),
+                        Expanded(
+                          child: CarouselSliderSection(movie:widget.movie),
+                        ),
+                        Image.asset(
+                          AppAssets.watchNow,
+                          width: context.width * 0.76,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
               ),
-            ),
-            child: Container(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [
-                    AppColors.black.withValues(alpha: 0.8),
-                    AppColors.black.withValues(alpha: 0.6),
-                    AppColors.black,
+              SizedBox(
+                height: context.height * 0.28,
+                child: Column(
+                  children: [
+                    seeMoreSection(),
+                    const SizedBox(height: 12),
+                    Expanded(
+                      child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: widget.movie.length,
+                        itemBuilder: (context, index) {
+                          return InkWell(
+                            onTap: () {},
+                            child: CustomMovieImage(
+                              rating: widget.movie[index].rating.toString(),
+                              image: widget.movie[index].mediumCoverImage ??'',
+                              margin: EdgeInsets.only(left: 16),
+                              width: context.width * 0.32,
+                            ),
+                          );
+                        },
+                      ),
+                    ),
                   ],
                 ),
               ),
-              child: Column(
-                spacing: context.height * 0.01,
-                children: [
-                  Image.asset(AppAssets.availableNow, height: context.height * 0.1),
-                  Expanded(child: CarouselSliderSection()),
-                  Image.asset(AppAssets.watchNow,width: context.width * 0.76,),
-                ],
-              ),
-            ),
-          ),
-        ),
-        SizedBox(
-          height: context.height * 0.28,
-          child: Column(
-            children: [
-              seeMoreSection(),
-              const SizedBox(height: 12),
-              Expanded(
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: images.length,
-                  itemBuilder: (context, index) {
-                    return InkWell(
-                      onTap: () {},
-                      child: CustomMovieImage(
-                        image: images[index],
-                        margin: EdgeInsets.only(left: 16),
-                        width: context.width * 0.32,
-                      ),
-                    );
-                  },
-                ),
-              ),
+              SizedBox(height: context.height * 0.02),
             ],
-          ),
-        ),
-        SizedBox(height: context.height * 0.02,)
-      ],
-    );
+          );
   }
 
   Padding seeMoreSection() {
@@ -108,7 +107,7 @@ class _HomeTabState extends State<HomeTab> {
           ),
           const Spacer(),
           InkWell(
-            onTap: (){},
+            onTap: () {},
             child: Text(
               'See More',
               style: TextStyle(
@@ -119,13 +118,13 @@ class _HomeTabState extends State<HomeTab> {
             ),
           ),
           const SizedBox(width: 2),
-          Icon(
-            Icons.arrow_forward_rounded,
-            color: AppColors.yellow,
-            size: 15,
-          ),
+          Icon(Icons.arrow_forward_rounded, color: AppColors.yellow, size: 15),
         ],
       ),
     );
   }
 }
+/*
+
+
+ */

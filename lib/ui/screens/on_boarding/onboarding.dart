@@ -4,9 +4,9 @@ import 'package:movies_app/data/datasources/onbording/onborading_ds_impl.dart';
 import 'package:movies_app/data/repositories/onboarding/onboarding_repository_impl.dart';
 import 'package:movies_app/ui/screens/on_boarding/cubit/onboarding_cubit.dart';
 import 'package:movies_app/ui/screens/on_boarding/cubit/onboarding_states.dart';
-import 'package:movies_app/ui/utils/app_colors.dart';
-import 'package:movies_app/ui/utils/app_routes.dart';
-import 'package:movies_app/ui/utils/app_text_styles.dart';
+import 'package:movies_app/core/utils/app_colors.dart';
+import 'package:movies_app/core/utils/app_routes.dart';
+import 'package:movies_app/core/utils/app_text_styles.dart';
 import 'package:movies_app/ui/widgets/custom_button.dart';
 
 class Onboarding extends StatelessWidget {
