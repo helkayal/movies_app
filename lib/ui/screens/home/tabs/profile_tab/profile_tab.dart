@@ -78,11 +78,11 @@
 // }
 
 import 'package:flutter/material.dart';
-import 'package:movies_app/core/utils/app_assets.dart';
-import 'package:movies_app/core/utils/app_colors.dart';
-import 'package:movies_app/core/utils/app_routes.dart';
-import 'package:movies_app/core/utils/app_text_styles.dart';
-import 'package:movies_app/core/utils/context_extension.dart';
+import 'package:movies_app/ui/utils/app_assets.dart';
+import 'package:movies_app/ui/utils/app_colors.dart';
+import 'package:movies_app/ui/utils/app_routes.dart';
+import 'package:movies_app/ui/utils/app_text_styles.dart';
+import 'package:movies_app/ui/utils/context_extension.dart';
 import 'package:movies_app/model/movie_dm.dart';
 import 'package:movies_app/ui/widgets/custom_button.dart';
 import 'package:movies_app/ui/widgets/custom_gride_view.dart';
@@ -203,10 +203,7 @@ class ProfileTab extends StatelessWidget {
                     horizontal: 16,
                     vertical: 20,
                   ),
-                  child: CustomGrideView(
-                    rowItemCount: 3,
-                    movie: movie,
-                  ),
+                  child: CustomGrideView(rowItemCount: 3, movie: movie),
                 ),
               ],
             ),
