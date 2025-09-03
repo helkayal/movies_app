@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:movies_app/core/utils/app_assets.dart';
-import 'package:movies_app/core/utils/app_routes.dart';
-import 'package:movies_app/core/utils/app_text_styles.dart';
-import 'package:movies_app/data/datasources/onbording/onborading_ds_impl.dart';
-import 'package:movies_app/data/repositories/onboarding/onboarding_repository.dart';
-import 'package:movies_app/data/repositories/onboarding/onboarding_repository_impl.dart';
+import '../../../core/utils/constants/app_assets.dart';
+import '../../../core/utils/constants/app_routes.dart';
+import '../../../core/theme/app_text_styles.dart';
+import '../../../data/datasources/onbording/onborading_ds_impl.dart';
+import '../../../data/repositories/onboarding/onboarding_repository.dart';
+import '../../../data/repositories/onboarding/onboarding_repository_impl.dart';
 
 class Splash extends StatefulWidget {
   const Splash({super.key});

@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:movies_app/core/utils/app_assets.dart';
-import 'package:movies_app/core/utils/app_colors.dart';
+import '../../core/utils/constants/app_assets.dart';
+import '../../core/theme/app_colors.dart';
 
 class CustomMovieImage extends StatelessWidget {
   final double? width;

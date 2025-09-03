@@ -1,8 +1,8 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
-import 'package:movies_app/core/services/Api/api_constants.dart';
-import 'package:movies_app/model/movie_dm.dart';
+import 'api_constants.dart';
+import 'package:movies_app/data/model/movie_dm.dart';
 
 class ApiService {
   static Future<MovieDataModel> getMovies() async {

@@ -3,8 +3,8 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
-import 'package:movies_app/core/services/Api/api_service.dart';
-import 'package:movies_app/model/movie_dm.dart';
+import '../../../../../data/datasources/Api/api_service.dart';
+import 'package:movies_app/data/model/movie_dm.dart';
 
 part 'movie_event.dart';
 part 'movie_state.dart';

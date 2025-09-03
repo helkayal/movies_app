@@ -1,4 +1,4 @@
-import 'package:movies_app/data/datasources/onbording/onborading_ds.dart';
+import 'onborading_ds.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class OnboardingDataSourceImpl implements OnboardingDataSource {

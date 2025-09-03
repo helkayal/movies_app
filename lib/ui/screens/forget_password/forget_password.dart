@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:movies_app/core/utils/app_text_styles.dart';
+import '../../../core/theme/app_text_styles.dart';
 
 class ForgetPassword extends StatelessWidget {
   const ForgetPassword({super.key});

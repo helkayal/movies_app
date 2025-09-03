@@ -1,20 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:movies_app/model/movie_dm.dart';
-import 'package:movies_app/ui/screens/home/widgets/carousel_slider_section.dart';
-import 'package:movies_app/core/utils/context_extension.dart';
-import 'package:movies_app/ui/widgets/custom_movie_image.dart';
-import 'package:movies_app/core/utils/app_assets.dart';
-import 'package:movies_app/core/utils/app_colors.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:movies_app/ui/screens/home/bloc/change_bg_image_bloc/change_bg_image_bloc.dart';
+import '../../../../data/model/movie_dm.dart';
+import '../widgets/carousel_slider_section.dart';
+import '../../../../core/utils/context_extension.dart';
+import '../../../widgets/custom_movie_image.dart';
+import '../../../../core/utils/constants/app_assets.dart';
+import '../../../../core/theme/app_colors.dart';
 
-class HomeTab extends StatefulWidget {
+class HomeTab extends StatelessWidget {
   final List<Movies> movie;
   const HomeTab({super.key,required this.movie,});
-
-  @override
-  State<HomeTab> createState() => _HomeTabState();
-}
-
-class _HomeTabState extends State<HomeTab> {
 
   @override
   Widget build(BuildContext context) {
@@ -23,42 +19,50 @@ class _HomeTabState extends State<HomeTab> {
             children: [
               Expanded(
                 flex: 3,
-                child: Container(
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: NetworkImage(widget.movie[0].mediumCoverImage ??''),
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter,
-                        colors: [
-                          AppColors.black.withValues(alpha: 0.8),
-                          AppColors.black.withValues(alpha: 0.6),
-                          AppColors.black,
-                        ],
+                child: BlocBuilder<ChangeBgImageBloc,ChangeBgImageState>(
+                  builder: (context, state) {
+                    String imagePath = movie[0].mediumCoverImage ?? ''; //default image => first image in api
+                    if(state is ChangeBgImageSuccess){
+                      imagePath = state.imagePath;
+                    }
+                    return Container(
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image: NetworkImage(imagePath),
+                          fit: BoxFit.cover,
+                        ),
                       ),
-                    ),
-                    child: Column(
-                      spacing: context.height * 0.01,
-                      children: [
-                        Image.asset(
-                          AppAssets.availableNow,
-                          height: context.height * 0.1,
+                      child: Container(
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            begin: Alignment.topCenter,
+                            end: Alignment.bottomCenter,
+                            colors: [
+                              AppColors.black.withValues(alpha: 0.8),
+                              AppColors.black.withValues(alpha: 0.6),
+                              AppColors.black,
+                            ],
+                          ),
                         ),
-                        Expanded(
-                          child: CarouselSliderSection(movie:widget.movie),
+                        child: Column(
+                          spacing: context.height * 0.01,
+                          children: [
+                            Image.asset(
+                              AppAssets.availableNow,
+                              height: context.height * 0.1,
+                            ),
+                            Expanded(
+                              child: CarouselSliderSection(movie:movie),
+                            ),
+                            Image.asset(
+                              AppAssets.watchNow,
+                              width: context.width * 0.76,
+                            ),
+                          ],
                         ),
-                        Image.asset(
-                          AppAssets.watchNow,
-                          width: context.width * 0.76,
-                        ),
-                      ],
-                    ),
-                  ),
+                      ),
+                    );
+                  }
                 ),
               ),
               SizedBox(
@@ -70,13 +74,13 @@ class _HomeTabState extends State<HomeTab> {
                     Expanded(
                       child: ListView.builder(
                         scrollDirection: Axis.horizontal,
-                        itemCount: widget.movie.length,
+                        itemCount: movie.length,
                         itemBuilder: (context, index) {
                           return InkWell(
                             onTap: () {},
                             child: CustomMovieImage(
-                              rating: widget.movie[index].rating.toString(),
-                              image: widget.movie[index].mediumCoverImage ??'',
+                              rating: movie[index].rating.toString(),
+                              image: movie[index].mediumCoverImage ??'',
                               margin: EdgeInsets.only(left: 16),
                               width: context.width * 0.32,
                             ),
@@ -124,6 +128,7 @@ class _HomeTabState extends State<HomeTab> {
     );
   }
 }
+
 /*
 
 
