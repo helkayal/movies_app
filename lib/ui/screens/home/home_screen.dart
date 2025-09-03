@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movies_app/core/services/Api/api_service.dart';
 import 'package:movies_app/ui/utils/app_text_styles.dart';
 import 'package:movies_app/data/bloc/bloc/movie_bloc.dart';
-import 'package:movies_app/model/movie_dm.dart';
 import 'package:movies_app/ui/screens/home/tabs/category_tab.dart';
 import 'package:movies_app/ui/screens/home/tabs/home_tab.dart';
 import 'package:movies_app/ui/screens/home/tabs/profile_tab/profile_tab.dart';
