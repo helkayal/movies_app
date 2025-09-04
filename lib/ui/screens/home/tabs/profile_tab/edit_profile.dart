@@ -4,6 +4,7 @@ import 'package:movies_app/ui/screens/home/tabs/profile_tab/cubit/profile_cubit.
 import 'package:movies_app/ui/screens/home/tabs/profile_tab/cubit/profile_states.dart';
 import 'package:movies_app/ui/utils/app_assets.dart';
 import 'package:movies_app/ui/utils/app_colors.dart';
+import 'package:movies_app/ui/utils/app_routes.dart';
 import 'package:movies_app/ui/widgets/custom_button.dart';
 import 'package:movies_app/ui/widgets/custom_text_field.dart';
 import 'package:movies_app/ui/utils/context_extension.dart';
@@ -103,10 +104,7 @@ class _EditProfileState extends State<EditProfile> {
             );
             Navigator.pop(context, true);
           } else if (state is ProfileDeleted) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text("Account deleted successfully")),
-            );
-            Navigator.pop(context, false);
+            Navigator.push(context, AppRoutes.login);
           } else if (state is ProfileError) {
             ScaffoldMessenger.of(
               context,
@@ -119,7 +117,9 @@ class _EditProfileState extends State<EditProfile> {
         },
         builder: (context, state) {
           if (state is ProfileLoading) {
-            return const Center(child: CircularProgressIndicator());
+            return const Center(
+              child: CircularProgressIndicator(color: AppColors.yellow),
+            );
           }
 
           return Column(
@@ -163,7 +163,7 @@ class _EditProfileState extends State<EditProfile> {
                 text: 'Update Data',
                 onClick: () => context.read<ProfileCubit>().updateProfile(
                   name: nameController.text,
-                  avatar: selectedAvatarId, // ✅ send ID
+                  avatar: selectedAvatarId,
                 ),
               ),
               const SizedBox(height: 40),
