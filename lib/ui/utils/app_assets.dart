@@ -33,7 +33,6 @@ abstract final class AppAssets {
   static const String icExit = 'assets/images/ic_exit.png';
   static const String icWishList = 'assets/images/ic_wish_list.png';
   static const String icHistory = 'assets/images/ic_history.png';
-  //
   static const String call = 'assets/images/call.png';
   static const String email = 'assets/images/email.png';
   static const String google = 'assets/images/google.png';
@@ -43,4 +42,14 @@ abstract final class AppAssets {
   static const String save = 'assets/images/save.png';
   static const String timer = 'assets/images/timer.png';
   static const String register = 'assets/images/register.png';
+  static const String video = 'assets/icons/video.png';
+  static const String moviedetials = 'assets/icons/moviedetials.png';
+  static const String negma = 'assets/icons/negma.png';
+  static const String similar1 = 'assets/icons/similar1.png';
+  static const String similar2 = 'assets/icons/similar2.png';
+  static const String similar3 = 'assets/icons/similar3.png';
+  static const String similar4 = 'assets/icons/similar4.png';
+  static const String char1 = 'assets/icons/char1.png';
+
+
 }
