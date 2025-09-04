@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movies_app/data/datasources/onbording/onborading_ds_impl.dart';
-import 'package:movies_app/data/repositories/onboarding/onboarding_repository_impl.dart';
+import 'package:movies_app/data/repositories/onboarding_repository/onboarding_repository_impl.dart';
 import 'package:movies_app/ui/screens/on_boarding/cubit/onboarding_cubit.dart';
 import 'package:movies_app/ui/screens/on_boarding/cubit/onboarding_states.dart';
 import 'package:movies_app/ui/utils/app_colors.dart';

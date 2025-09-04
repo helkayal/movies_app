@@ -1,5 +1,5 @@
 import 'package:movies_app/data/datasources/onbording/onborading_ds.dart';
-import 'package:movies_app/data/repositories/onboarding/onboarding_repository.dart';
+import 'package:movies_app/data/repositories/onboarding_repository/onboarding_repository.dart';
 
 class OnboardingRepositoryImpl implements OnboardingRepository {
   final OnboardingDataSource localDataSource;

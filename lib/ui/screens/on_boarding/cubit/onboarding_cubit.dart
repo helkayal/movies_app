@@ -1,5 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:movies_app/data/repositories/onboarding/onboarding_repository.dart';
+import 'package:movies_app/data/repositories/onboarding_repository/onboarding_repository.dart';
 import 'package:movies_app/ui/screens/on_boarding/cubit/onboarding_states.dart';
 import 'package:movies_app/ui/screens/on_boarding/model/onboarding_dm.dart';
 import 'package:movies_app/ui/utils/app_assets.dart';
