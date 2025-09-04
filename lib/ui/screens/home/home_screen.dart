@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movies_app/core/services/Api/api_service.dart';
+import 'package:movies_app/ui/screens/home/tabs/profile_tab/cubit/favourite_cubit.dart';
 import 'package:movies_app/ui/utils/app_text_styles.dart';
 import 'package:movies_app/data/bloc/bloc/movie_bloc.dart';
 import 'package:movies_app/ui/screens/home/tabs/category_tab.dart';
@@ -47,7 +48,10 @@ class _HomeScreenState extends State<HomeScreen> {
               HomeTab(movie: movieList!),
               SearchTab(movie: movieList),
               CategoryTab(movie: movieList),
-              ProfileTab(movie: movieList),
+              BlocProvider(
+                create: (_) => FavouriteCubit(),
+                child: ProfileTab(movie: movieList),
+              ),
             ];
             return _buildHomeBody(screens);
           } else {

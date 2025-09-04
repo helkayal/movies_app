@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:movies_app/core/services/common/common.dart';
 
 class ProfileApiService {
   final String token;
@@ -18,7 +19,7 @@ class ProfileApiService {
       Uri.parse('$_baseUrl/profile'),
       headers: _headers,
     );
-    return _handleResponse(response);
+    return handleResponse(response);
   }
 
   Future<Map<String, dynamic>> updateProfile(Map<String, dynamic> body) async {
@@ -27,7 +28,7 @@ class ProfileApiService {
       headers: _headers,
       body: jsonEncode(body),
     );
-    return _handleResponse(response);
+    return handleResponse(response);
   }
 
   Future<Map<String, dynamic>> deleteProfile() async {
@@ -35,14 +36,6 @@ class ProfileApiService {
       Uri.parse('$_baseUrl/profile'),
       headers: _headers,
     );
-    return _handleResponse(response);
-  }
-
-  Map<String, dynamic> _handleResponse(http.Response response) {
-    if (response.statusCode >= 200 && response.statusCode < 300) {
-      return jsonDecode(response.body);
-    } else {
-      throw Exception("API Error: ${response.statusCode} - ${response.body}");
-    }
+    return handleResponse(response);
   }
 }

@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movies_app/core/services/api/profile_api_service.dart';
 import 'package:movies_app/data/datasources/profile/profile_data_source_impl.dart';
@@ -11,7 +13,7 @@ class ProfileCubit extends Cubit<ProfileStates> {
   ProfileCubit() : super(ProfileInitial()) {
     // final token = SharedPrefsUtils.getString("token") ?? "";
     final token =
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4Yjg0OTBjNWQ5YzQ0MjM4MTJlMDdkMiIsImVtYWlsIjoiaGVsa2F5YWxAZ21haWwuY29tIiwiaWF0IjoxNzU2OTA3ODI2fQ.j6fkcErvvsLS74l55JriWwWoKOm35H7Xpx6AERQTzn0";
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4YjhhMmQ0MTY3MDRjYzg5NWNhYzI0MyIsImVtYWlsIjoiaGVsa2F5YWxAZ21haWwuY29tIiwiaWF0IjoxNzU2OTMwNzc4fQ.HRGvVM_qBlIRsxezd_rgnB-cIo-D4N_QPWpmGmZzqhI";
     final apiService = ProfileApiService(token: token);
     final dataSource = ProfileDataSourceImpl(apiService);
     repository = ProfileRepositoryImpl(dataSource);
@@ -27,7 +29,8 @@ class ProfileCubit extends Cubit<ProfileStates> {
 
       emit(ProfileLoaded(user));
     } catch (e) {
-      emit(ProfileError(e.toString()));
+      final errorMessage = _extractErrorMessage(e);
+      emit(ProfileError(errorMessage));
     }
   }
 
@@ -44,7 +47,8 @@ class ProfileCubit extends Cubit<ProfileStates> {
       final user = UserDataModel.fromJson(profileJson);
       emit(ProfileUpdated(user));
     } catch (e) {
-      emit(ProfileError(e.toString()));
+      final errorMessage = _extractErrorMessage(e);
+      emit(ProfileError(errorMessage));
     }
   }
 
@@ -54,7 +58,32 @@ class ProfileCubit extends Cubit<ProfileStates> {
       await repository.deleteProfile();
       emit(ProfileDeleted());
     } catch (e) {
-      emit(ProfileError(e.toString()));
+      final errorMessage = _extractErrorMessage(e);
+      emit(ProfileError(errorMessage));
+    }
+  }
+
+  String _extractErrorMessage(dynamic error) {
+    try {
+      final errorStr = error.toString();
+
+      final jsonStart = errorStr.indexOf('{');
+      if (jsonStart != -1) {
+        final jsonPart = errorStr.substring(jsonStart);
+        final decoded = jsonDecode(jsonPart);
+        if (decoded is Map && decoded['message'] != null) {
+          return decoded['message'];
+        }
+      }
+
+      final decoded = jsonDecode(errorStr);
+      if (decoded is Map && decoded['message'] != null) {
+        return decoded['message'];
+      }
+
+      return errorStr.replaceAll("Exception: ", "");
+    } catch (_) {
+      return error.toString();
     }
   }
 }
