@@ -1,218 +1,406 @@
 // import 'package:flutter/material.dart';
+// import 'package:flutter_bloc/flutter_bloc.dart';
+// import 'package:movies_app/ui/screens/home/tabs/profile_tab/cubit/favourite_cubit.dart';
+// import 'package:movies_app/ui/screens/home/tabs/profile_tab/cubit/profile_cubit.dart';
+// import 'package:movies_app/ui/screens/home/tabs/profile_tab/cubit/profile_states.dart';
+// import 'package:movies_app/ui/screens/home/tabs/profile_tab/widgets/favourite_list.dart';
 // import 'package:movies_app/ui/utils/app_assets.dart';
 // import 'package:movies_app/ui/utils/app_colors.dart';
+// import 'package:movies_app/ui/utils/app_routes.dart';
 // import 'package:movies_app/ui/utils/app_text_styles.dart';
 // import 'package:movies_app/ui/utils/context_extension.dart';
 // import 'package:movies_app/ui/widgets/custom_button.dart';
+// import 'package:movies_app/ui/widgets/custom_gride_view.dart';
+// import 'package:movies_app/model/movie_dm.dart';
 
-// class ProfileTab extends StatelessWidget {
-//   const ProfileTab({super.key});
+// class ProfileTab extends StatefulWidget {
+//   final List<Movies> movie;
+//   const ProfileTab({super.key, required this.movie});
+
+//   @override
+//   State<ProfileTab> createState() => _ProfileTabState();
+// }
+
+// class _ProfileTabState extends State<ProfileTab> {
+//   @override
+//   void initState() {
+//     super.initState();
+//     context.read<ProfileCubit>().getProfile();
+//   }
 
 //   @override
 //   Widget build(BuildContext context) {
-//     return Column(
-//       crossAxisAlignment: CrossAxisAlignment.stretch,
-//       children: [
-//         Container(
-//           color: AppColors.darkGrey,
-//           padding: const EdgeInsets.symmetric(vertical: 20),
-//           child: Row(
-//             mainAxisAlignment: MainAxisAlignment.spaceAround,
+//     final List<String> avatars = [
+//       AppAssets.avatar1,
+//       AppAssets.avatar2,
+//       AppAssets.avatar3,
+//       AppAssets.avatar4,
+//       AppAssets.avatar5,
+//       AppAssets.avatar6,
+//       AppAssets.avatar7,
+//       AppAssets.avatar8,
+//       AppAssets.avatar9,
+//     ];
+
+//     return BlocBuilder<ProfileCubit, ProfileStates>(
+//       builder: (context, state) {
+//         if (state is ProfileLoading) {
+//           return const Center(
+//             child: CircularProgressIndicator(color: AppColors.yellow),
+//           );
+//         }
+
+//         String userName = "Guest";
+//         String avatarPath = avatars[0];
+
+//         if (state is ProfileLoaded) {
+//           userName = state.user.name;
+//           avatarPath = avatars[state.user.avaterId - 1];
+//         }
+
+//         if (state is ProfileError) {
+//           return Center(
+//             child: Text(
+//               "Error: ${state.message}",
+//               style: AppTextStyles.whiteBold20,
+//             ),
+//           );
+//         }
+
+//         return DefaultTabController(
+//           length: 2,
+//           child: Column(
+//             crossAxisAlignment: CrossAxisAlignment.stretch,
 //             children: [
-//               Column(
-//                 spacing: 15,
-//                 children: [
-//                   Image.asset(
-//                     AppAssets.avatar1,
-//                     width: context.width * 0.25,
-//                     fit: BoxFit.contain,
-//                   ),
-//                   Text('John Safwat', style: AppTextStyles.whiteBold20),
-//                 ],
+//               Container(
+//                 color: AppColors.darkGrey,
+//                 padding: const EdgeInsets.symmetric(vertical: 40),
+//                 child: Row(
+//                   mainAxisAlignment: MainAxisAlignment.spaceAround,
+//                   children: [
+//                     Column(
+//                       spacing: 15,
+//                       children: [
+//                         Image.asset(
+//                           avatarPath,
+//                           width: context.width * 0.25,
+//                           fit: BoxFit.contain,
+//                         ),
+//                         Text(userName, style: AppTextStyles.whiteBold20),
+//                       ],
+//                     ),
+//                     Column(
+//                       spacing: 10,
+//                       children: [
+//                         Text('12', style: AppTextStyles.whiteBold36),
+//                         Text('Wish List', style: AppTextStyles.whiteBold24),
+//                       ],
+//                     ),
+//                     Column(
+//                       spacing: 10,
+//                       children: [
+//                         Text('10', style: AppTextStyles.whiteBold36),
+//                         Text('History', style: AppTextStyles.whiteBold24),
+//                       ],
+//                     ),
+//                   ],
+//                 ),
 //               ),
-//               Column(
-//                 spacing: 20,
-//                 children: [
-//                   Text('12', style: AppTextStyles.whiteBold36),
-//                   Text('Wish List', style: AppTextStyles.whiteBold24),
-//                 ],
+
+//               // Buttons
+//               Container(
+//                 color: AppColors.darkGrey,
+//                 padding: const EdgeInsets.only(bottom: 20),
+//                 child: Row(
+//                   mainAxisAlignment: MainAxisAlignment.spaceAround,
+//                   children: [
+//                     SizedBox(
+//                       width: context.width * 0.62,
+//                       child: CustomButton(
+//                         text: 'Edit Profile',
+//                         onClick: () {
+//                           Navigator.push(context, AppRoutes.editProfile).then((
+//                             updated,
+//                           ) {
+//                             if (updated == true && context.mounted) {
+//                               context.read<ProfileCubit>().getProfile();
+//                             }
+//                           });
+//                         },
+//                       ),
+//                     ),
+//                     SizedBox(
+//                       width: context.width * 0.32,
+//                       child: CustomButton(
+//                         text: 'Exit',
+//                         onClick: () async {
+//                           context.read<ProfileCubit>().deleteProfile();
+//                           if (!context.mounted) return;
+//                           Navigator.pushAndRemoveUntil(
+//                             context,
+//                             AppRoutes.login,
+//                             (route) => false,
+//                           );
+//                         },
+//                         icon: Image.asset(AppAssets.icExit),
+//                         backgroundColor: AppColors.red,
+//                         borderColor: AppColors.red,
+//                         textColor: AppColors.white,
+//                       ),
+//                     ),
+//                   ],
+//                 ),
 //               ),
-//               Column(
-//                 spacing: 20,
-//                 children: [
-//                   Text('10', style: AppTextStyles.whiteBold36),
-//                   Text('History', style: AppTextStyles.whiteBold24),
-//                 ],
+
+//               // Tabs
+//               Container(
+//                 color: AppColors.darkGrey,
+//                 child: TabBar(
+//                   indicatorColor: AppColors.yellow,
+//                   indicatorSize: TabBarIndicatorSize.tab,
+//                   indicatorWeight: 3,
+//                   labelColor: AppColors.white,
+//                   unselectedLabelColor: AppColors.darkGrey,
+//                   tabs: [
+//                     Column(
+//                       mainAxisSize: MainAxisSize.min,
+//                       children: [
+//                         Image.asset(AppAssets.icWishList, height: 30),
+//                         const SizedBox(height: 4),
+//                         Text("Wish List", style: AppTextStyles.whiteRegular20),
+//                         SizedBox(height: 10),
+//                       ],
+//                     ),
+//                     Column(
+//                       mainAxisSize: MainAxisSize.min,
+//                       children: [
+//                         Image.asset(AppAssets.icHistory, height: 30),
+//                         const SizedBox(height: 4),
+//                         Text("History", style: AppTextStyles.whiteRegular20),
+//                         SizedBox(height: 10),
+//                       ],
+//                     ),
+//                   ],
+//                 ),
 //               ),
-//             ],
-//           ),
-//         ),
-//         Container(
-//           color: AppColors.darkGrey,
-//           padding: const EdgeInsets.only(bottom: 20),
-//           child: Row(
-//             mainAxisAlignment: MainAxisAlignment.spaceAround,
-//             children: [
-//               SizedBox(
-//                 width: context.width * 0.62,
-//                 child: CustomButton(text: 'Edit Profile', onClick: () {}),
-//               ),
-//               SizedBox(
-//                 width: context.width * 0.32,
-//                 child: CustomButton(
-//                   text: 'Exit',
-//                   onClick: () {},
-//                   icon: Image.asset(AppAssets.icExit),
-//                   backgroundColor: AppColors.red,
-//                   borderColor: AppColors.red,
-//                   textColor: AppColors.white,
+
+//               Expanded(
+//                 child: TabBarView(
+//                   children: [
+//                     BlocProvider(
+//                       create: (_) => FavouriteCubit()..loadFavourites(),
+//                       child: const FavouriteList(),
+//                     ),
+//                     Center(child: Image.asset(AppAssets.emptyList, width: 150)),
+//                   ],
 //                 ),
 //               ),
 //             ],
 //           ),
-//         ),
-//         Row(children: [Text('Profile Tab', style: AppTextStyles.whiteBold24)]),
-//       ],
+//         );
+//       },
 //     );
 //   }
 // }
 
 import 'package:flutter/material.dart';
-import '../../../../../core/utils/constants/app_assets.dart';
-import '../../../../../core/theme/app_colors.dart';
-import '../../../../../core/utils/constants/app_routes.dart';
-import '../../../../../core/theme/app_text_styles.dart';
-import '../../../../../core/utils/context_extension.dart';
-import '../../../../../data/model/movie_dm.dart';
-import '../../../../widgets/custom_button.dart';
-import '../../../../widgets/custom_gride_view.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:movies_app/core/theme/app_colors.dart';
+import 'package:movies_app/core/theme/app_text_styles.dart';
+import 'package:movies_app/core/utils/constants/app_assets.dart';
+import 'package:movies_app/core/utils/constants/app_routes.dart';
+import 'package:movies_app/data/model/movie_dm.dart';
+import 'package:movies_app/ui/screens/home/tabs/profile_tab/cubit/profile_cubit.dart';
+import 'package:movies_app/ui/screens/home/tabs/profile_tab/cubit/profile_states.dart';
+import 'package:movies_app/ui/screens/home/tabs/profile_tab/cubit/favourite_cubit.dart';
+import 'package:movies_app/ui/screens/home/tabs/profile_tab/widgets/favourite_list.dart';
+import 'package:movies_app/core/utils/context_extension.dart';
+import 'package:movies_app/ui/widgets/custom_button.dart';
 
-class ProfileTab extends StatelessWidget {
+class ProfileTab extends StatefulWidget {
   final List<Movies> movie;
   const ProfileTab({super.key, required this.movie});
 
   @override
+  State<ProfileTab> createState() => _ProfileTabState();
+}
+
+class _ProfileTabState extends State<ProfileTab> {
+  @override
+  void initState() {
+    super.initState();
+    context.read<ProfileCubit>().getProfile();
+    context.read<FavouriteCubit>().loadFavourites();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: 2,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Container(
-            color: AppColors.darkGrey,
-            padding: const EdgeInsets.symmetric(vertical: 40),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                Column(
-                  spacing: 15,
+    final List<String> avatars = [
+      AppAssets.avatar1,
+      AppAssets.avatar2,
+      AppAssets.avatar3,
+      AppAssets.avatar4,
+      AppAssets.avatar5,
+      AppAssets.avatar6,
+      AppAssets.avatar7,
+      AppAssets.avatar8,
+      AppAssets.avatar9,
+    ];
+
+    return BlocBuilder<ProfileCubit, ProfileStates>(
+      builder: (context, state) {
+        if (state is ProfileLoading) {
+          return const Center(
+            child: CircularProgressIndicator(color: AppColors.yellow),
+          );
+        }
+
+        String userName = "Guest";
+        String avatarPath = avatars[0];
+
+        if (state is ProfileLoaded) {
+          userName = state.user.name;
+          avatarPath = avatars[state.user.avaterId - 1];
+        }
+
+        if (state is ProfileError) {
+          return Center(
+            child: Text(
+              "Error: ${state.message}",
+              style: AppTextStyles.whiteBold20,
+            ),
+          );
+        }
+
+        return DefaultTabController(
+          length: 2,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Container(
+                color: AppColors.darkGrey,
+                padding: const EdgeInsets.symmetric(vertical: 40),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    Image.asset(
-                      AppAssets.avatar8,
-                      width: context.width * 0.25,
-                      fit: BoxFit.contain,
+                    Column(
+                      spacing: 15,
+                      children: [
+                        Image.asset(
+                          avatarPath,
+                          width: context.width * 0.25,
+                          fit: BoxFit.contain,
+                        ),
+                        Text(userName, style: AppTextStyles.whiteBold20),
+                      ],
                     ),
-                    Text('John Safwat', style: AppTextStyles.whiteBold20),
+                    Column(
+                      spacing: 10,
+                      children: [
+                        Text('12', style: AppTextStyles.whiteBold36),
+                        Text('Wish List', style: AppTextStyles.whiteBold24),
+                      ],
+                    ),
+                    Column(
+                      spacing: 10,
+                      children: [
+                        Text('10', style: AppTextStyles.whiteBold36),
+                        Text('History', style: AppTextStyles.whiteBold24),
+                      ],
+                    ),
                   ],
                 ),
-                Column(
-                  spacing: 10,
-                  children: [
-                    Text('12', style: AppTextStyles.whiteBold36),
-                    Text('Wish List', style: AppTextStyles.whiteBold24),
-                  ],
-                ),
-                Column(
-                  spacing: 10,
-                  children: [
-                    Text('10', style: AppTextStyles.whiteBold36),
-                    Text('History', style: AppTextStyles.whiteBold24),
-                  ],
-                ),
-              ],
-            ),
-          ),
+              ),
 
-          Container(
-            color: AppColors.darkGrey,
-            padding: const EdgeInsets.only(bottom: 20),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                SizedBox(
-                  width: context.width * 0.62,
-                  child: CustomButton(
-                    text: 'Edit Profile',
-                    onClick: () {
-                      Navigator.push(context, AppRoutes.editProfile);
-                    },
-                  ),
-                ),
-                SizedBox(
-                  width: context.width * 0.32,
-                  child: CustomButton(
-                    text: 'Exit',
-                    onClick: () {},
-                    icon: Image.asset(AppAssets.icExit),
-                    backgroundColor: AppColors.red,
-                    borderColor: AppColors.red,
-                    textColor: AppColors.white,
-                  ),
-                ),
-              ],
-            ),
-          ),
-
-          Container(
-            color: AppColors.darkGrey,
-            child: TabBar(
-              indicatorColor: AppColors.yellow,
-              indicatorSize: TabBarIndicatorSize.tab,
-              indicatorWeight: 3,
-              labelColor: AppColors.white,
-              unselectedLabelColor: AppColors.darkGrey,
-              tabs: [
-                Column(
-                  mainAxisSize: MainAxisSize.min,
+              // Buttons
+              Container(
+                color: AppColors.darkGrey,
+                padding: const EdgeInsets.only(bottom: 20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    Image.asset(AppAssets.icWishList, height: 30),
-                    const SizedBox(height: 4),
-                    Text("Wish List", style: AppTextStyles.whiteRegular20),
-                    SizedBox(height: 10),
+                    SizedBox(
+                      width: context.width * 0.62,
+                      child: CustomButton(
+                        text: 'Edit Profile',
+                        onClick: () {
+                          Navigator.push(context, AppRoutes.editProfile).then((
+                            updated,
+                          ) {
+                            if (updated == true && context.mounted) {
+                              context.read<ProfileCubit>().getProfile();
+                            }
+                          });
+                        },
+                      ),
+                    ),
+                    SizedBox(
+                      width: context.width * 0.32,
+                      child: CustomButton(
+                        text: 'Exit',
+                        onClick: () async {
+                          context.read<ProfileCubit>().deleteProfile();
+                          if (!context.mounted) return;
+                          Navigator.pushAndRemoveUntil(
+                            context,
+                            AppRoutes.login,
+                            (route) => false,
+                          );
+                        },
+                        icon: Image.asset(AppAssets.icExit),
+                        backgroundColor: AppColors.red,
+                        borderColor: AppColors.red,
+                        textColor: AppColors.white,
+                      ),
+                    ),
                   ],
                 ),
-                Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Image.asset(AppAssets.icHistory, height: 30),
-                    const SizedBox(height: 4),
-                    Text("History", style: AppTextStyles.whiteRegular20),
-                    SizedBox(height: 10),
+              ),
+
+              // Tabs
+              Container(
+                color: AppColors.darkGrey,
+                child: TabBar(
+                  indicatorColor: AppColors.yellow,
+                  indicatorSize: TabBarIndicatorSize.tab,
+                  indicatorWeight: 3,
+                  labelColor: AppColors.white,
+                  unselectedLabelColor: AppColors.darkGrey,
+                  tabs: [
+                    Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Image.asset(AppAssets.icWishList, height: 30),
+                        const SizedBox(height: 4),
+                        Text("Wish List", style: AppTextStyles.whiteRegular20),
+                        SizedBox(height: 10),
+                      ],
+                    ),
+                    Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Image.asset(AppAssets.icHistory, height: 30),
+                        const SizedBox(height: 4),
+                        Text("History", style: AppTextStyles.whiteRegular20),
+                        SizedBox(height: 10),
+                      ],
+                    ),
                   ],
                 ),
-              ],
-            ),
-          ),
+              ),
 
-          Expanded(
-            child: TabBarView(
-              children: [
-                Center(child: Image.asset(AppAssets.emptyList, width: 150)),
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 16,
-                    vertical: 20,
-                  ),
-                  child: CustomGrideView(
-                    rowItemCount: 3,
-                    movie: movie,
-                  ),
+              Expanded(
+                child: TabBarView(
+                  children: [
+                    const FavouriteList(),
+                    Center(child: Image.asset(AppAssets.emptyList, width: 150)),
+                  ],
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
-        ],
-      ),
+        );
+      },
     );
   }
 }

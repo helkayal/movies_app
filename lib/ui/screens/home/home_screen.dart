@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:movies_app/ui/screens/home/tabs/profile_tab/cubit/favourite_cubit.dart';
 import '../../../data/datasources/Api/api_service.dart';
 import '../../../core/theme/app_text_styles.dart';
 import 'bloc/movie_bloc/movie_bloc.dart';
@@ -46,9 +47,12 @@ class _HomeScreenState extends State<HomeScreen> {
             final movieList = state.movies.data?.movies;
             final List<Widget> screens = [
               HomeTab(movie: movieList!),
-              SearchTab(movie: movieList!),
-              CategoryTab(movie: movieList!),
-              ProfileTab(movie: movieList!,),
+              SearchTab(movie: movieList),
+              CategoryTab(movie: movieList),
+              BlocProvider(
+                create: (_) => FavouriteCubit(),
+                child: ProfileTab(movie: movieList),
+              ),
             ];
             return _buildHomeBody(screens);
           } else {
@@ -74,67 +78,58 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Scaffold _buildHomeBody(List<Widget> screens) {
     return Scaffold(
-            backgroundColor: AppColors.black,
-            body: screens[_selectedIndex],
-            floatingActionButtonLocation:
-                FloatingActionButtonLocation.centerDocked,
-            floatingActionButton: Container(
-              margin: EdgeInsets.all(8),
-              padding: EdgeInsets.symmetric(horizontal: 34, vertical: 18),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(16),
-                color: AppColors.darkGrey,
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  InkWell(
-                    onTap: () {
-                      _onScreenTab(0);
-                    },
-                    child: Image.asset(
-                      AppAssets.homeIcon,
-                      color: _selectedIndex == 0
-                          ? AppColors.yellow
-                          : AppColors.white,
-                    ),
-                  ),
-                  InkWell(
-                    onTap: () {
-                      _onScreenTab(1);
-                    },
-                    child: Image.asset(
-                      AppAssets.searchIcon,
-                      color: _selectedIndex == 1
-                          ? AppColors.yellow
-                          : AppColors.white,
-                    ),
-                  ),
-                  InkWell(
-                    onTap: () {
-                      _onScreenTab(2);
-                    },
-                    child: Image.asset(
-                      AppAssets.categoryIcon,
-                      color: _selectedIndex == 2
-                          ? AppColors.yellow
-                          : AppColors.white,
-                    ),
-                  ),
-                  InkWell(
-                    onTap: () {
-                      _onScreenTab(3);
-                    },
-                    child: Image.asset(
-                      AppAssets.profile,
-                      color: _selectedIndex == 3
-                          ? AppColors.yellow
-                          : AppColors.white,
-                    ),
-                  ),
-                ],
+      backgroundColor: AppColors.black,
+      body: screens[_selectedIndex],
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButton: Container(
+        margin: EdgeInsets.all(8),
+        padding: EdgeInsets.symmetric(horizontal: 34, vertical: 18),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(16),
+          color: AppColors.darkGrey,
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            InkWell(
+              onTap: () {
+                _onScreenTab(0);
+              },
+              child: Image.asset(
+                AppAssets.homeIcon,
+                color: _selectedIndex == 0 ? AppColors.yellow : AppColors.white,
               ),
             ),
-          );
+            InkWell(
+              onTap: () {
+                _onScreenTab(1);
+              },
+              child: Image.asset(
+                AppAssets.searchIcon,
+                color: _selectedIndex == 1 ? AppColors.yellow : AppColors.white,
+              ),
+            ),
+            InkWell(
+              onTap: () {
+                _onScreenTab(2);
+              },
+              child: Image.asset(
+                AppAssets.categoryIcon,
+                color: _selectedIndex == 2 ? AppColors.yellow : AppColors.white,
+              ),
+            ),
+            InkWell(
+              onTap: () {
+                _onScreenTab(3);
+              },
+              child: Image.asset(
+                AppAssets.profile,
+                color: _selectedIndex == 3 ? AppColors.yellow : AppColors.white,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

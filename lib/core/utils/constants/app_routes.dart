@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:movies_app/ui/screens/forget_password/forget_password.dart';
+import 'package:movies_app/ui/screens/auth/forget_password/forget_password.dart';
 import 'package:movies_app/ui/screens/home/home_screen.dart';
 import 'package:movies_app/ui/screens/home/tabs/profile_tab/edit_profile.dart';
-import 'package:movies_app/ui/screens/login/login.dart';
+import 'package:movies_app/ui/screens/auth/login/login.dart';
+import 'package:movies_app/ui/screens/moviedetials/movie%20detials.dart';
 import 'package:movies_app/ui/screens/on_boarding/onboarding.dart';
 import 'package:movies_app/ui/screens/on_boarding/onboarding_intro.dart';
-import 'package:movies_app/ui/screens/register/register.dart';
+import 'package:movies_app/ui/screens/auth/register/register.dart';
 
 abstract final class AppRoutes {
   static Route get onboardingIntro {
@@ -17,7 +18,7 @@ abstract final class AppRoutes {
   }
 
   static Route get login {
-    return MaterialPageRoute(builder: (_) => const Login());
+    return MaterialPageRoute(builder: (_) => const LoginScreen());
   }
 
   static Route get register {
@@ -34,5 +35,9 @@ abstract final class AppRoutes {
 
   static Route get editProfile {
     return MaterialPageRoute(builder: (_) => const EditProfile());
+  }
+
+  static Route get movieDetails {
+    return MaterialPageRoute(builder: (_) => const MovieDetails());
   }
 }

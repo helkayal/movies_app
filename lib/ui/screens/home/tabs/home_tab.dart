@@ -10,7 +10,7 @@ import '../../../../core/theme/app_colors.dart';
 
 class HomeTab extends StatelessWidget {
   final List<Movies> movie;
-  const HomeTab({super.key,required this.movie,});
+  const HomeTab({super.key, required this.movie});
 
   @override
   Widget build(BuildContext context) {
@@ -91,9 +91,10 @@ class HomeTab extends StatelessWidget {
                   ],
                 ),
               ),
-              SizedBox(height: context.height * 0.02),
-            ],
-          );
+          SizedBox(height: context.height * 0.02),
+        ],
+      );
+    }
   }
 
   Padding seeMoreSection() {
@@ -127,9 +128,4 @@ class HomeTab extends StatelessWidget {
       ),
     );
   }
-}
 
-/*
-
-
- */

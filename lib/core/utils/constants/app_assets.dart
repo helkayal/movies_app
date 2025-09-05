@@ -19,8 +19,8 @@ abstract final class AppAssets {
   static const String profile = 'assets/images/profile.png';
   static const String searchIcon = 'assets/images/search_icon.png';
   static const String watchNow = 'assets/images/watch_now.png';
-  static const String forgetPasswordBanner =
-      'assets/images/forgot_password_banner.png';
+  static const String forgetPassword =
+      'assets/images/forgotPassword.png';
   static const String avatar1 = 'assets/images/avatar1.png';
   static const String avatar2 = 'assets/images/avatar2.png';
   static const String avatar3 = 'assets/images/avatar3.png';
@@ -33,4 +33,25 @@ abstract final class AppAssets {
   static const String icExit = 'assets/images/ic_exit.png';
   static const String icWishList = 'assets/images/ic_wish_list.png';
   static const String icHistory = 'assets/images/ic_history.png';
+  static const String call = 'assets/images/call.png';
+  static const String email = 'assets/images/email.png';
+  static const String google = 'assets/images/google.png';
+  static const String lock = 'assets/images/lock.png';
+  static const String love = 'assets/images/love.png';
+  static const String name = 'assets/images/name.png';
+  static const String save = 'assets/images/save.png';
+  static const String timer = 'assets/images/timer.png';
+  static const String register = 'assets/images/register.png';
+  static const String video = 'assets/icons/video.png';
+  static const String moviedetials = 'assets/icons/moviedetials.png';
+  static const String negma = 'assets/icons/negma.png';
+  static const String similar1 = 'assets/icons/similar1.png';
+  static const String similar2 = 'assets/icons/similar2.png';
+  static const String similar3 = 'assets/icons/similar3.png';
+  static const String similar4 = 'assets/icons/similar4.png';
+  static const String char1 = 'assets/icons/char1.png';
+  static const String screen1 = 'assets/icons/screen1.png';
+  static const String screen2 = 'assets/icons/screen2.png';
+  static const String screen3 = 'assets/icons/screen3.png';
+
 }
