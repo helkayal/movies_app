@@ -13,6 +13,7 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_bloc: ^9.1.1
+  flutter_native_splash: ^2.4.6
   http: ^1.5.0
   shared_preferences: ^2.5.3
 
@@ -27,3 +28,23 @@ flutter:
     - assets/icons/
   uses-material-design: true
 
+flutter_native_splash:
+  color: "#121312"
+  image: assets/images/splash_logo.png
+  branding: assets/images/splash_branding.png
+  color_dark: "#121312"
+  image_dark: assets/images/splash_logo.png
+  branding_dark: assets/images/splash_branding.png
+  branding_bottom_padding: 24
+
+  android_12:
+    image: assets/images/splash_logo.png
+    color: "#121312"
+    branding: assets/images/splash_branding.png
+    image_dark: assets/images/splash_logo.png
+    color_dark: "#121312"
+    branding_dark: assets/images/splash_branding.png
+
+  ios: true
+  android: true
+  web: false

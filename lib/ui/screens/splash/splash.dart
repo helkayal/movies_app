@@ -51,7 +51,7 @@ class _SplashState extends State<Splash> {
             Spacer(),
             Image.asset(
               AppAssets.logo,
-              height: height * 0.15,
+              height: height * 0.1,
               fit: BoxFit.contain,
             ),
             Spacer(),
