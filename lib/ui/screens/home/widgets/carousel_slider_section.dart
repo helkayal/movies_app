@@ -1,8 +1,5 @@
-import 'package:carousel_slider/carousel_slider.dart';
-import 'package:flutter/material.dart';
-import 'package:movies_app/ui/utils/context_extension.dart';
-import 'package:movies_app/model/movie_dm.dart';
-import 'package:movies_app/ui/widgets/custom_movie_image.dart';
+
+import 'package:movies_app/core/utils/constants/imports.dart';
 
 class CarouselSliderSection extends StatelessWidget {
   final List<Movies>? movie;
@@ -22,6 +19,9 @@ class CarouselSliderSection extends StatelessWidget {
         );
       },
       options: CarouselOptions(
+        onPageChanged: (index, reason) {
+          context.read<ChangeBgImageBloc>().add(ChangeBgImage(movie![index].mediumCoverImage ?? ''));
+        },
         height: context.height * 0.5,
         viewportFraction: 0.53, //width
         // autoPlay: true,

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:movies_app/ui/utils/app_assets.dart';
-import 'package:movies_app/ui/utils/app_colors.dart';
-import 'package:movies_app/ui/utils/app_text_styles.dart';
+import 'package:movies_app/core/theme/app_colors.dart';
+import 'package:movies_app/core/theme/app_text_styles.dart';
+import 'package:movies_app/core/utils/constants/app_assets.dart';
 
 class ForgetPassword extends StatefulWidget {
   const ForgetPassword({super.key});

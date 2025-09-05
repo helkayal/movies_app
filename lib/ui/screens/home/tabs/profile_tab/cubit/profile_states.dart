@@ -1,4 +1,4 @@
-import 'package:movies_app/model/user_dm.dart';
+import 'package:movies_app/data/model/user_dm.dart';
 
 abstract class ProfileStates {}
 

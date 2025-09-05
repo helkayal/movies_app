@@ -1,15 +1,5 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:movies_app/core/services/Api/api_service.dart';
-import 'package:movies_app/ui/screens/home/tabs/profile_tab/cubit/favourite_cubit.dart';
-import 'package:movies_app/ui/utils/app_text_styles.dart';
-import 'package:movies_app/data/bloc/bloc/movie_bloc.dart';
-import 'package:movies_app/ui/screens/home/tabs/category_tab.dart';
-import 'package:movies_app/ui/screens/home/tabs/home_tab.dart';
-import 'package:movies_app/ui/screens/home/tabs/profile_tab/profile_tab.dart';
-import 'package:movies_app/ui/screens/home/tabs/search_tab.dart';
-import 'package:movies_app/ui/utils/app_assets.dart';
-import 'package:movies_app/ui/utils/app_colors.dart';
+
+import 'package:movies_app/core/utils/constants/imports.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -40,7 +30,7 @@ class _HomeScreenState extends State<HomeScreen> {
         builder: (context, state) {
           if (state is MovieLoading) {
             return Center(
-              child: CircularProgressIndicator(color: AppColors.lightGrey),
+              child: CircularProgressIndicator(color: AppColors.yellow),
             );
           } else if (state is MovieSuccess) {
             final movieList = state.movies.data?.movies;
@@ -56,23 +46,16 @@ class _HomeScreenState extends State<HomeScreen> {
             return _buildHomeBody(screens);
           } else {
             return Column(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(
-                  'Error: ${state.props.toString()}',
-                  style: AppTextStyles.whiteRegular16,
-                ),
-                Center(
-                  child: IconButton(
-                    onPressed: () {
-                      setState(() {
-                        ApiService.getMovies();
-                      });
-                    },
-                    icon: Icon(
-                      Icons.refresh_rounded,
-                      color: AppColors.lightGrey,
-                    ),
-                  ),
+                Text(state.props.toString(),style: AppTextStyles.whiteRegular16,),
+                IconButton(
+                  onPressed: () {
+                    setState(() {
+                      ApiService.getMovies();
+                    });
+                  },
+                  icon: Icon(Icons.refresh_rounded, color: AppColors.lightGrey),
                 ),
               ],
             );

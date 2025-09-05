@@ -35,11 +35,7 @@
 //     );
 //   }
 // }
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:movies_app/ui/screens/home/tabs/profile_tab/cubit/favourite_cubit.dart';
-import 'package:movies_app/ui/screens/home/tabs/profile_tab/cubit/favourite_states.dart';
-import 'package:movies_app/ui/widgets/custom_gride_view.dart';
+import 'package:movies_app/core/utils/constants/imports.dart';
 
 class FavouriteList extends StatelessWidget {
   const FavouriteList({super.key});

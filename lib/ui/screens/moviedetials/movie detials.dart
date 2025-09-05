@@ -1,9 +1,4 @@
-import 'package:flutter/material.dart';
-
-import '../../utils/app_assets.dart';
-import '../../utils/app_colors.dart';
-import '../../utils/app_text_styles.dart';
-
+import 'package:movies_app/core/utils/constants/imports.dart';
 
 class MovieDetails extends StatelessWidget {
   const MovieDetails({super.key});

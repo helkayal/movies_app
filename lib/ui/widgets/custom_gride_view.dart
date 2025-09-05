@@ -1,7 +1,6 @@
-import 'package:flutter/material.dart';
-import 'package:movies_app/model/movie_dm.dart';
-import 'package:movies_app/ui/widgets/custom_movie_image.dart';
 
+
+import 'package:movies_app/core/utils/constants/imports.dart';
 class CustomGrideView extends StatelessWidget {
   final List<Movies>? movie;
   final int rowItemCount;

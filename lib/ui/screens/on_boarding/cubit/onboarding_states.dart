@@ -1,4 +1,4 @@
-import 'package:movies_app/ui/screens/on_boarding/model/onboarding_dm.dart';
+import '../model/onboarding_dm.dart';
 
 abstract class OnboardingState {
   const OnboardingState();
