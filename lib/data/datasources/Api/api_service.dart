@@ -18,7 +18,7 @@ class ApiService {
         throw Exception('Failed to recieve data: ${response.statusCode}');
       }
     } on Exception catch (e) {
-      if(e.toString().contains('ClientException')){
+      if (e.toString().contains('ClientException')) {
         throw 'Failed to connect';
       }
       throw Exception('catch error: ${e.toString()}');
