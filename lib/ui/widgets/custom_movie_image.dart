@@ -55,7 +55,10 @@ class CustomMovieImage extends StatelessWidget {
           ),
         ),
       ),
-      placeholder: (context, url) => Center(child: CircularProgressIndicator()),
+      placeholder: (context, url) => Center(child: Padding(
+        padding: const EdgeInsets.all(20),
+        child: CircularProgressIndicator(color: AppColors.yellow,),
+      )),
       errorWidget: (context, url, error) => Icon(Icons.error),
     );
   }

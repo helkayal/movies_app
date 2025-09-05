@@ -9,7 +9,7 @@ class CustomTextField extends StatefulWidget {
   final Widget? prefixIcon;
   final bool isPassword;
   final int minLines;
-  final Function(String value)? onTap;
+  final Function(String value)? onChanged;
   final TextEditingController? controller;
 
   const CustomTextField({
@@ -20,7 +20,7 @@ class CustomTextField extends StatefulWidget {
     this.prefixIcon,
     this.isPassword = false,
     this.controller,
-    this.minLines = 1, this.onTap,
+    this.minLines = 1, this.onChanged,
   });
 
   @override
@@ -33,7 +33,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
   @override
   Widget build(BuildContext context) {
     return TextField(
-      onChanged: widget.onTap,
+      onChanged: widget.onChanged,
       controller: widget.controller,
       decoration: InputDecoration(
         filled: true,
@@ -68,11 +68,13 @@ class _CustomTextFieldState extends State<CustomTextField> {
           borderSide: BorderSide.none,
         ),
         hintText: widget.hint,
+        hintStyle: AppTextStyles.whiteRegular16,
       ),
       minLines: widget.minLines,
       maxLines: widget.isPassword ? 1 : widget.minLines + 1,
       obscureText: widget.isPassword ? obscureText : false,
       style: AppTextStyles.whiteRegular20,
+      cursorColor: AppColors.yellow,
     );
   }
 }

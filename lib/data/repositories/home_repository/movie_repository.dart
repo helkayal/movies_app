@@ -15,23 +15,30 @@ class MovieRepository {
     // السيت بقت عندى جاهزة مافيهاش تكرار هحولها ل ليست واساويها بالليست الفاضيه الى عندى
     return genersSet.toList();
   }
-  static List<Movies> getMoviesByGenres({required String genre ,required List<Movies> movies}){
+
+  static List<Movies> getMoviesByGenres({
+    required String genre,
+    required List<Movies> movies,
+  }) {
     List<Movies> moviesByGenres = [];
     for (var movie in movies) {
       final List<String>? movieGeners = movie.genres;
-      if(movieGeners!.contains(genre)){
+      if (movieGeners!.contains(genre)) {
         moviesByGenres.add(movie);
       }
-    }return moviesByGenres;
+    }
+    return moviesByGenres;
   }
-  static List<Movies> searchForMovie({required String movieName,required List<Movies> movies}){
-//بتدخل ف كل فيلم تشوف اسمههو نفس الباراميتار ولا لا ولو اه بتحطه فى ليست وترحعه
-    List<Movies> recievedMovies =[];
-    for(var movie in movies){
-      if(movie.title!.toLowerCase().contains(movieName.toLowerCase().trim())){
-        recievedMovies.add(movie);
-        }
-      }
-    return recievedMovies ;
+
+  static List<Movies> addSearchedValueToSearchedList({
+    required String searchedMovie,
+    required List<Movies> movies,
+  }) {
+    if (searchedMovie.isEmpty) {
+      return [];
+    } else {
+      return movies.where((movie) => movie.title!.toLowerCase().startsWith(searchedMovie),
+          ).toList();
+    }
   }
 }

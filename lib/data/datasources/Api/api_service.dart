@@ -14,9 +14,12 @@ class ApiService {
         MovieDataModel myResponse = MovieDataModel.fromJson(json);
         return myResponse;
       } else {
-        throw Exception('Failed to load movies: ${response.statusCode}');
+        throw Exception('Failed to recieve data: ${response.statusCode}');
       }
-    } catch (e) {
+    } on Exception catch (e) {
+      if(e.toString().contains('ClientException')){
+        throw 'Failed to connect';
+      }
       throw Exception('catch error: ${e.toString()}');
     }
   }

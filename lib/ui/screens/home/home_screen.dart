@@ -40,7 +40,7 @@ class _HomeScreenState extends State<HomeScreen> {
         builder: (context, state) {
           if (state is MovieLoading) {
             return Center(
-              child: CircularProgressIndicator(color: AppColors.lightGrey),
+              child: CircularProgressIndicator(color: AppColors.yellow),
             );
           } else if (state is MovieSuccess) {
             final movieList = state.movies.data?.movies;
@@ -53,17 +53,16 @@ class _HomeScreenState extends State<HomeScreen> {
             return _buildHomeBody(screens);
           } else {
             return Column(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text('Error: ${state.props.toString()}',style: AppTextStyles.whiteRegular16,),
-                Center(
-                  child: IconButton(
-                    onPressed: () {
-                      setState(() {
-                        ApiService.getMovies();
-                      });
-                    },
-                    icon: Icon(Icons.refresh_rounded, color: AppColors.lightGrey),
-                  ),
+                Text(state.props.toString(),style: AppTextStyles.whiteRegular16,),
+                IconButton(
+                  onPressed: () {
+                    setState(() {
+                      ApiService.getMovies();
+                    });
+                  },
+                  icon: Icon(Icons.refresh_rounded, color: AppColors.lightGrey),
                 ),
               ],
             );
