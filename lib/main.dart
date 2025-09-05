@@ -1,12 +1,6 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:movies_app/ui/screens/home/bloc/change_bg_image_bloc/change_bg_image_bloc.dart';
-import 'package:movies_app/ui/screens/home/tabs/profile_tab/cubit/profile_cubit.dart';
-import 'core/theme/app_theme.dart';
-import 'ui/screens/home/bloc/movie_bloc/movie_bloc.dart';
-import 'ui/screens/home/home_screen.dart';
-import 'ui/screens/splash/splash.dart';
 
+
+import 'package:movies_app/core/utils/constants/imports.dart';
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
 

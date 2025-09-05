@@ -1,10 +1,5 @@
-import 'package:flutter/material.dart';
-import 'package:movies_app/core/theme/app_colors.dart';
-import 'package:movies_app/core/theme/app_text_styles.dart';
-import 'package:movies_app/core/utils/context_extension.dart';
-import 'package:movies_app/data/repositories/home_repository/movie_repository.dart';
-import '../../../../data/model/movie_dm.dart';
-import '../../../widgets/custom_gride_view.dart';
+
+import 'package:movies_app/core/utils/constants/imports.dart';
 
 class CategoryTab extends StatefulWidget {
   List<Movies> movie;

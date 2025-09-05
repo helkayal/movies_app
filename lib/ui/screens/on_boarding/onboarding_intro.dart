@@ -1,8 +1,5 @@
-import 'package:flutter/material.dart';
-import 'package:movies_app/core/theme/app_text_styles.dart';
-import 'package:movies_app/core/utils/constants/app_assets.dart';
-import 'package:movies_app/core/utils/constants/app_routes.dart';
-import 'package:movies_app/ui/widgets/custom_button.dart';
+
+import 'package:movies_app/core/utils/constants/imports.dart';
 
 class OnboardingIntro extends StatelessWidget {
   const OnboardingIntro({super.key});

@@ -1,12 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:movies_app/ui/screens/home/bloc/change_bg_image_bloc/change_bg_image_bloc.dart';
-import '../../../../data/model/movie_dm.dart';
-import '../widgets/carousel_slider_section.dart';
-import '../../../../core/utils/context_extension.dart';
-import '../../../widgets/custom_movie_image.dart';
-import '../../../../core/utils/constants/app_assets.dart';
-import '../../../../core/theme/app_colors.dart';
+import 'package:movies_app/core/utils/constants/imports.dart';
 
 class HomeTab extends StatelessWidget {
   final List<Movies> movie;

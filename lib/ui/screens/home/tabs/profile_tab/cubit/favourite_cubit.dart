@@ -1,10 +1,5 @@
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:movies_app/data/datasources/Api/favourite_api_service.dart';
-import 'package:movies_app/data/datasources/favourite/favourite_data_source_impl.dart';
-import 'package:movies_app/data/model/movie_dm.dart';
-import 'package:movies_app/data/repositories/favourite/favourite_repository_impl.dart';
-import 'package:movies_app/ui/screens/home/tabs/profile_tab/cubit/favourite_states.dart';
 
+import 'package:movies_app/core/utils/constants/imports.dart';
 class FavouriteCubit extends Cubit<FavouriteStates> {
   late final FavouriteRepositoryImpl repository;
 

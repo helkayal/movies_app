@@ -1,12 +1,5 @@
-import 'dart:async';
 
-import 'package:flutter/material.dart';
-import 'package:movies_app/data/repositories/home_repository/movie_repository.dart';
-import '../../../../data/model/movie_dm.dart';
-import '../../../widgets/custom_gride_view.dart';
-import '../../../../core/utils/constants/app_assets.dart';
-import '../../../../core/utils/context_extension.dart';
-import '../../../widgets/custom_text_field.dart';
+import 'package:movies_app/core/utils/constants/imports.dart';
 
 class SearchTab extends StatefulWidget {
   final List<Movies> movie;

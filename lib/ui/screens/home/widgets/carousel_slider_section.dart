@@ -1,10 +1,5 @@
-import 'package:carousel_slider/carousel_slider.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:movies_app/ui/screens/home/bloc/change_bg_image_bloc/change_bg_image_bloc.dart';
-import '../../../../core/utils/context_extension.dart';
-import '../../../../data/model/movie_dm.dart';
-import '../../../widgets/custom_movie_image.dart';
+
+import 'package:movies_app/core/utils/constants/imports.dart';
 
 class CarouselSliderSection extends StatelessWidget {
   final List<Movies>? movie;
