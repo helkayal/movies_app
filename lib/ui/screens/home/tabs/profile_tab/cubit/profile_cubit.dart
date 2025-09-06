@@ -1,10 +1,10 @@
 import 'dart:convert';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:movies_app/core/services/api/profile_api_service.dart';
+import 'package:movies_app/data/datasources/Api/profile_api_service.dart';
 import 'package:movies_app/data/datasources/profile/profile_data_source_impl.dart';
+import 'package:movies_app/data/model/user_dm.dart';
 import 'package:movies_app/data/repositories/profile_repository/profile_repository_impl.dart';
-import 'package:movies_app/model/user_dm.dart';
 import 'package:movies_app/ui/screens/home/tabs/profile_tab/cubit/profile_states.dart';
 
 class ProfileCubit extends Cubit<ProfileStates> {

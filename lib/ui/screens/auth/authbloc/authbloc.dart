@@ -1,8 +1,8 @@
 // lib/ui/screens/auth/authbloc/authbloc.dart
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../authapi/authapi.dart';
-import '../../../../authapi/loginwithgmail.dart';
+import '../../../../data/datasources/Api/authapi.dart';
+import '../../../../data/datasources/google/google_auth.dart';
 import 'authevent.dart';
 import 'authstate.dart';
 
@@ -16,10 +16,12 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       emit(AuthLoading());
       try {
         final result = await authApis.login(event.email, event.password);
-        emit(LoginSuccess(
-          message: result['message'] ?? 'Login Successful',
-          token: result['token'] ?? '',
-        ));
+        emit(
+          LoginSuccess(
+            message: result['message'] ?? 'Login Successful',
+            token: result['token'] ?? '',
+          ),
+        );
       } catch (e) {
         emit(AuthFailure(e.toString()));
       }
@@ -31,10 +33,12 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       try {
         final userCredential = await googleAuth.loginWithGoogle();
         if (userCredential != null) {
-          emit(LoginSuccess(
-            message: "Login Successful with Google",
-            token: await userCredential.user?.getIdToken() ?? "",
-          ));
+          emit(
+            LoginSuccess(
+              message: "Login Successful with Google",
+              token: await userCredential.user?.getIdToken() ?? "",
+            ),
+          );
         } else {
           emit(AuthFailure("Google Sign-In canceled"));
         }
@@ -48,9 +52,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       emit(AuthLoading());
       try {
         final result = await authApis.forgetPassword(event.email);
-        emit(AuthSuccessMessage(
-          message: result['message'] ?? 'Check your email',
-        ));
+        emit(
+          AuthSuccessMessage(message: result['message'] ?? 'Check your email'),
+        );
       } catch (e) {
         emit(AuthFailure(e.toString()));
       }
@@ -65,9 +69,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           oldPassword: event.oldPassword,
           newPassword: event.newPassword,
         );
-        emit(AuthSuccessMessage(
-          message: result['message'] ?? 'Password Reset Successful',
-        ));
+        emit(
+          AuthSuccessMessage(
+            message: result['message'] ?? 'Password Reset Successful',
+          ),
+        );
       } catch (e) {
         emit(AuthFailure(e.toString()));
       }
@@ -85,10 +91,12 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           phone: event.phone,
           avaterId: event.avaterId,
         );
-        emit(RegisterSuccess(
-          message: result['message'] ?? 'Register Successful',
-          data: result['data'] ?? {},
-        ));
+        emit(
+          RegisterSuccess(
+            message: result['message'] ?? 'Register Successful',
+            data: result['data'] ?? {},
+          ),
+        );
       } catch (e) {
         emit(AuthFailure(e.toString()));
       }

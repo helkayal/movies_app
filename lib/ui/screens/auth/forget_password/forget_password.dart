@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../../authapi/authapi.dart';
-import '../../../../authapi/dioclient.dart';
-import '../../../utils/app_colors.dart';
 
+// Theme & Utils
+import '../../../../core/theme/app_colors.dart';
 
+// Auth APIs
+import '../../../../data/datasources/Api/authapi.dart';
+import '../../../../data/datasources/Api/dioclient.dart';
+
+// Auth Bloc
 import '../authbloc/authbloc.dart';
 import '../authbloc/authstate.dart';
+
+// Screens
 import '../login/login.dart';
 import 'forget_passwordview.dart';
 
@@ -24,8 +30,9 @@ class ForgetPasswordScreen extends StatelessWidget {
             showDialog(
               context: context,
               barrierDismissible: false,
-              builder: (_) =>
-              const Center(child: CircularProgressIndicator(color: AppColors.white)),
+              builder: (_) => const Center(
+                child: CircularProgressIndicator(color: AppColors.white),
+              ),
             );
           } else if (Navigator.canPop(context)) {
             Navigator.of(context, rootNavigator: true).pop();
@@ -33,9 +40,9 @@ class ForgetPasswordScreen extends StatelessWidget {
 
           // Success
           if (state is AuthSuccessMessage) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text(state.message ?? "Check your email inbox")),
-            );
+            ScaffoldMessenger.of(
+              context,
+            ).showSnackBar(SnackBar(content: Text(state.message)));
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(builder: (_) => const LoginScreen()),
@@ -44,9 +51,9 @@ class ForgetPasswordScreen extends StatelessWidget {
 
           // Failure
           if (state is AuthFailure) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text(state.error)),
-            );
+            ScaffoldMessenger.of(
+              context,
+            ).showSnackBar(SnackBar(content: Text(state.error)));
           }
         },
         child: const ForgetPasswordView(),

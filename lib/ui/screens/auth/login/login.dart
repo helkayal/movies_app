@@ -1,11 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../../authapi/authapi.dart';
-import '../../../../authapi/dioclient.dart';
-import '../../../../authapi/loginwithgmail.dart';
-import '../../../utils/app_routes.dart';
+
+// Theme & Utils
+import '../../../../core/utils/constants/app_routes.dart';
+
+// Auth APIs
+import '../../../../data/datasources/Api/authapi.dart';
+import '../../../../data/datasources/Api/dioclient.dart';
+
+// Auth Bloc
 import '../authbloc/authbloc.dart';
 import '../authbloc/authstate.dart';
+
+// Screens
 import 'loginview.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -14,19 +21,24 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => AuthBloc(
-        authApis: AuthApis(DioClient()),
-      ),
+      create: (_) => AuthBloc(authApis: AuthApis(DioClient())),
       child: BlocListener<AuthBloc, AuthState>(
         listener: (context, state) async {
+          // حالة النجاح في تسجيل الدخول
           if (state is LoginSuccess) {
             Navigator.pushReplacement(context, AppRoutes.home);
-          } else if (state is AuthFailure) {
-            ScaffoldMessenger.of(context)
-                .showSnackBar(SnackBar(content: Text(state.error)));
-          } else if (state is AuthSuccessMessage) {
-            ScaffoldMessenger.of(context)
-                .showSnackBar(SnackBar(content: Text(state.message)));
+          }
+          // حالة الفشل
+          else if (state is AuthFailure) {
+            ScaffoldMessenger.of(
+              context,
+            ).showSnackBar(SnackBar(content: Text(state.error)));
+          }
+          // أي رسالة نجاح أخرى
+          else if (state is AuthSuccessMessage) {
+            ScaffoldMessenger.of(
+              context,
+            ).showSnackBar(SnackBar(content: Text(state.message)));
           }
         },
         child: BlocBuilder<AuthBloc, AuthState>(
@@ -36,7 +48,7 @@ class LoginScreen extends StatelessWidget {
                 body: Center(child: CircularProgressIndicator()),
               );
             }
-            return  LoginView(); // الشاشة الأساسية لتسجيل الدخول
+            return LoginView(); // الشاشة الأساسية لتسجيل الدخول
           },
         ),
       ),

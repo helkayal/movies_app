@@ -1,12 +1,10 @@
-import 'package:flutter/material.dart';
-import 'package:movies_app/ui/utils/app_colors.dart';
-import 'package:movies_app/ui/utils/app_text_styles.dart';
+import 'package:movies_app/core/utils/constants/imports.dart';
 
 class CustomButton extends StatelessWidget {
   final Color backgroundColor;
   final Color borderColor;
   final String text;
-  final TextStyle textStyle;
+  final TextStyle? textStyle;
   final Function() onClick;
   final Color textColor;
   final Widget? icon;
@@ -18,7 +16,7 @@ class CustomButton extends StatelessWidget {
     this.icon,
     this.backgroundColor = AppColors.yellow,
     this.borderColor = AppColors.yellow,
-    this.textStyle = AppTextStyles.blackRegular20,
+    this.textStyle,
     this.textColor = AppColors.black,
   });
 
@@ -37,7 +35,12 @@ class CustomButton extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text(text, style: textStyle.copyWith(color: textColor)),
+          Text(
+            text,
+            style: (textStyle ?? AppTextStyles.blackRegular20).copyWith(
+              color: textColor,
+            ),
+          ),
           if (icon != null) const SizedBox(width: 5),
           if (icon != null) icon!,
         ],

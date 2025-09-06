@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:movies_app/ui/utils/app_colors.dart';
-import '../../../../authapi/authapi.dart';
-import '../../../../authapi/dioclient.dart';
-import '../../../utils/app_routes.dart';
+import '../../../../data/datasources/Api/authapi.dart';
+import '../../../../data/datasources/Api/dioclient.dart';
+import '../../../../core/theme/app_colors.dart';
+import '../../../../core/utils/constants/app_routes.dart';
 import '../authbloc/authbloc.dart';
 import '../authbloc/authstate.dart';
 import 'registerview.dart';
@@ -34,17 +34,17 @@ class RegisterScreen extends StatelessWidget {
           }
 
           if (state is RegisterSuccess) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text(state.message)),
-            );
+            ScaffoldMessenger.of(
+              context,
+            ).showSnackBar(SnackBar(content: Text(state.message)));
             // بعد النجاح انتقل للـ Login
             Navigator.pushReplacement(context, AppRoutes.login);
           }
 
           if (state is AuthFailure) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text(state.error)),
-            );
+            ScaffoldMessenger.of(
+              context,
+            ).showSnackBar(SnackBar(content: Text(state.error)));
           }
         },
         child: const RegisterView(),

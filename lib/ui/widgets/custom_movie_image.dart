@@ -1,7 +1,4 @@
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/material.dart';
-import 'package:movies_app/ui/utils/app_assets.dart';
-import 'package:movies_app/ui/utils/app_colors.dart';
+import 'package:movies_app/core/utils/constants/imports.dart';
 
 class CustomMovieImage extends StatelessWidget {
   final double? width;
@@ -55,7 +52,10 @@ class CustomMovieImage extends StatelessWidget {
           ),
         ),
       ),
-      placeholder: (context, url) => Center(child: CircularProgressIndicator()),
+      placeholder: (context, url) => Center(child: Padding(
+        padding: const EdgeInsets.all(20),
+        child: CircularProgressIndicator(color: AppColors.yellow,),
+      )),
       errorWidget: (context, url, error) => Icon(Icons.error),
     );
   }

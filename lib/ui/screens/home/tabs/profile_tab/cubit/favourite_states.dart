@@ -1,4 +1,4 @@
-import 'package:movies_app/model/movie_dm.dart';
+import 'package:movies_app/data/model/movie_dm.dart';
 
 abstract class FavouriteStates {}
 

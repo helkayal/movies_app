@@ -1,4 +1,4 @@
-import 'package:movies_app/core/services/api/profile_api_service.dart';
+import 'package:movies_app/data/datasources/Api/profile_api_service.dart';
 import 'package:movies_app/data/datasources/profile/profile_data_source.dart';
 
 class ProfileDataSourceImpl implements ProfileDataSource {

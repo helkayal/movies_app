@@ -1,10 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:movies_app/ui/utils/app_assets.dart';
-import 'package:movies_app/ui/utils/app_routes.dart';
-import 'package:movies_app/ui/utils/app_text_styles.dart';
-import 'package:movies_app/data/datasources/onbording/onborading_ds_impl.dart';
-import 'package:movies_app/data/repositories/onboarding_repository/onboarding_repository.dart';
-import 'package:movies_app/data/repositories/onboarding_repository/onboarding_repository_impl.dart';
+import 'package:movies_app/core/utils/constants/imports.dart';
 
 class Splash extends StatefulWidget {
   const Splash({super.key});
@@ -51,7 +45,7 @@ class _SplashState extends State<Splash> {
             Spacer(),
             Image.asset(
               AppAssets.logo,
-              height: height * 0.15,
+              height: height * 0.1,
               fit: BoxFit.contain,
             ),
             Spacer(),
