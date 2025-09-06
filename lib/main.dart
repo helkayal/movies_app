@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:movies_app/firebase_options.dart';
 
 // Screens
 import 'package:movies_app/ui/screens/auth/login/login.dart';
@@ -19,7 +20,7 @@ import 'package:movies_app/authapi/dioclient.dart';
 // Main
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
   final dioClient = DioClient();
   final authApis = AuthApis(dioClient);
@@ -30,8 +31,7 @@ void main() async {
         BlocProvider(create: (_) => MovieBloc()),
         BlocProvider(create: (_) => ProfileCubit()),
         BlocProvider(create: (_) => AuthBloc(authApis: authApis)),
-        // لو عايزة تحافظي على ChangeBgImageBloc:
-        // BlocProvider(create: (_) => ChangeBgImageBloc()),
+        BlocProvider(create: (_) => ChangeBgImageBloc()),
       ],
       child: const MainApp(),
     ),
