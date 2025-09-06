@@ -95,7 +95,7 @@ class _ForgetPasswordViewState extends State<ForgetPasswordView> {
                     borderRadius: BorderRadius.circular(12),
                   ),
                 ),
-                child: const Text(
+                child: Text(
                   'Verify Email',
                   style: AppTextStyles.blackRegular20,
                 ),
