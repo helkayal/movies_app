@@ -1,98 +1,56 @@
 import 'package:flutter/material.dart';
-import 'package:movies_app/ui/utils/app_assets.dart';
-import 'package:movies_app/ui/utils/app_colors.dart';
-import 'package:movies_app/ui/utils/app_text_styles.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../../authapi/authapi.dart';
+import '../../../../authapi/dioclient.dart';
+import '../../../utils/app_colors.dart';
 
-class ForgetPassword extends StatefulWidget {
-  const ForgetPassword({super.key});
 
-  @override
-  State<ForgetPassword> createState() => _ForgetPasswordState();
-}
+import '../authbloc/authbloc.dart';
+import '../authbloc/authstate.dart';
+import '../login/login.dart';
+import 'forget_passwordview.dart';
 
-class _ForgetPasswordState extends State<ForgetPassword> {
-  bool isArabic = true;
-  final TextEditingController emailController = TextEditingController();
+class ForgetPasswordScreen extends StatelessWidget {
+  const ForgetPasswordScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
-    var height = MediaQuery.of(context).size.height;
-    var width = MediaQuery.of(context).size.width;
+    return BlocProvider(
+      create: (_) => AuthBloc(authApis: AuthApis(DioClient())),
+      child: BlocListener<AuthBloc, AuthState>(
+        listener: (context, state) {
+          // Loading
+          if (state is AuthLoading) {
+            showDialog(
+              context: context,
+              barrierDismissible: false,
+              builder: (_) =>
+              const Center(child: CircularProgressIndicator(color: AppColors.white)),
+            );
+          } else if (Navigator.canPop(context)) {
+            Navigator.of(context, rootNavigator: true).pop();
+          }
 
-    return Scaffold(
-        backgroundColor: Colors.transparent,
-        appBar: AppBar(
-          backgroundColor: Colors.black,
-          leading: Icon(Icons.arrow_back, color: AppColors.yellow),
-          centerTitle: true,
-          title: Text(
-            'Forget Password',
-            style: AppTextStyles.yelowRegular14,
-          ),
-        ),
+          // Success
+          if (state is AuthSuccessMessage) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text(state.message ?? "Check your email inbox")),
+            );
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (_) => const LoginScreen()),
+            );
+          }
 
-        body: SingleChildScrollView(
-            child: Column(
-                children: [
-                  SizedBox(height: height * 0.01),
-                  Image.asset(AppAssets.forgetPassword),
-                  SizedBox(height: height * 0.04),
-                  // 📧 TextField الإيميل
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: width * 0.03),
-                    child: SizedBox(
-                      width: width * 0.95,
-                      child: TextField(
-                        controller: emailController,
-                        decoration: InputDecoration(
-                          hintText: "Email",
-                          hintStyle: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 14,
-                          ),
-                          filled: true,
-                          fillColor: AppColors.black,
-                          prefixIcon: Image.asset(AppAssets.email),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(16),
-                            borderSide: const BorderSide(color: Colors.black),
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(16),
-                            borderSide: const BorderSide(color: Colors.black),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(16),
-                            borderSide:
-                            const BorderSide(color: Colors.black, width: 2),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-
-                  SizedBox(height: height * 0.03),
-
-                  ElevatedButton(
-                    onPressed: () {
-                      print("Email :${emailController.text}");
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: AppColors.yellow,
-                      minimumSize: Size(width * 0.9, height * 0.07), // 👈 أكبر شوية
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                    ),
-                    child: Text(
-                      'Verify Email',
-                      style: TextStyle(
-                        color:AppColors.black,
-                        fontSize: 16,
-                      ),
-                    ),
-                  ),
-
-                ]))
+          // Failure
+          if (state is AuthFailure) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text(state.error)),
+            );
+          }
+        },
+        child: const ForgetPasswordView(),
+      ),
     );
   }
 }
