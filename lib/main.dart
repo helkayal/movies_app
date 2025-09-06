@@ -1,16 +1,41 @@
+import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+// Screens
+import 'package:movies_app/ui/screens/auth/login/login.dart';
+import 'package:movies_app/ui/screens/splash/splash.dart';
 
-import 'package:movies_app/core/utils/constants/imports.dart';
-void main() {
+// Blocs & Cubits
+import 'package:movies_app/ui/screens/auth/authbloc/authbloc.dart';
+import 'package:movies_app/ui/screens/home/tabs/profile_tab/cubit/profile_cubit.dart';
+
+import 'package:movies_app/core/utils/constants/imports.dart'; // لو محتاجة حاجات تانية زي ChangeBgImageBloc
+
+// APIs
+import 'package:movies_app/authapi/authapi.dart';
+import 'package:movies_app/authapi/dioclient.dart';
+
+// Main
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
 
-  runApp(MultiBlocProvider(
-    providers: [
-      BlocProvider(create: (context) => MovieBloc(),),
-      BlocProvider(create: (context) => ChangeBgImageBloc(),),
-      BlocProvider(create: (context) => ProfileCubit()),
-    ],
-    child: const MainApp()));
+  final dioClient = DioClient();
+  final authApis = AuthApis(dioClient);
+
+  runApp(
+    MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (_) => MovieBloc()),
+        BlocProvider(create: (_) => ProfileCubit()),
+        BlocProvider(create: (_) => AuthBloc(authApis: authApis)),
+        // لو عايزة تحافظي على ChangeBgImageBloc:
+        // BlocProvider(create: (_) => ChangeBgImageBloc()),
+      ],
+      child: const MainApp(),
+    ),
+  );
 }
 
 class MainApp extends StatelessWidget {
@@ -22,7 +47,7 @@ class MainApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       themeMode: ThemeMode.dark,
       darkTheme: AppTheme.darkTheme,
-      home: Splash(),
+      home: LoginScreen(),
     );
   }
 }
