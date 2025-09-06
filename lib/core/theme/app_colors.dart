@@ -8,4 +8,5 @@ abstract final class AppColors {
   static const yellow = Color(0xFFFFBB3B);
   static const green = Color(0xFF57AA53);
   static const red = Color(0xFFE82626);
+  static const transperant = Colors.transparent;
 }
