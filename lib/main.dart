@@ -1,16 +1,11 @@
 import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movies_app/firebase_options.dart';
 
 // Screens
 import 'package:movies_app/ui/screens/auth/login/login.dart';
-import 'package:movies_app/ui/screens/splash/splash.dart';
 
 // Blocs & Cubits
 import 'package:movies_app/ui/screens/auth/authbloc/authbloc.dart';
-import 'package:movies_app/ui/screens/home/tabs/profile_tab/cubit/profile_cubit.dart';
-
 import 'package:movies_app/core/utils/constants/imports.dart'; // لو محتاجة حاجات تانية زي ChangeBgImageBloc
 
 // APIs

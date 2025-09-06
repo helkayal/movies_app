@@ -23,10 +23,10 @@ class GoogleAuth {
       );
 
       final userCredential = await auth.signInWithCredential(credential);
-      print("Google Sign-In Success: ${userCredential.user?.email}");
+      // print("Google Sign-In Success: ${userCredential.user?.email}");
       return userCredential;
     } catch (e) {
-      print("Google Sign-In Error: ${e.toString()}");
+      // print("Google Sign-In Error: ${e.toString()}");
       rethrow;
     }
   }

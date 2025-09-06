@@ -1,16 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../authapi/authapi.dart';
-import '../../../../authapi/dioclient.dart';
-
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/utils/constants/app_assets.dart';
 import '../authbloc/authbloc.dart';
 import '../authbloc/authevent.dart';
-import '../login/login.dart';
-
 
 /// ========================= ForgetPasswordView =========================
 class ForgetPasswordView extends StatefulWidget {
@@ -65,12 +60,19 @@ class _ForgetPasswordViewState extends State<ForgetPasswordView> {
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(16),
-                      borderSide: const BorderSide(color: Colors.white, width: 2),
+                      borderSide: const BorderSide(
+                        color: Colors.white,
+                        width: 2,
+                      ),
                     ),
                   ),
                   validator: (value) {
-                    if (value == null || value.isEmpty) return "Please enter your email";
-                    if (!isValidEmail(value)) return "Please enter a valid email";
+                    if (value == null || value.isEmpty) {
+                      return "Please enter your email";
+                    }
+                    if (!isValidEmail(value)) {
+                      return "Please enter a valid email";
+                    }
                     return null;
                   },
                 ),
@@ -89,9 +91,14 @@ class _ForgetPasswordViewState extends State<ForgetPasswordView> {
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColors.yellow,
                   minimumSize: Size(width * 0.9, height * 0.07),
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
                 ),
-                child: const Text('Verify Email', style: AppTextStyles.blackRegular20),
+                child: const Text(
+                  'Verify Email',
+                  style: AppTextStyles.blackRegular20,
+                ),
               ),
             ],
           ),

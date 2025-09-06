@@ -26,7 +26,10 @@ class AuthApis {
 
   Future<Map<String, dynamic>> login(String email, String password) async {
     try {
-      final response = await dio.post(Api_Constants.login, data: {'email': email, 'password': password});
+      final response = await dio.post(
+        ApiConstants.login,
+        data: {'email': email, 'password': password},
+      );
       final body = response.data as Map<String, dynamic>? ?? {};
       await _saveTokenIfExists(body);
       return body;
@@ -44,14 +47,17 @@ class AuthApis {
     required int avaterId,
   }) async {
     try {
-      final response = await dio.post(Api_Constants.register, data: {
-        'name': name,
-        'email': email,
-        'password': password,
-        'confirmPassword': confirmPassword,
-        'phone': phone,
-        'avaterId': avaterId,
-      });
+      final response = await dio.post(
+        ApiConstants.register,
+        data: {
+          'name': name,
+          'email': email,
+          'password': password,
+          'confirmPassword': confirmPassword,
+          'phone': phone,
+          'avaterId': avaterId,
+        },
+      );
       final body = response.data as Map<String, dynamic>? ?? {};
       await _saveTokenIfExists(body);
       return body;
@@ -62,7 +68,10 @@ class AuthApis {
 
   Future<Map<String, dynamic>> forgetPassword(String email) async {
     try {
-      final response = await dio.post(Api_Constants.forgetPassword, data: {'email': email});
+      final response = await dio.post(
+        ApiConstants.forgetPassword,
+        data: {'email': email},
+      );
       return response.data as Map<String, dynamic>? ?? {};
     } catch (e) {
       rethrow;
@@ -75,8 +84,14 @@ class AuthApis {
     required String newPassword,
   }) async {
     try {
-      final response = await dio.patch(Api_Constants.resetpassword,
-          data: {'email': email, 'oldPassword': oldPassword, 'newPassword': newPassword});
+      final response = await dio.patch(
+        ApiConstants.resetpassword,
+        data: {
+          'email': email,
+          'oldPassword': oldPassword,
+          'newPassword': newPassword,
+        },
+      );
       return response.data as Map<String, dynamic>? ?? {};
     } catch (e) {
       rethrow;

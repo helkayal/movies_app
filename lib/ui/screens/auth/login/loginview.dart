@@ -62,7 +62,10 @@ class _LoginViewState extends State<LoginView> {
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(16),
-                      borderSide: const BorderSide(color: Colors.white, width: 2),
+                      borderSide: const BorderSide(
+                        color: Colors.white,
+                        width: 2,
+                      ),
                     ),
                   ),
                 ),
@@ -81,13 +84,18 @@ class _LoginViewState extends State<LoginView> {
                   style: AppTextStyles.whiteRegular16,
                   decoration: InputDecoration(
                     hintText: "Password",
-                    hintStyle: const TextStyle(color: Colors.white70, fontSize: 16),
+                    hintStyle: const TextStyle(
+                      color: Colors.white70,
+                      fontSize: 16,
+                    ),
                     filled: true,
                     fillColor: AppColors.darkGrey,
                     prefixIcon: Image.asset(AppAssets.lock),
                     suffixIcon: IconButton(
                       icon: Icon(
-                        _obscurePassword ? Icons.visibility_off : Icons.visibility,
+                        _obscurePassword
+                            ? Icons.visibility_off
+                            : Icons.visibility,
                         color: Colors.white,
                       ),
                       onPressed: () {
@@ -105,7 +113,10 @@ class _LoginViewState extends State<LoginView> {
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(16),
-                      borderSide: const BorderSide(color: Colors.white, width: 2),
+                      borderSide: const BorderSide(
+                        color: Colors.white,
+                        width: 2,
+                      ),
                     ),
                   ),
                 ),
@@ -120,7 +131,10 @@ class _LoginViewState extends State<LoginView> {
                 alignment: Alignment.centerRight,
                 child: GestureDetector(
                   onTap: () {
-                    Navigator.pushReplacement(context, AppRoutes.forgetPassword);
+                    Navigator.pushReplacement(
+                      context,
+                      AppRoutes.forgetPassword,
+                    );
                   },
                   child: Text(
                     'Forget Password?',
@@ -138,9 +152,9 @@ class _LoginViewState extends State<LoginView> {
                 if (state is LoginSuccess) {
                   Navigator.pushReplacement(context, AppRoutes.home);
                 } else if (state is AuthFailure) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text(state.error)),
-                  );
+                  ScaffoldMessenger.of(
+                    context,
+                  ).showSnackBar(SnackBar(content: Text(state.error)));
                 }
               },
               builder: (context, state) {
@@ -151,16 +165,19 @@ class _LoginViewState extends State<LoginView> {
                       onPressed: isLoading
                           ? null
                           : () {
-                        context.read<AuthBloc>().add(
-                          LoginRequested(
-                            emailController.text,
-                            passwordController.text,
-                          ),
-                        );
-                      },
+                              context.read<AuthBloc>().add(
+                                LoginRequested(
+                                  emailController.text,
+                                  passwordController.text,
+                                ),
+                              );
+                            },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: AppColors.yellow,
-                        minimumSize: Size(MediaQuery.of(context).size.width * 0.9, 55),
+                        minimumSize: Size(
+                          MediaQuery.of(context).size.width * 0.9,
+                          55,
+                        ),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12),
                         ),
@@ -180,7 +197,10 @@ class _LoginViewState extends State<LoginView> {
                         ),
                         GestureDetector(
                           onTap: () {
-                            Navigator.pushReplacement(context, AppRoutes.register);
+                            Navigator.pushReplacement(
+                              context,
+                              AppRoutes.register,
+                            );
                           },
                           child: Text(
                             "Create One",
@@ -207,11 +227,14 @@ class _LoginViewState extends State<LoginView> {
                         ),
                         Text(
                           "OR",
-                          style: TextStyle(color: AppColors.yellow, fontSize: 14),
+                          style: TextStyle(
+                            color: AppColors.yellow,
+                            fontSize: 14,
+                          ),
                         ),
                         Expanded(
                           child: Divider(
-                            color:AppColors.yellow,
+                            color: AppColors.yellow,
                             thickness: 1,
                             indent: 10,
                             endIndent: width * 0.05,
@@ -224,15 +247,25 @@ class _LoginViewState extends State<LoginView> {
                       onPressed: isLoading
                           ? null
                           : () {
-                        context.read<AuthBloc>().add(GoogleLoginRequested());
-                      },
-                      icon: Image.asset(AppAssets.google, height: 24, width: 24),
-                      label: Text("Login with Google",
-                      style: AppTextStyles.blackRegular20,
+                              context.read<AuthBloc>().add(
+                                GoogleLoginRequested(),
+                              );
+                            },
+                      icon: Image.asset(
+                        AppAssets.google,
+                        height: 24,
+                        width: 24,
+                      ),
+                      label: Text(
+                        "Login with Google",
+                        style: AppTextStyles.blackRegular20,
                       ),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: AppColors.yellow,
-                        minimumSize: Size(MediaQuery.of(context).size.width * 0.9, 55),
+                        minimumSize: Size(
+                          MediaQuery.of(context).size.width * 0.9,
+                          55,
+                        ),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12),
                         ),
@@ -243,9 +276,6 @@ class _LoginViewState extends State<LoginView> {
               },
             ),
 
-
-
-
             SizedBox(height: height * 0.02),
             const LanguageSwitcher(),
           ],
@@ -254,6 +284,7 @@ class _LoginViewState extends State<LoginView> {
     );
   }
 }
+
 class LanguageSwitcher extends StatefulWidget {
   const LanguageSwitcher({super.key});
 
@@ -287,11 +318,19 @@ class _LanguageSwitcherState extends State<LanguageSwitcher> {
         ),
         child: Stack(
           children: [
-            Align(alignment: Alignment.centerRight, child: Image.asset(AppAssets.EG)),
-            Align(alignment: Alignment.centerLeft, child: Image.asset(AppAssets.Us)),
+            Align(
+              alignment: Alignment.centerRight,
+              child: Image.asset(AppAssets.eg),
+            ),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Image.asset(AppAssets.us),
+            ),
             AnimatedAlign(
               duration: const Duration(milliseconds: 300),
-              alignment: isArabic ? Alignment.centerRight : Alignment.centerLeft,
+              alignment: isArabic
+                  ? Alignment.centerRight
+                  : Alignment.centerLeft,
               child: Container(
                 width: 32,
                 height: 32,
@@ -302,16 +341,10 @@ class _LanguageSwitcherState extends State<LanguageSwitcher> {
                 ),
               ),
             ),
-            SizedBox(height: height*0.02,),
-
+            SizedBox(height: height * 0.02),
           ],
         ),
       ),
     );
   }
 }
-
-
-
-
-

@@ -3,8 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 // Theme & Utils
 import '../../../../core/theme/app_colors.dart';
-import 'package:movies_app/core/theme/app_text_styles.dart';
-import 'package:movies_app/core/utils/constants/app_assets.dart';
 
 // Auth APIs
 import '../../../../authapi/authapi.dart';
@@ -42,9 +40,9 @@ class ForgetPasswordScreen extends StatelessWidget {
 
           // Success
           if (state is AuthSuccessMessage) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text(state.message ?? "Check your email inbox")),
-            );
+            ScaffoldMessenger.of(
+              context,
+            ).showSnackBar(SnackBar(content: Text(state.message)));
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(builder: (_) => const LoginScreen()),
@@ -53,9 +51,9 @@ class ForgetPasswordScreen extends StatelessWidget {
 
           // Failure
           if (state is AuthFailure) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text(state.error)),
-            );
+            ScaffoldMessenger.of(
+              context,
+            ).showSnackBar(SnackBar(content: Text(state.error)));
           }
         },
         child: const ForgetPasswordView(),

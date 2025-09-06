@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-import 'package:movies_app/core/theme/app_colors.dart';
 import 'package:movies_app/data/model/movie_dm.dart';
 
 class MovieRepository {
@@ -37,8 +35,11 @@ class MovieRepository {
     if (searchedMovie.isEmpty) {
       return [];
     } else {
-      return movies.where((movie) => movie.title!.toLowerCase().startsWith(searchedMovie),
-          ).toList();
+      return movies
+          .where(
+            (movie) => movie.title!.toLowerCase().startsWith(searchedMovie),
+          )
+          .toList();
     }
   }
 }

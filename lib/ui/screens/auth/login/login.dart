@@ -2,16 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 // Theme & Utils
-import 'package:movies_app/core/theme/app_colors.dart';
-import 'package:movies_app/core/theme/app_text_styles.dart';
-import 'package:movies_app/core/utils/constants/app_assets.dart';
 import '../../../../core/utils/constants/app_routes.dart';
-
 
 // Auth APIs
 import '../../../../authapi/authapi.dart';
 import '../../../../authapi/dioclient.dart';
-import '../../../../authapi/loginwithgmail.dart';
 
 // Auth Bloc
 import '../authbloc/authbloc.dart';
@@ -35,13 +30,15 @@ class LoginScreen extends StatelessWidget {
           }
           // حالة الفشل
           else if (state is AuthFailure) {
-            ScaffoldMessenger.of(context)
-                .showSnackBar(SnackBar(content: Text(state.error)));
+            ScaffoldMessenger.of(
+              context,
+            ).showSnackBar(SnackBar(content: Text(state.error)));
           }
           // أي رسالة نجاح أخرى
           else if (state is AuthSuccessMessage) {
-            ScaffoldMessenger.of(context)
-                .showSnackBar(SnackBar(content: Text(state.message)));
+            ScaffoldMessenger.of(
+              context,
+            ).showSnackBar(SnackBar(content: Text(state.message)));
           }
         },
         child: BlocBuilder<AuthBloc, AuthState>(
@@ -51,7 +48,7 @@ class LoginScreen extends StatelessWidget {
                 body: Center(child: CircularProgressIndicator()),
               );
             }
-            return  LoginView(); // الشاشة الأساسية لتسجيل الدخول
+            return LoginView(); // الشاشة الأساسية لتسجيل الدخول
           },
         ),
       ),
