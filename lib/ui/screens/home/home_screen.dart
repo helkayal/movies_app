@@ -1,5 +1,5 @@
-
 import 'package:movies_app/core/utils/constants/imports.dart';
+import 'package:movies_app/ui/screens/home/tabs/profile_tab/cubit/history_cubit.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -38,8 +38,11 @@ class _HomeScreenState extends State<HomeScreen> {
               HomeTab(movie: movieList!),
               SearchTab(movie: movieList),
               CategoryTab(movie: movieList),
-              BlocProvider(
-                create: (_) => FavouriteCubit(),
+              MultiBlocProvider(
+                providers: [
+                  BlocProvider(create: (_) => FavouriteCubit()),
+                  BlocProvider(create: (_) => HistoryCubit()),
+                ],
                 child: ProfileTab(movie: movieList),
               ),
             ];
@@ -48,7 +51,10 @@ class _HomeScreenState extends State<HomeScreen> {
             return Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(state.props.toString(),style: AppTextStyles.whiteRegular16,),
+                Text(
+                  state.props.toString(),
+                  style: AppTextStyles.whiteRegular16,
+                ),
                 IconButton(
                   onPressed: () {
                     setState(() {
