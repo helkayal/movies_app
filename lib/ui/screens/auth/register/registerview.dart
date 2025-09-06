@@ -55,7 +55,7 @@ class _RegisterViewState extends State<RegisterView> {
           icon: Icon(Icons.arrow_back, color: AppColors.yellow),
         ),
         centerTitle: true,
-        title: const Text('Register', style: AppTextStyles.yelowRegular14),
+        title: Text('Register', style: AppTextStyles.yelowRegular14),
       ),
       body: SingleChildScrollView(
         child: Form(
@@ -106,7 +106,7 @@ class _RegisterViewState extends State<RegisterView> {
                 ),
               ),
               const SizedBox(height: 10),
-              const Text('Avatar', style: AppTextStyles.whiteRegular16),
+              Text('Avatar', style: AppTextStyles.whiteRegular16),
               SizedBox(height: height * 0.015),
               _buildTextField(
                 width,
@@ -177,7 +177,7 @@ class _RegisterViewState extends State<RegisterView> {
                     borderRadius: BorderRadius.circular(12),
                   ),
                 ),
-                child: const Text(
+                child: Text(
                   'Create Account',
                   style: AppTextStyles.blackRegular20,
                 ),
