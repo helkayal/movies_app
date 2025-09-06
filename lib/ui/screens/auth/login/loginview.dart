@@ -1,11 +1,5 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:movies_app/core/utils/constants/imports.dart';
 import '../../../../data/datasources/google/google_auth.dart';
-
-import '../../../../core/theme/app_colors.dart';
-import '../../../../core/theme/app_text_styles.dart';
-import '../../../../core/utils/constants/app_assets.dart';
-import '../../../../core/utils/constants/app_routes.dart';
 import '../authbloc/authbloc.dart';
 import '../authbloc/authevent.dart';
 import '../authbloc/authstate.dart';
@@ -23,7 +17,6 @@ class LoginView extends StatefulWidget {
 class _LoginViewState extends State<LoginView> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-  bool _obscurePassword = true;
 
   @override
   Widget build(BuildContext context) {
@@ -44,81 +37,25 @@ class _LoginViewState extends State<LoginView> {
               padding: EdgeInsets.symmetric(horizontal: width * 0.03),
               child: SizedBox(
                 width: width * 0.95,
-                child: TextField(
+                child: CustomTextField(
+                  hint: 'Email',
                   controller: emailController,
-                  style: AppTextStyles.whiteRegular16,
-                  decoration: InputDecoration(
-                    hintText: "Email",
-                    hintStyle: AppTextStyles.whiteRegular16,
-                    filled: true,
-                    fillColor: AppColors.darkGrey,
-                    prefixIcon: Image.asset(AppAssets.email),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(16),
-                      borderSide: const BorderSide(color: Colors.white),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(16),
-                      borderSide: const BorderSide(
-                        color: Colors.white,
-                        width: 2,
-                      ),
-                    ),
-                  ),
+                  prefixIcon: Image.asset(AppAssets.email),
                 ),
               ),
             ),
-            SizedBox(height: height * 0.026),
+            SizedBox(height: height * 0.01),
 
             // Password
             Padding(
               padding: EdgeInsets.symmetric(horizontal: width * 0.03),
               child: SizedBox(
                 width: width * 0.95,
-                child: TextField(
+                child: CustomTextField(
+                  hint: "Password",
                   controller: passwordController,
-                  obscureText: _obscurePassword,
-                  style: AppTextStyles.whiteRegular16,
-                  decoration: InputDecoration(
-                    hintText: "Password",
-                    hintStyle: const TextStyle(
-                      color: Colors.white70,
-                      fontSize: 16,
-                    ),
-                    filled: true,
-                    fillColor: AppColors.darkGrey,
-                    prefixIcon: Image.asset(AppAssets.lock),
-                    suffixIcon: IconButton(
-                      icon: Icon(
-                        _obscurePassword
-                            ? Icons.visibility_off
-                            : Icons.visibility,
-                        color: Colors.white,
-                      ),
-                      onPressed: () {
-                        setState(() {
-                          _obscurePassword = !_obscurePassword;
-                        });
-                      },
-                    ),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(16),
-                      borderSide: const BorderSide(color: Colors.white),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(16),
-                      borderSide: const BorderSide(
-                        color: Colors.white,
-                        width: 2,
-                      ),
-                    ),
-                  ),
+                  prefixIcon: Image.asset(AppAssets.lock),
+                  isPassword: true,
                 ),
               ),
             ),
@@ -138,7 +75,7 @@ class _LoginViewState extends State<LoginView> {
                   },
                   child: Text(
                     'Forget Password?',
-                    style: TextStyle(color: AppColors.yellow, fontSize: 12),
+                    style: AppTextStyles.yelowRegular14,
                   ),
                 ),
               ),
@@ -193,7 +130,7 @@ class _LoginViewState extends State<LoginView> {
                       children: [
                         const Text(
                           "Don't have an account? ",
-                          style: TextStyle(color: Colors.white, fontSize: 14),
+                          style: AppTextStyles.whiteRegular14,
                         ),
                         GestureDetector(
                           onTap: () {
@@ -204,11 +141,7 @@ class _LoginViewState extends State<LoginView> {
                           },
                           child: Text(
                             "Create One",
-                            style: TextStyle(
-                              color: AppColors.yellow,
-                              fontSize: 14,
-                              fontWeight: FontWeight.bold,
-                            ),
+                            style: AppTextStyles.yelowBlack14,
                           ),
                         ),
                       ],

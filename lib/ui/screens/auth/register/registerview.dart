@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movies_app/core/utils/constants/app_routes.dart';
+import 'package:movies_app/ui/widgets/custom_text_field.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/utils/constants/app_assets.dart';
@@ -23,10 +24,6 @@ class _RegisterViewState extends State<RegisterView> {
       TextEditingController();
   final TextEditingController phoneController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
-
-  // Password visibility لكل field
-  bool _obscurePassword = true;
-  bool _obscureConfirmPassword = true;
 
   // 👇 Avatar list
   final List<Map<String, dynamic>> avaters = [
@@ -109,42 +106,48 @@ class _RegisterViewState extends State<RegisterView> {
                 ),
               ),
               const SizedBox(height: 10),
-              const Text(
-                'Avatar',
-                style: TextStyle(color: AppColors.white, fontSize: 14),
+              const Text('Avatar', style: AppTextStyles.whiteRegular16),
+              SizedBox(height: height * 0.015),
+              _buildTextField(
+                width,
+                "Name",
+                AppAssets.name,
+                nameController,
+                false,
               ),
-              SizedBox(height: height * 0.02),
-              _buildTextField(width, "Name", AppAssets.name, nameController),
-              SizedBox(height: height * 0.02),
-              _buildTextField(width, "Email", AppAssets.email, emailController),
-              SizedBox(height: height * 0.02),
-              _buildPasswordField(
+              SizedBox(height: height * 0.015),
+              _buildTextField(
+                width,
+                "Email",
+                AppAssets.email,
+                emailController,
+                false,
+              ),
+              SizedBox(height: height * 0.015),
+              _buildTextField(
                 width,
                 "Password",
+                AppAssets.lock,
                 passwordController,
-                _obscurePassword,
-                (val) {
-                  setState(() => _obscurePassword = val);
-                },
+                true,
               ),
-              SizedBox(height: height * 0.02),
-              _buildPasswordField(
+              SizedBox(height: height * 0.015),
+              _buildTextField(
                 width,
                 "Confirm Password",
+                AppAssets.lock,
                 confirmPasswordController,
-                _obscureConfirmPassword,
-                (val) {
-                  setState(() => _obscureConfirmPassword = val);
-                },
+                true,
               ),
-              SizedBox(height: height * 0.02),
+              SizedBox(height: height * 0.015),
               _buildTextField(
                 width,
                 "Phone Number",
                 AppAssets.call,
                 phoneController,
+                false,
               ),
-              SizedBox(height: height * 0.02),
+              SizedBox(height: height * 0.015),
               ElevatedButton(
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
@@ -176,7 +179,7 @@ class _RegisterViewState extends State<RegisterView> {
                 ),
                 child: const Text(
                   'Create Account',
-                  style: TextStyle(color: Colors.black, fontSize: 16),
+                  style: AppTextStyles.blackRegular20,
                 ),
               ),
               SizedBox(height: height * 0.02),
@@ -194,62 +197,15 @@ class _RegisterViewState extends State<RegisterView> {
     String hint,
     String icon,
     TextEditingController controller,
+    bool isPassword,
   ) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: width * 0.03),
-      child: TextFormField(
+      child: CustomTextField(
+        hint: hint,
+        prefixIcon: Image.asset(icon),
         controller: controller,
-        style: AppTextStyles.whiteRegular16,
-        decoration: InputDecoration(
-          hintText: hint,
-          hintStyle: AppTextStyles.whiteRegular16,
-          filled: true,
-          fillColor: AppColors.darkGrey,
-          prefixIcon: Image.asset(icon),
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(16)),
-          enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(16),
-          ),
-        ),
-        validator: (value) =>
-            value == null || value.isEmpty ? "Please enter $hint" : null,
-      ),
-    );
-  }
-
-  Widget _buildPasswordField(
-    double width,
-    String hint,
-    TextEditingController controller,
-    bool obscure,
-    ValueChanged<bool> toggle,
-  ) {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: width * 0.03),
-      child: TextFormField(
-        controller: controller,
-        style: AppTextStyles.whiteRegular16,
-        obscureText: obscure,
-        decoration: InputDecoration(
-          hintText: hint,
-          hintStyle: const TextStyle(color: Colors.white70, fontSize: 16),
-          filled: true,
-          fillColor: AppColors.darkGrey,
-          prefixIcon: Image.asset(AppAssets.lock),
-          suffixIcon: IconButton(
-            icon: Icon(
-              obscure ? Icons.visibility_off : Icons.visibility,
-              color: Colors.white,
-            ),
-            onPressed: () => toggle(!obscure),
-          ),
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(16)),
-          enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(16),
-          ),
-        ),
-        validator: (value) =>
-            value == null || value.isEmpty ? "Please enter $hint" : null,
+        isPassword: isPassword,
       ),
     );
   }

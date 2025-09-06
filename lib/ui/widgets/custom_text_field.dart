@@ -18,7 +18,8 @@ class CustomTextField extends StatefulWidget {
     this.prefixIcon,
     this.isPassword = false,
     this.controller,
-    this.minLines = 1, this.onChanged,
+    this.minLines = 1,
+    this.onChanged,
   });
 
   @override
@@ -30,7 +31,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
+    return TextFormField(
       onChanged: widget.onChanged,
       controller: widget.controller,
       decoration: InputDecoration(
@@ -50,6 +51,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
                 },
                 child: Icon(
                   obscureText ? Icons.visibility_off : Icons.remove_red_eye,
+                  color: AppColors.white,
                 ),
               )
             : null,
@@ -73,6 +75,8 @@ class _CustomTextFieldState extends State<CustomTextField> {
       obscureText: widget.isPassword ? obscureText : false,
       style: AppTextStyles.whiteRegular20,
       cursorColor: AppColors.yellow,
+      validator: (value) =>
+          value == null || value.isEmpty ? "Please enter ${widget.hint}" : null,
     );
   }
 }
