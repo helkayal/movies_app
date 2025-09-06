@@ -7,10 +7,9 @@ sealed class ChangeBgImageEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class ChangeBgImage extends ChangeBgImageEvent{
+class ChangeBgImage extends ChangeBgImageEvent {
   final String imagePath;
   const ChangeBgImage(this.imagePath);
   @override
-  // TODO: implement props
   List<Object> get props => [imagePath];
 }

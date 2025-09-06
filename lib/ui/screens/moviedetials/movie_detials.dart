@@ -8,14 +8,13 @@ class MovieDetails extends StatelessWidget {
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
     return Scaffold(
-      extendBodyBehindAppBar: true, // 🔥 دي اللي هتخلي الكونتينر يبدا من ورا الاب بار
+      extendBodyBehindAppBar:
+          true, // 🔥 دي اللي هتخلي الكونتينر يبدا من ورا الاب بار
       appBar: AppBar(
         backgroundColor: Colors.transparent, // شفاف عشان يبان وراه
         elevation: 0, // يشيل الظل
         leading: const Icon(Icons.arrow_back_ios, color: Colors.white),
-        actions: const [
-          Icon(Icons.bookmark, color: Colors.white),
-        ],
+        actions: const [Icon(Icons.bookmark, color: Colors.white)],
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -56,10 +55,7 @@ class MovieDetails extends StatelessWidget {
                   borderRadius: BorderRadius.circular(12),
                 ),
               ),
-              child: Text(
-                'watch',
-                style: AppTextStyles.whiteBold24,
-              ),
+              child: Text('watch', style: AppTextStyles.whiteBold24),
             ),
             SizedBox(height: height * 0.03),
             Row(
@@ -71,8 +67,9 @@ class MovieDetails extends StatelessWidget {
                     width: width * 0.28,
                     height: height * 0.07,
                     decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(18),
-                        color: AppColors.darkGrey),
+                      borderRadius: BorderRadius.circular(18),
+                      color: AppColors.darkGrey,
+                    ),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -80,11 +77,8 @@ class MovieDetails extends StatelessWidget {
                           padding: EdgeInsets.only(left: width * 0.04),
                           child: Image.asset(AppAssets.love),
                         ),
-                        Text(
-                          '15',
-                          style: AppTextStyles.whiteBold20,
-                        ),
-                        SizedBox(width: width * 0.01)
+                        Text('15', style: AppTextStyles.whiteBold20),
+                        SizedBox(width: width * 0.01),
                       ],
                     ),
                   ),
@@ -95,8 +89,9 @@ class MovieDetails extends StatelessWidget {
                     width: width * 0.28,
                     height: height * 0.07,
                     decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(18),
-                        color: AppColors.darkGrey),
+                      borderRadius: BorderRadius.circular(18),
+                      color: AppColors.darkGrey,
+                    ),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -104,11 +99,8 @@ class MovieDetails extends StatelessWidget {
                           padding: EdgeInsets.only(left: width * 0.04),
                           child: Image.asset(AppAssets.timer),
                         ),
-                        Text(
-                          '90',
-                          style: AppTextStyles.whiteBold20,
-                        ),
-                        SizedBox(width: width * 0.01)
+                        Text('90', style: AppTextStyles.whiteBold20),
+                        SizedBox(width: width * 0.01),
                       ],
                     ),
                   ),
@@ -119,8 +111,9 @@ class MovieDetails extends StatelessWidget {
                     width: width * 0.28,
                     height: height * 0.07,
                     decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(18),
-                        color: AppColors.darkGrey),
+                      borderRadius: BorderRadius.circular(18),
+                      color: AppColors.darkGrey,
+                    ),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -128,11 +121,8 @@ class MovieDetails extends StatelessWidget {
                           padding: EdgeInsets.only(left: width * 0.04),
                           child: Image.asset(AppAssets.negma),
                         ),
-                        Text(
-                          '7.6',
-                          style: AppTextStyles.whiteBold20,
-                        ),
-                        SizedBox(width: width * 0.01)
+                        Text('7.6', style: AppTextStyles.whiteBold20),
+                        SizedBox(width: width * 0.01),
                       ],
                     ),
                   ),
@@ -174,7 +164,6 @@ class MovieDetails extends StatelessWidget {
               ),
             ),
             SizedBox(height: height * 0.015), // 👈 قللت المسافة
-
             // ===== Similar =====
             Padding(
               padding: EdgeInsets.only(right: width * 0.7),
@@ -203,15 +192,16 @@ class MovieDetails extends StatelessWidget {
 
             // ===== Summary =====
             Padding(
-                padding: EdgeInsets.only(right: width * 0.7),
-                child: Text(
-                  "Summary",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
-                )),
+              padding: EdgeInsets.only(right: width * 0.7),
+              child: Text(
+                "Summary",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
             const SizedBox(height: 12),
             Text(
               "Following the events of Spider-Man No Way Home, Doctor Strange unwittingly casts a forbidden spell that accidentally opens up the multiverse. With help from Wong and Scarlet Witch, Strange confronts various versions of himself as well as teaming up with the young America Chavez while traveling through various realities and working to restore reality as he knows it. Along the way, Strange and his allies realize they must take on a powerful new adversary who seeks to take over the multiverse. —Blazer346",
@@ -248,31 +238,33 @@ class MovieDetails extends StatelessWidget {
                   child: Row(
                     children: [
                       Container(
-                          width: width * 0.7,
-                          height: height * 0.07,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(16),
-                              color: AppColors.darkGrey),
-                          child: Row(
-                            children: [
-                              CircleAvatar(
-                                radius: 30,
-                                backgroundImage: AssetImage(AppAssets.char1),
-                              ),
-                              Column(
-                                children: [
-                                  Text(
-                                    'Name : Hayley Atwell',
-                                    style: AppTextStyles.whiteRegular16,
-                                  ),
-                                  Text(
-                                    'Character : Captain Carter',
-                                    style: AppTextStyles.whiteRegular16,
-                                  ),
-                                ],
-                              ),
-                            ],
-                          )),
+                        width: width * 0.7,
+                        height: height * 0.07,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(16),
+                          color: AppColors.darkGrey,
+                        ),
+                        child: Row(
+                          children: [
+                            CircleAvatar(
+                              radius: 30,
+                              backgroundImage: AssetImage(AppAssets.char1),
+                            ),
+                            Column(
+                              children: [
+                                Text(
+                                  'Name : Hayley Atwell',
+                                  style: AppTextStyles.whiteRegular16,
+                                ),
+                                Text(
+                                  'Character : Captain Carter',
+                                  style: AppTextStyles.whiteRegular16,
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
                       const SizedBox(width: 16),
                     ],
                   ),
@@ -318,27 +310,27 @@ class MovieDetails extends StatelessWidget {
 }
 
 // ===== ويدجيت أيكونات Like, Rate, Time =====
-Widget _buildIconContainer(IconData icon, String label) {
-  return Container(
-    width: 80,
-    height: 80,
-    decoration: BoxDecoration(
-      color: Colors.grey[900],
-      borderRadius: BorderRadius.circular(16),
-    ),
-    child: Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Icon(icon, color: Colors.white, size: 28),
-        const SizedBox(height: 8),
-        Text(
-          label,
-          style: const TextStyle(color: Colors.white, fontSize: 14),
-        ),
-      ],
-    ),
-  );
-}
+// Widget _buildIconContainer(IconData icon, String label) {
+//   return Container(
+//     width: 80,
+//     height: 80,
+//     decoration: BoxDecoration(
+//       color: Colors.grey[900],
+//       borderRadius: BorderRadius.circular(16),
+//     ),
+//     child: Column(
+//       mainAxisAlignment: MainAxisAlignment.center,
+//       children: [
+//         Icon(icon, color: Colors.white, size: 28),
+//         const SizedBox(height: 8),
+//         Text(
+//           label,
+//           style: const TextStyle(color: Colors.white, fontSize: 14),
+//         ),
+//       ],
+//     ),
+//   );
+// }
 
 // ===== ويدجيت الكونتينر بتاع Genres =====
 Widget _buildGenreContainer(String genre) {
@@ -397,8 +389,10 @@ class CustomGrideView extends StatelessWidget {
                 top: 8,
                 right: 8,
                 child: Container(
-                  padding:
-                  const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 8,
+                    vertical: 4,
+                  ),
                   decoration: BoxDecoration(
                     color: Colors.black54,
                     borderRadius: BorderRadius.circular(8),

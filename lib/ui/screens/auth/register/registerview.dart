@@ -18,7 +18,8 @@ class _RegisterViewState extends State<RegisterView> {
   final TextEditingController nameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-  final TextEditingController confirmPasswordController = TextEditingController();
+  final TextEditingController confirmPasswordController =
+      TextEditingController();
   final TextEditingController phoneController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
@@ -27,7 +28,7 @@ class _RegisterViewState extends State<RegisterView> {
   bool _obscureConfirmPassword = true;
 
   // 👇 Avatar list
-  final List<Map<String, dynamic>> avaters  = [
+  final List<Map<String, dynamic>> avaters = [
     {'id': 1, 'image': AppAssets.avatar1},
     {'id': 2, 'image': AppAssets.avatar2},
     {'id': 3, 'image': AppAssets.avatar3},
@@ -37,7 +38,6 @@ class _RegisterViewState extends State<RegisterView> {
     {'id': 7, 'image': AppAssets.avatar7},
     {'id': 8, 'image': AppAssets.avatar8},
     {'id': 9, 'image': AppAssets.avatar9},
-
   ];
 
   int get selectedavaterId => avaters[selectedIndex]['id'];
@@ -91,41 +91,61 @@ class _RegisterViewState extends State<RegisterView> {
                           ),
                           boxShadow: isSelected
                               ? [
-                            BoxShadow(
-                              color: Colors.black26,
-                              blurRadius: 10,
-                              offset: Offset(0, 5),
-                            )
-                          ]
+                                  BoxShadow(
+                                    color: Colors.black26,
+                                    blurRadius: 10,
+                                    offset: Offset(0, 5),
+                                  ),
+                                ]
                               : [],
                         ),
-
                       ),
                     );
                   },
                 ),
               ),
               const SizedBox(height: 10),
-              const Text('Avatar', style: TextStyle(color: AppColors.white, fontSize: 14)),
+              const Text(
+                'Avatar',
+                style: TextStyle(color: AppColors.white, fontSize: 14),
+              ),
               SizedBox(height: height * 0.02),
               _buildTextField(width, "Name", AppAssets.name, nameController),
               SizedBox(height: height * 0.02),
               _buildTextField(width, "Email", AppAssets.email, emailController),
               SizedBox(height: height * 0.02),
-              _buildPasswordField(width, "Password", passwordController, _obscurePassword, (val) {
-                setState(() => _obscurePassword = val);
-              }),
+              _buildPasswordField(
+                width,
+                "Password",
+                passwordController,
+                _obscurePassword,
+                (val) {
+                  setState(() => _obscurePassword = val);
+                },
+              ),
               SizedBox(height: height * 0.02),
-              _buildPasswordField(width, "Confirm Password", confirmPasswordController, _obscureConfirmPassword, (val) {
-                setState(() => _obscureConfirmPassword = val);
-              }),
+              _buildPasswordField(
+                width,
+                "Confirm Password",
+                confirmPasswordController,
+                _obscureConfirmPassword,
+                (val) {
+                  setState(() => _obscureConfirmPassword = val);
+                },
+              ),
               SizedBox(height: height * 0.02),
-              _buildTextField(width, "Phone Number", AppAssets.call, phoneController),
+              _buildTextField(
+                width,
+                "Phone Number",
+                AppAssets.call,
+                phoneController,
+              ),
               SizedBox(height: height * 0.02),
               ElevatedButton(
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
-                    if (passwordController.text != confirmPasswordController.text) {
+                    if (passwordController.text !=
+                        confirmPasswordController.text) {
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(content: Text("Passwords do not match")),
                       );
@@ -146,9 +166,14 @@ class _RegisterViewState extends State<RegisterView> {
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColors.yellow,
                   minimumSize: Size(width * 0.9, height * 0.07),
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
                 ),
-                child: const Text('Create Account', style: TextStyle(color: Colors.black, fontSize: 16)),
+                child: const Text(
+                  'Create Account',
+                  style: TextStyle(color: Colors.black, fontSize: 16),
+                ),
               ),
               SizedBox(height: height * 0.02),
               const LanguageSwitcher(),
@@ -160,7 +185,12 @@ class _RegisterViewState extends State<RegisterView> {
     );
   }
 
-  Widget _buildTextField(double width, String hint, String icon, TextEditingController controller) {
+  Widget _buildTextField(
+    double width,
+    String hint,
+    String icon,
+    TextEditingController controller,
+  ) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: width * 0.03),
       child: TextFormField(
@@ -173,20 +203,23 @@ class _RegisterViewState extends State<RegisterView> {
           fillColor: AppColors.darkGrey,
           prefixIcon: Image.asset(icon),
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(16)),
-          enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(16)),
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(16),
+          ),
         ),
-        validator: (value) => value == null || value.isEmpty ? "Please enter $hint" : null,
+        validator: (value) =>
+            value == null || value.isEmpty ? "Please enter $hint" : null,
       ),
     );
   }
 
   Widget _buildPasswordField(
-      double width,
-      String hint,
-      TextEditingController controller,
-      bool obscure,
-      ValueChanged<bool> toggle,
-      ) {
+    double width,
+    String hint,
+    TextEditingController controller,
+    bool obscure,
+    ValueChanged<bool> toggle,
+  ) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: width * 0.03),
       child: TextFormField(
@@ -200,13 +233,19 @@ class _RegisterViewState extends State<RegisterView> {
           fillColor: AppColors.darkGrey,
           prefixIcon: Image.asset(AppAssets.lock),
           suffixIcon: IconButton(
-            icon: Icon(obscure ? Icons.visibility_off : Icons.visibility, color: Colors.white),
+            icon: Icon(
+              obscure ? Icons.visibility_off : Icons.visibility,
+              color: Colors.white,
+            ),
             onPressed: () => toggle(!obscure),
           ),
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(16)),
-          enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(16)),
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(16),
+          ),
         ),
-        validator: (value) => value == null || value.isEmpty ? "Please enter $hint" : null,
+        validator: (value) =>
+            value == null || value.isEmpty ? "Please enter $hint" : null,
       ),
     );
   }
@@ -240,11 +279,19 @@ class _LanguageSwitcherState extends State<LanguageSwitcher> {
         ),
         child: Stack(
           children: [
-            Align(alignment: Alignment.centerRight, child: Image.asset(AppAssets.EG)),
-            Align(alignment: Alignment.centerLeft, child: Image.asset(AppAssets.Us)),
+            Align(
+              alignment: Alignment.centerRight,
+              child: Image.asset(AppAssets.eg),
+            ),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Image.asset(AppAssets.us),
+            ),
             AnimatedAlign(
               duration: const Duration(milliseconds: 300),
-              alignment: isArabic ? Alignment.centerRight : Alignment.centerLeft,
+              alignment: isArabic
+                  ? Alignment.centerRight
+                  : Alignment.centerLeft,
               child: Container(
                 width: 32,
                 height: 32,
