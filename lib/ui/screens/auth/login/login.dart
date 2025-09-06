@@ -5,8 +5,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../core/utils/constants/app_routes.dart';
 
 // Auth APIs
-import '../../../../authapi/authapi.dart';
-import '../../../../authapi/dioclient.dart';
+import '../../../../data/datasources/Api/authapi.dart';
+import '../../../../data/datasources/Api/dioclient.dart';
 
 // Auth Bloc
 import '../authbloc/authbloc.dart';

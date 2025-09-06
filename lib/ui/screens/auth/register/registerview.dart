@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:movies_app/core/utils/constants/app_routes.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/utils/constants/app_assets.dart';
@@ -52,7 +53,10 @@ class _RegisterViewState extends State<RegisterView> {
       backgroundColor: Colors.transparent,
       appBar: AppBar(
         backgroundColor: Colors.black,
-        leading: const Icon(Icons.arrow_back, color: AppColors.yellow),
+        leading: IconButton(
+          onPressed: () => Navigator.pushReplacement(context, AppRoutes.login),
+          icon: Icon(Icons.arrow_back, color: AppColors.yellow),
+        ),
         centerTitle: true,
         title: const Text('Register', style: AppTextStyles.yelowRegular14),
       ),
