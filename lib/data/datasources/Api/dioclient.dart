@@ -1,6 +1,7 @@
 // lib/core/network/dio_client.dart
 import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import 'apiconstants.dart';
 
 class DioClient {
@@ -13,6 +14,18 @@ class DioClient {
       connectTimeout: const Duration(seconds: 30),
       receiveTimeout: const Duration(seconds: 30),
       headers: {'Content-Type': 'application/json'},
+    );
+
+    _dio.interceptors.add(
+      PrettyDioLogger(
+        requestHeader: true,
+        requestBody: true,
+        responseHeader: false,
+        responseBody: true,
+        error: true,
+        compact: true,
+        maxWidth: 120,
+      ),
     );
 
     _dio.interceptors.add(
