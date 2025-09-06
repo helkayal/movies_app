@@ -31,6 +31,11 @@ abstract final class AppTextStyles {
   );
 
   // white text styles
+  static const whiteRegular14 = TextStyle(
+    fontSize: 14,
+    color: AppColors.white,
+    fontWeight: FontWeight.w400,
+  );
   static const whiteRegular16 = TextStyle(
     fontSize: 16,
     color: AppColors.white,
