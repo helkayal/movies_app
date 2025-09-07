@@ -159,9 +159,18 @@ class _EditProfileState extends State<EditProfile> {
             Navigator.push(context, AppRoutes.login);
           } else if (state is PasswordResetSuccess) {
             ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text("Password changed successfully")),
+              const SnackBar(
+                content: Text(
+                  "Password changed successfully, please login again",
+                ),
+              ),
             );
+            Navigator.pushReplacement(context, AppRoutes.login);
           } else if (state is ProfileError) {
+            ScaffoldMessenger.of(
+              context,
+            ).showSnackBar(SnackBar(content: Text(state.message)));
+          } else if (state is PasswordResetError) {
             ScaffoldMessenger.of(
               context,
             ).showSnackBar(SnackBar(content: Text(state.message)));
