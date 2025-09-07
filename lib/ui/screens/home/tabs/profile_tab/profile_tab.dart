@@ -1,4 +1,5 @@
 import 'package:movies_app/core/utils/constants/imports.dart';
+import 'package:movies_app/core/utils/secure_storage_utils.dart';
 import 'package:movies_app/ui/screens/home/tabs/profile_tab/cubit/history_cubit.dart';
 import 'package:movies_app/ui/screens/home/tabs/profile_tab/widgets/history_list.dart';
 
@@ -65,34 +66,50 @@ class _ProfileTabState extends State<ProfileTab> {
             children: [
               Container(
                 color: AppColors.darkGrey,
-                padding: const EdgeInsets.symmetric(vertical: 40),
+                padding: const EdgeInsets.symmetric(
+                  vertical: 40,
+                  horizontal: 10,
+                ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    Column(
-                      spacing: 15,
-                      children: [
-                        Image.asset(
-                          avatarPath,
-                          width: context.width * 0.25,
-                          fit: BoxFit.contain,
-                        ),
-                        Text(userName, style: AppTextStyles.whiteBold20),
-                      ],
+                    Expanded(
+                      flex: 3,
+                      child: Column(
+                        spacing: 15,
+                        children: [
+                          Image.asset(
+                            avatarPath,
+                            width: context.width * 0.25,
+                            fit: BoxFit.contain,
+                          ),
+                          Text(
+                            userName,
+                            style: AppTextStyles.whiteBold20,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ],
+                      ),
                     ),
-                    Column(
-                      spacing: 10,
-                      children: [
-                        Text('12', style: AppTextStyles.whiteBold36),
-                        Text('Wish List', style: AppTextStyles.whiteBold24),
-                      ],
+                    Expanded(
+                      flex: 2,
+                      child: Column(
+                        spacing: 10,
+                        children: [
+                          Text('12', style: AppTextStyles.whiteBold24),
+                          Text('Wish List', style: AppTextStyles.whiteBold20),
+                        ],
+                      ),
                     ),
-                    Column(
-                      spacing: 10,
-                      children: [
-                        Text('10', style: AppTextStyles.whiteBold36),
-                        Text('History', style: AppTextStyles.whiteBold24),
-                      ],
+                    Expanded(
+                      flex: 2,
+                      child: Column(
+                        spacing: 10,
+                        children: [
+                          Text('10', style: AppTextStyles.whiteBold24),
+                          Text('History', style: AppTextStyles.whiteBold20),
+                        ],
+                      ),
                     ),
                   ],
                 ),
@@ -125,13 +142,9 @@ class _ProfileTabState extends State<ProfileTab> {
                       child: CustomButton(
                         text: 'Exit',
                         onClick: () async {
-                          context.read<ProfileCubit>().deleteProfile();
+                          await SecureStorageUtils().logout();
                           if (!context.mounted) return;
-                          Navigator.pushAndRemoveUntil(
-                            context,
-                            AppRoutes.login,
-                            (route) => false,
-                          );
+                          Navigator.pushReplacement(context, AppRoutes.login);
                         },
                         icon: Image.asset(AppAssets.icExit),
                         backgroundColor: AppColors.red,

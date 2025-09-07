@@ -19,7 +19,7 @@ class FavouriteList extends StatelessWidget {
         } else if (state is FavouriteError) {
           return Center(child: Text("Error: ${state.message}"));
         }
-        return const Center(child: Text("No data yet"));
+        return Center(child: Image.asset(AppAssets.emptyList));
       },
     );
   }

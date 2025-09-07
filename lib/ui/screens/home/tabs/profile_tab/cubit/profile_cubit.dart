@@ -39,14 +39,18 @@ class ProfileCubit extends Cubit<ProfileStates> {
 
   Future<void> updateProfile({
     required String name,
+    required String email,
     required int avatar,
+    required String phone,
   }) async {
     emit(ProfileLoading());
     try {
       final repository = await _initRepository();
       final profileJson = await repository.updateProfile(
         name: name,
+        email: email,
         avatar: avatar,
+        phone: phone,
       );
       final user = UserDataModel.fromJson(profileJson);
       emit(ProfileUpdated(user));
