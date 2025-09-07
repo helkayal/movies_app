@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:movies_app/core/utils/secure_storage_utils.dart';
 import 'package:movies_app/data/datasources/Api/profile_api_service.dart';
 import 'package:movies_app/data/datasources/profile/profile_data_source_impl.dart';
 import 'package:movies_app/data/model/user_dm.dart';
@@ -8,20 +9,22 @@ import 'package:movies_app/data/repositories/profile_repository/profile_reposito
 import 'package:movies_app/ui/screens/home/tabs/profile_tab/cubit/profile_states.dart';
 
 class ProfileCubit extends Cubit<ProfileStates> {
-  late final ProfileRepositoryImpl repository;
+  ProfileCubit() : super(ProfileInitial());
 
-  ProfileCubit() : super(ProfileInitial()) {
-    // final token = SharedPrefsUtils.getString("token") ?? "";
-    final token =
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4YjhhMmQ0MTY3MDRjYzg5NWNhYzI0MyIsImVtYWlsIjoiaGVsa2F5YWxAZ21haWwuY29tIiwiaWF0IjoxNzU2OTMwNzc4fQ.HRGvVM_qBlIRsxezd_rgnB-cIo-D4N_QPWpmGmZzqhI";
+  Future<ProfileRepositoryImpl> _initRepository() async {
+    final token = await SecureStorageUtils().getToken();
+    if (token == null) {
+      throw Exception("No token found, please login again");
+    }
     final apiService = ProfileApiService(token: token);
     final dataSource = ProfileDataSourceImpl(apiService);
-    repository = ProfileRepositoryImpl(dataSource);
+    return ProfileRepositoryImpl(dataSource);
   }
 
   Future<void> getProfile() async {
     emit(ProfileLoading());
     try {
+      final repository = await _initRepository();
       final response = await repository.getProfile();
 
       final userJson = response["data"];
@@ -40,6 +43,7 @@ class ProfileCubit extends Cubit<ProfileStates> {
   }) async {
     emit(ProfileLoading());
     try {
+      final repository = await _initRepository();
       final profileJson = await repository.updateProfile(
         name: name,
         avatar: avatar,
@@ -55,6 +59,7 @@ class ProfileCubit extends Cubit<ProfileStates> {
   Future<void> deleteProfile() async {
     emit(ProfileLoading());
     try {
+      final repository = await _initRepository();
       await repository.deleteProfile();
       emit(ProfileDeleted());
     } catch (e) {
