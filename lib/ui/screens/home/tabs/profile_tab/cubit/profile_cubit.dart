@@ -90,7 +90,7 @@ class ProfileCubit extends Cubit<ProfileStates> {
     } catch (e) {
       final errorMessage = e.toString().replaceFirst("Exception: ", "");
 
-      emit(ProfileError(errorMessage));
+      emit(PasswordResetError(errorMessage));
     }
   }
 
