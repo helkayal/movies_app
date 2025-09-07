@@ -7,10 +7,9 @@ import '../authbloc/authbloc.dart';
 import '../authbloc/authstate.dart';
 import 'loginview.dart';
 import '../../../../l10n/app_localizations.dart';
-class LoginScreen extends StatelessWidget {
-  final void Function(Locale)? onLocaleChange; // 👈 هنا نضيف الفانكشن
 
-  const LoginScreen({super.key, this.onLocaleChange}); // 👈 نمرره كـ named parameter
+class LoginScreen extends StatelessWidget {
+  const LoginScreen({super.key}); // ✅ حذف onLocaleChange
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +32,7 @@ class LoginScreen extends StatelessWidget {
         builder: (context, state) {
           return LoginView(
             isLoading: state is AuthLoading,
-            onLocaleChange: onLocaleChange ?? (_) {}, // 👈 نمررها للـ LoginView
+            // ✅ مش محتاجين نمرر onLocaleChange بعد كده
           );
         },
       ),
