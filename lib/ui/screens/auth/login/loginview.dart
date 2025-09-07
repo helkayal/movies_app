@@ -13,7 +13,7 @@ class LoginView extends StatefulWidget {
   final bool isLoading;
   final GoogleAuth googleAuth = GoogleAuth();
 
-   LoginView({super.key, this.isLoading = false});
+  LoginView({super.key, this.isLoading = false});
 
   @override
   State<LoginView> createState() => _LoginViewState();
@@ -22,6 +22,7 @@ class LoginView extends StatefulWidget {
 class _LoginViewState extends State<LoginView> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -32,163 +33,198 @@ class _LoginViewState extends State<LoginView> {
     return Scaffold(
       backgroundColor: Colors.transparent,
       body: SingleChildScrollView(
-        child: Column(
-          children: [
-            SizedBox(height: height * 0.1),
-            Image.asset(AppAssets.videologo),
-            SizedBox(height: height * 0.09),
+        child: Form(
+          key: _formKey,
+          child: Column(
+            children: [
+              SizedBox(height: height * 0.1),
+              Image.asset(AppAssets.videologo),
+              SizedBox(height: height * 0.09),
 
-            // Email
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: width * 0.03),
-              child: SizedBox(
-                width: width * 0.95,
-                child: CustomTextField(
-                  hint: loc.email,
-                  controller: emailController,
-                  prefixIcon: Image.asset(AppAssets.email),
-                ),
-              ),
-            ),
-            SizedBox(height: height * 0.01),
-
-            // Password
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: width * 0.03),
-              child: SizedBox(
-                width: width * 0.95,
-                child: CustomTextField(
-                  hint: loc.password,
-                  controller: passwordController,
-                  prefixIcon: Image.asset(AppAssets.lock),
-                  isPassword: true,
-                ),
-              ),
-            ),
-            SizedBox(height: height * 0.02),
-
-            // Forget Password
-            Padding(
-              padding: EdgeInsets.only(right: width * 0.05),
-              child: Align(
-                alignment: Alignment.centerRight,
-                child: GestureDetector(
-                  onTap: () {
-                    Navigator.pushReplacement(
-                      context,
-                      AppRoutes.forgetPassword,
-                    );
-                  },
-                  child: Text(
-                    loc.forgotPassword,
-                    style: AppTextStyles.yelowRegular14,
+              // Email
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: width * 0.03),
+                child: SizedBox(
+                  width: width * 0.95,
+                  child: CustomTextField(
+                    hint: loc.email,
+                    controller: emailController,
+                    prefixIcon: Image.asset(AppAssets.email),
                   ),
                 ),
               ),
-            ),
-            SizedBox(height: height * 0.03),
+              SizedBox(height: height * 0.01),
 
-            // Login Button (Bloc)
-            BlocBuilder<AuthBloc, AuthState>(
-              builder: (context, state) {
-                bool isLoading = state is AuthLoading || widget.isLoading;
-                return Column(
-                  children: [
-                    ElevatedButton(
-                      onPressed: isLoading
-                          ? null
-                          : () {
-                        context.read<AuthBloc>().add(
-                          LoginRequested(
-                            emailController.text,
-                            passwordController.text,
+              // Password
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: width * 0.03),
+                child: SizedBox(
+                  width: width * 0.95,
+                  child: CustomTextField(
+                    hint: loc.password,
+                    controller: passwordController,
+                    prefixIcon: Image.asset(AppAssets.lock),
+                    isPassword: true,
+                  ),
+                ),
+              ),
+              SizedBox(height: height * 0.02),
+
+              // Forget Password
+              Padding(
+                padding: EdgeInsets.only(right: width * 0.05),
+                child: Align(
+                  alignment: Alignment.centerRight,
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.pushReplacement(
+                        context,
+                        AppRoutes.forgetPassword,
+                      );
+                    },
+                    child: Text(
+                      loc.forgotPassword,
+                      style: AppTextStyles.yelowRegular14,
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(height: height * 0.03),
+
+              // Login Button (Bloc)
+              BlocBuilder<AuthBloc, AuthState>(
+                builder: (context, state) {
+                  bool isLoading = state is AuthLoading || widget.isLoading;
+                  return Column(
+                    children: [
+                      ElevatedButton(
+                        onPressed: isLoading
+                            ? null
+                            : () {
+                                if (_formKey.currentState!.validate()) {
+                                  context.read<AuthBloc>().add(
+                                    LoginRequested(
+                                      emailController.text,
+                                      passwordController.text,
+                                    ),
+                                  );
+                                }
+                              },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: AppColors.yellow,
+                          minimumSize: Size(width * 0.9, 55),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
                           ),
-                        );
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: AppColors.yellow,
-                        minimumSize: Size(width * 0.9, 55),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: isLoading
+                            ? const CircularProgressIndicator(
+                                color: Colors.white,
+                              )
+                            : Text(
+                                loc.login,
+                                style: AppTextStyles.blackRegular20,
+                              ),
+                      ),
+                      SizedBox(height: height * 0.03),
+
+                      // Create Account
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            loc.dontHaveAccount,
+                            style: AppTextStyles.whiteRegular14,
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.pushReplacement(
+                                context,
+                                AppRoutes.register,
+                              );
+                            },
+                            child: Text(
+                              loc.createOne,
+                              style: AppTextStyles.yelowBlack14,
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: height * 0.02),
+
+                      // OR Divider
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Divider(
+                              color: AppColors.yellow,
+                              thickness: 1,
+                              indent: width * 0.05,
+                              endIndent: 10,
+                            ),
+                          ),
+                          Text(
+                            loc.or,
+                            style: TextStyle(
+                              color: AppColors.yellow,
+                              fontSize: 14,
+                            ),
+                          ),
+                          Expanded(
+                            child: Divider(
+                              color: AppColors.yellow,
+                              thickness: 1,
+                              indent: 10,
+                              endIndent: width * 0.05,
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 16),
+
+                      // Google Login
+                      ElevatedButton.icon(
+                        onPressed: isLoading
+                            ? null
+                            : () {
+                                context.read<AuthBloc>().add(
+                                  GoogleLoginRequested(),
+                                );
+                              },
+                        icon: Image.asset(
+                          AppAssets.google,
+                          height: 24,
+                          width: 24,
+                        ),
+                        label: Text(
+                          loc.loginWithGoogle,
+                          style: AppTextStyles.blackRegular20,
+                        ),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: AppColors.yellow,
+                          minimumSize: Size(width * 0.9, 55),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
                         ),
                       ),
-                      child: isLoading
-                          ? const CircularProgressIndicator(color: Colors.white)
-                          : Text(loc.login, style: AppTextStyles.blackRegular20),
-                    ),
-                    SizedBox(height: height * 0.03),
+                    ],
+                  );
+                },
+              ),
 
-                    // Create Account
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(loc.dontHaveAccount, style: AppTextStyles.whiteRegular14),
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.pushReplacement(context, AppRoutes.register);
-                          },
-                          child: Text(loc.createOne, style: AppTextStyles.yelowBlack14),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: height * 0.02),
+              SizedBox(height: height * 0.02),
 
-                    // OR Divider
-                    Row(
-                      children: [
-                        Expanded(
-                          child: Divider(
-                            color: AppColors.yellow,
-                            thickness: 1,
-                            indent: width * 0.05,
-                            endIndent: 10,
-                          ),
-                        ),
-                        Text(loc.or, style: TextStyle(color: AppColors.yellow, fontSize: 14)),
-                        Expanded(
-                          child: Divider(
-                            color: AppColors.yellow,
-                            thickness: 1,
-                            indent: 10,
-                            endIndent: width * 0.05,
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 16),
-
-                    // Google Login
-                    ElevatedButton.icon(
-                      onPressed: isLoading
-                          ? null
-                          : () {
-                        context.read<AuthBloc>().add(GoogleLoginRequested());
-                      },
-                      icon: Image.asset(AppAssets.google, height: 24, width: 24),
-                      label: Text(loc.loginWithGoogle, style: AppTextStyles.blackRegular20),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: AppColors.yellow,
-                        minimumSize: Size(width * 0.9, 55),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                      ),
-                    ),
-                  ],
-                );
-              },
-            ),
-
-            SizedBox(height: height * 0.02),
-
-            // Language Switcher
-            LanguageSwitcher(), // ✅ مش هنبعت onLocaleChange بعد كده
-          ],
+              // Language Switcher
+              LanguageSwitcher(), // ✅ مش هنبعت onLocaleChange بعد كده
+            ],
+          ),
         ),
       ),
     );
   }
 }
+
 class LanguageSwitcher extends StatefulWidget {
   const LanguageSwitcher({super.key});
 
@@ -225,11 +261,19 @@ class _LanguageSwitcherState extends State<LanguageSwitcher> {
         ),
         child: Stack(
           children: [
-            Align(alignment: Alignment.centerRight, child: Image.asset(AppAssets.eg)),
-            Align(alignment: Alignment.centerLeft, child: Image.asset(AppAssets.us)),
+            Align(
+              alignment: Alignment.centerRight,
+              child: Image.asset(AppAssets.eg),
+            ),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Image.asset(AppAssets.us),
+            ),
             AnimatedAlign(
               duration: const Duration(milliseconds: 300),
-              alignment: isArabic ? Alignment.centerRight : Alignment.centerLeft,
+              alignment: isArabic
+                  ? Alignment.centerRight
+                  : Alignment.centerLeft,
               child: Container(
                 width: 32,
                 height: 32,
