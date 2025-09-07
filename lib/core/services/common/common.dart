@@ -1,11 +1,19 @@
-import 'dart:convert';
+import 'package:dio/dio.dart';
 
-import 'package:http/http.dart' as http;
-
-Map<String, dynamic> handleResponse(http.Response response) {
-  if (response.statusCode >= 200 && response.statusCode < 300) {
-    return jsonDecode(response.body);
+Map<String, dynamic> handleDioResponse(Response response) {
+  if (response.statusCode == 200 || response.statusCode == 201) {
+    return response.data is Map<String, dynamic>
+        ? response.data
+        : {'data': response.data};
   } else {
-    throw Exception("API Error: ${response.statusCode} - ${response.body}");
+    throw Exception('Failed with status code: ${response.statusCode}');
+  }
+}
+
+void handleDioError(DioException e) {
+  if (e.response != null) {
+    throw Exception('Dio error: ${e.response?.statusCode} ${e.response?.data}');
+  } else {
+    throw Exception('Dio error: ${e.message}');
   }
 }

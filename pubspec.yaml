@@ -27,6 +27,7 @@ dependencies:
   flutter_localizations: # مهم عشان l10n
     sdk: flutter
   intl: any # مكتبة intl للترجمة
+  provider: ^6.1.5+1
 
 dev_dependencies:
   flutter_test:

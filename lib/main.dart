@@ -1,8 +1,6 @@
-import 'package:flutter/material.dart';
 import 'package:movies_app/ui/screens/auth/local_provider/local_provider.dart';
 import 'package:provider/provider.dart'; // ✅ استدعاء Provider
 import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:movies_app/firebase_options.dart';
 
@@ -29,13 +27,17 @@ void main() async {
   final dioClient = DioClient();
   final authApis = AuthApis(dioClient);
 
-  final onboardingRepository = OnboardingRepositoryImpl(OnboardingDataSourceImpl());
+  final onboardingRepository = OnboardingRepositoryImpl(
+    OnboardingDataSourceImpl(),
+  );
   final completed = await onboardingRepository.isOnboardingCompleted();
 
   runApp(
     MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => LocaleProvider()), // ✅ Provider للـ Locale
+        ChangeNotifierProvider(
+          create: (_) => LocaleProvider(),
+        ), // ✅ Provider للـ Locale
         BlocProvider(create: (_) => MovieBloc()),
         BlocProvider(create: (_) => ProfileCubit()),
         BlocProvider(create: (_) => AuthBloc(authApis: authApis)),
@@ -52,7 +54,9 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final localeProvider = Provider.of<LocaleProvider>(context); // ✅ جلب الـ Locale من الـ Provider
+    final localeProvider = Provider.of<LocaleProvider>(
+      context,
+    ); // ✅ جلب الـ Locale من الـ Provider
 
     return ScreenUtilInit(
       designSize: const Size(375, 812),
@@ -72,7 +76,9 @@ class MainApp extends StatelessWidget {
             GlobalCupertinoLocalizations.delegate,
           ],
           home: onboardingCompleted
-              ? const LoginScreen(key: Key('loginScreen')) // مش محتاجين onLocaleChange بعد كده
+              ? const LoginScreen(
+                  key: Key('loginScreen'),
+                ) // مش محتاجين onLocaleChange بعد كده
               : const OnboardingIntro(),
         );
       },

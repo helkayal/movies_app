@@ -6,7 +6,6 @@ import '../../../../data/datasources/Api/dioclient.dart';
 import '../authbloc/authbloc.dart';
 import '../authbloc/authstate.dart';
 import 'loginview.dart';
-import '../../../../l10n/app_localizations.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key}); // ✅ حذف onLocaleChange
@@ -20,13 +19,13 @@ class LoginScreen extends StatelessWidget {
           if (state is LoginSuccess) {
             Navigator.pushReplacement(context, AppRoutes.home);
           } else if (state is AuthFailure) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text(state.error)),
-            );
+            ScaffoldMessenger.of(
+              context,
+            ).showSnackBar(SnackBar(content: Text(state.error)));
           } else if (state is AuthSuccessMessage) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text(state.message)),
-            );
+            ScaffoldMessenger.of(
+              context,
+            ).showSnackBar(SnackBar(content: Text(state.message)));
           }
         },
         builder: (context, state) {
