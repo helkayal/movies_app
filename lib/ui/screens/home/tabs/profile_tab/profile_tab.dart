@@ -1,6 +1,7 @@
 import 'package:movies_app/core/utils/constants/imports.dart';
 import 'package:movies_app/core/utils/secure_storage_utils.dart';
 import 'package:movies_app/ui/screens/home/tabs/profile_tab/cubit/history_cubit.dart';
+import 'package:movies_app/ui/screens/home/tabs/profile_tab/cubit/history_states.dart';
 import 'package:movies_app/ui/screens/home/tabs/profile_tab/widgets/history_list.dart';
 
 class ProfileTab extends StatefulWidget {
@@ -64,6 +65,7 @@ class _ProfileTabState extends State<ProfileTab> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
+              // Header
               Container(
                 color: AppColors.darkGrey,
                 padding: const EdgeInsets.symmetric(
@@ -73,6 +75,7 @@ class _ProfileTabState extends State<ProfileTab> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
+                    // Avatar + Username
                     Expanded(
                       flex: 3,
                       child: Column(
@@ -91,22 +94,48 @@ class _ProfileTabState extends State<ProfileTab> {
                         ],
                       ),
                     ),
+
+                    // Wish List count
                     Expanded(
                       flex: 2,
                       child: Column(
                         spacing: 10,
                         children: [
-                          Text('12', style: AppTextStyles.whiteBold24),
+                          BlocBuilder<FavouriteCubit, FavouriteStates>(
+                            builder: (context, favState) {
+                              int favCount = 0;
+                              if (favState is FavouriteLoaded) {
+                                favCount = favState.favourites.length;
+                              }
+                              return Text(
+                                '$favCount',
+                                style: AppTextStyles.whiteBold24,
+                              );
+                            },
+                          ),
                           Text('Wish List', style: AppTextStyles.whiteBold20),
                         ],
                       ),
                     ),
+
+                    // History count
                     Expanded(
                       flex: 2,
                       child: Column(
                         spacing: 10,
                         children: [
-                          Text('10', style: AppTextStyles.whiteBold24),
+                          BlocBuilder<HistoryCubit, HistoryStates>(
+                            builder: (context, historyState) {
+                              int historyCount = 0;
+                              if (historyState is HistoryLoaded) {
+                                historyCount = historyState.movies.length;
+                              }
+                              return Text(
+                                '$historyCount',
+                                style: AppTextStyles.whiteBold24,
+                              );
+                            },
+                          ),
                           Text('History', style: AppTextStyles.whiteBold20),
                         ],
                       ),
@@ -188,6 +217,7 @@ class _ProfileTabState extends State<ProfileTab> {
                 ),
               ),
 
+              // Tab views
               Expanded(
                 child: Padding(
                   padding: const EdgeInsets.only(top: 10),

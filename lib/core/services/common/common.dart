@@ -12,8 +12,8 @@ Map<String, dynamic> handleDioResponse(Response response) {
 
 void handleDioError(DioException e) {
   if (e.response != null) {
-    throw Exception('Dio error: ${e.response?.statusCode} ${e.response?.data}');
+    throw Exception('${e.response?.data["message"]}');
   } else {
-    throw Exception('Dio error: ${e.message}');
+    throw Exception('Something went wrong');
   }
 }

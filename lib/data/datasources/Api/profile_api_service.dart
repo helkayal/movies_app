@@ -60,4 +60,14 @@ class ProfileApiService {
       rethrow;
     }
   }
+
+  Future<Map<String, dynamic>> resetPassword(Map<String, dynamic> body) async {
+    try {
+      final response = await _dio.patch('/auth/reset-password', data: body);
+      return handleDioResponse(response);
+    } on DioException catch (e) {
+      handleDioError(e);
+      rethrow;
+    }
+  }
 }
