@@ -1,0 +1,21 @@
+{
+  "@@locale": "ar",
+  "login": "تسجيل الدخول",
+  "email": "البريد الإلكتروني",
+  "password": "كلمة المرور",
+  "forgotPassword": "نسيت كلمة المرور؟",
+  "dontHaveAccount": "ليس لديك حساب؟",
+  "createOne": "أنشئ حساب",
+  "or": "أو",
+  "loginWithGoogle": "تسجيل الدخول باستخدام جوجل",
+  "register": "إنشاء حساب",
+  "avatar": "الصورة الرمزية",
+  "name": "الاسم",
+  "confirmPassword": "تأكيد كلمة المرور",
+  "phoneNumber": "رقم الهاتف",
+  "createAccount": "إنشاء الحساب",
+  "passwordsDoNotMatch": "كلمات المرور غير متطابقة",
+  "verifyEmail": "تحقق من البريد الإلكتروني",
+  "enterEmail": "الرجاء إدخال البريد الإلكتروني",
+  "enterValidEmail": "الرجاء إدخال بريد إلكتروني صحيح"
+}

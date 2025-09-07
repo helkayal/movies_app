@@ -4,12 +4,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/utils/constants/app_assets.dart';
+import '../../../../l10n/app_localizations.dart';
 import '../authbloc/authbloc.dart';
 import '../authbloc/authevent.dart';
 
-/// ========================= ForgetPasswordView =========================
 class ForgetPasswordView extends StatefulWidget {
-  const ForgetPasswordView({super.key});
+  final void Function(Locale) onLocaleChange;
+
+  const ForgetPasswordView({super.key, required this.onLocaleChange});
 
   @override
   State<ForgetPasswordView> createState() => _ForgetPasswordViewState();
@@ -26,6 +28,7 @@ class _ForgetPasswordViewState extends State<ForgetPasswordView> {
 
   @override
   Widget build(BuildContext context) {
+    final loc = AppLocalizations.of(context)!;
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
 
@@ -47,7 +50,7 @@ class _ForgetPasswordViewState extends State<ForgetPasswordView> {
                   controller: emailController,
                   style: AppTextStyles.whiteRegular16,
                   decoration: InputDecoration(
-                    hintText: "Email",
+                    hintText: loc.email,
                     hintStyle: AppTextStyles.whiteRegular16,
                     filled: true,
                     fillColor: AppColors.darkGrey,
@@ -68,10 +71,10 @@ class _ForgetPasswordViewState extends State<ForgetPasswordView> {
                   ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return "Please enter your email";
+                      return loc.enterEmail;
                     }
                     if (!isValidEmail(value)) {
-                      return "Please enter a valid email";
+                      return loc.enterValidEmail;
                     }
                     return null;
                   },
@@ -96,14 +99,16 @@ class _ForgetPasswordViewState extends State<ForgetPasswordView> {
                   ),
                 ),
                 child: Text(
-                  'Verify Email',
+                  loc.verifyEmail,
                   style: AppTextStyles.blackRegular20,
                 ),
               ),
+
+              SizedBox(height: height * 0.02),
+
             ],
           ),
         ),
       ),
     );
-  }
-}
+  }}

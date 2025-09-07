@@ -1,0 +1,21 @@
+{
+  "@@locale": "en",
+  "login": "Login",
+  "email": "Email",
+  "password": "Password",
+  "forgotPassword": "Forgot Password?",
+  "dontHaveAccount": "Don't have an account?",
+  "createOne": "Create one",
+  "or": "OR",
+  "loginWithGoogle": "Login with Google",
+  "register": "Register",
+  "avatar": "Avatar",
+  "name": "Name",
+  "confirmPassword": "Confirm Password",
+  "phoneNumber": "Phone Number",
+  "createAccount": "Create Account",
+  "passwordsDoNotMatch": "Passwords do not match",
+  "verifyEmail": "Verify Email",
+  "enterEmail": "Please enter your email",
+  "enterValidEmail": "Please enter a valid email"
+}

@@ -1,14 +1,22 @@
-import 'package:movies_app/core/utils/constants/imports.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../data/datasources/google/google_auth.dart';
+import '../../../../l10n/app_localizations.dart';
 import '../authbloc/authbloc.dart';
 import '../authbloc/authevent.dart';
 import '../authbloc/authstate.dart';
+import '../../../../core/utils/constants/imports.dart';
 
 class LoginView extends StatefulWidget {
   final bool isLoading;
+  final void Function(Locale) onLocaleChange;
   final GoogleAuth googleAuth = GoogleAuth();
 
-  LoginView({super.key, this.isLoading = false});
+   LoginView({
+    super.key,
+    this.isLoading = false,
+    required this.onLocaleChange,
+  });
 
   @override
   State<LoginView> createState() => _LoginViewState();
@@ -22,6 +30,7 @@ class _LoginViewState extends State<LoginView> {
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
+    final loc = AppLocalizations.of(context)!;
 
     return Scaffold(
       backgroundColor: Colors.transparent,
@@ -38,7 +47,7 @@ class _LoginViewState extends State<LoginView> {
               child: SizedBox(
                 width: width * 0.95,
                 child: CustomTextField(
-                  hint: 'Email',
+                  hint: loc.email,
                   controller: emailController,
                   prefixIcon: Image.asset(AppAssets.email),
                 ),
@@ -52,7 +61,7 @@ class _LoginViewState extends State<LoginView> {
               child: SizedBox(
                 width: width * 0.95,
                 child: CustomTextField(
-                  hint: "Password",
+                  hint: loc.password,
                   controller: passwordController,
                   prefixIcon: Image.asset(AppAssets.lock),
                   isPassword: true,
@@ -74,7 +83,7 @@ class _LoginViewState extends State<LoginView> {
                     );
                   },
                   child: Text(
-                    'Forget Password?',
+                    loc.forgotPassword,
                     style: AppTextStyles.yelowRegular14,
                   ),
                 ),
@@ -83,73 +92,53 @@ class _LoginViewState extends State<LoginView> {
             SizedBox(height: height * 0.03),
 
             // Login Button (Bloc)
-            // Login Button + Google Login
-            BlocConsumer<AuthBloc, AuthState>(
-              listener: (context, state) {
-                if (state is LoginSuccess) {
-                  Navigator.pushReplacement(context, AppRoutes.home);
-                } else if (state is AuthFailure) {
-                  ScaffoldMessenger.of(
-                    context,
-                  ).showSnackBar(SnackBar(content: Text(state.error)));
-                }
-              },
+            BlocBuilder<AuthBloc, AuthState>(
               builder: (context, state) {
-                bool isLoading = state is AuthLoading;
+                bool isLoading = state is AuthLoading || widget.isLoading;
                 return Column(
                   children: [
                     ElevatedButton(
                       onPressed: isLoading
                           ? null
                           : () {
-                              context.read<AuthBloc>().add(
-                                LoginRequested(
-                                  emailController.text,
-                                  passwordController.text,
-                                ),
-                              );
-                            },
+                        context.read<AuthBloc>().add(
+                          LoginRequested(
+                            emailController.text,
+                            passwordController.text,
+                          ),
+                        );
+                      },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: AppColors.yellow,
-                        minimumSize: Size(
-                          MediaQuery.of(context).size.width * 0.9,
-                          55,
-                        ),
+                        minimumSize: Size(width * 0.9, 55),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12),
                         ),
                       ),
                       child: isLoading
                           ? const CircularProgressIndicator(color: Colors.white)
-                          : Text('Login', style: AppTextStyles.blackRegular20),
+                          : Text(loc.login, style: AppTextStyles.blackRegular20),
                     ),
                     SizedBox(height: height * 0.03),
+
                     // Create Account
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(
-                          "Don't have an account? ",
-                          style: AppTextStyles.whiteRegular14,
-                        ),
+                        Text(loc.dontHaveAccount, style: AppTextStyles.whiteRegular14),
                         GestureDetector(
                           onTap: () {
-                            Navigator.pushReplacement(
-                              context,
-                              AppRoutes.register,
-                            );
+                            Navigator.pushReplacement(context, AppRoutes.register);
                           },
-                          child: Text(
-                            "Create One",
-                            style: AppTextStyles.yelowBlack14,
-                          ),
+                          child: Text(loc.createOne, style: AppTextStyles.yelowBlack14),
                         ),
                       ],
                     ),
                     SizedBox(height: height * 0.02),
 
+                    // OR Divider
                     Row(
-                      children: <Widget>[
+                      children: [
                         Expanded(
                           child: Divider(
                             color: AppColors.yellow,
@@ -158,13 +147,7 @@ class _LoginViewState extends State<LoginView> {
                             endIndent: 10,
                           ),
                         ),
-                        Text(
-                          "OR",
-                          style: TextStyle(
-                            color: AppColors.yellow,
-                            fontSize: 14,
-                          ),
-                        ),
+                        Text(loc.or, style: TextStyle(color: AppColors.yellow, fontSize: 14)),
                         Expanded(
                           child: Divider(
                             color: AppColors.yellow,
@@ -176,29 +159,19 @@ class _LoginViewState extends State<LoginView> {
                       ],
                     ),
                     const SizedBox(height: 16),
+
+                    // Google Login
                     ElevatedButton.icon(
                       onPressed: isLoading
                           ? null
                           : () {
-                              context.read<AuthBloc>().add(
-                                GoogleLoginRequested(),
-                              );
-                            },
-                      icon: Image.asset(
-                        AppAssets.google,
-                        height: 24,
-                        width: 24,
-                      ),
-                      label: Text(
-                        "Login with Google",
-                        style: AppTextStyles.blackRegular20,
-                      ),
+                        context.read<AuthBloc>().add(GoogleLoginRequested());
+                      },
+                      icon: Image.asset(AppAssets.google, height: 24, width: 24),
+                      label: Text(loc.loginWithGoogle, style: AppTextStyles.blackRegular20),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: AppColors.yellow,
-                        minimumSize: Size(
-                          MediaQuery.of(context).size.width * 0.9,
-                          55,
-                        ),
+                        minimumSize: Size(width * 0.9, 55),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12),
                         ),
@@ -210,7 +183,9 @@ class _LoginViewState extends State<LoginView> {
             ),
 
             SizedBox(height: height * 0.02),
-            const LanguageSwitcher(),
+
+            // Language Switcher
+            LanguageSwitcher(onLocaleChange: widget.onLocaleChange),
           ],
         ),
       ),
@@ -218,25 +193,30 @@ class _LoginViewState extends State<LoginView> {
   }
 }
 
+// Language Switcher
 class LanguageSwitcher extends StatefulWidget {
-  const LanguageSwitcher({super.key});
+  final void Function(Locale) onLocaleChange;
+
+  const LanguageSwitcher({super.key, required this.onLocaleChange});
 
   @override
   State<LanguageSwitcher> createState() => _LanguageSwitcherState();
 }
 
 class _LanguageSwitcherState extends State<LanguageSwitcher> {
-  bool isArabic = true;
+  bool isArabic = false;
 
   @override
   Widget build(BuildContext context) {
-    var height = MediaQuery.of(context).size.height;
-    var width = MediaQuery.of(context).size.width;
+    final height = MediaQuery.of(context).size.height;
+    final width = MediaQuery.of(context).size.width;
 
     return GestureDetector(
       onTap: () {
         setState(() {
           isArabic = !isArabic;
+          final newLocale = isArabic ? const Locale('ar') : const Locale('en');
+          widget.onLocaleChange(newLocale);
         });
       },
       child: AnimatedContainer(
@@ -251,19 +231,11 @@ class _LanguageSwitcherState extends State<LanguageSwitcher> {
         ),
         child: Stack(
           children: [
-            Align(
-              alignment: Alignment.centerRight,
-              child: Image.asset(AppAssets.eg),
-            ),
-            Align(
-              alignment: Alignment.centerLeft,
-              child: Image.asset(AppAssets.us),
-            ),
+            Align(alignment: Alignment.centerRight, child: Image.asset(AppAssets.eg)),
+            Align(alignment: Alignment.centerLeft, child: Image.asset(AppAssets.us)),
             AnimatedAlign(
               duration: const Duration(milliseconds: 300),
-              alignment: isArabic
-                  ? Alignment.centerRight
-                  : Alignment.centerLeft,
+              alignment: isArabic ? Alignment.centerRight : Alignment.centerLeft,
               child: Container(
                 width: 32,
                 height: 32,
@@ -274,7 +246,6 @@ class _LanguageSwitcherState extends State<LanguageSwitcher> {
                 ),
               ),
             ),
-            SizedBox(height: height * 0.02),
           ],
         ),
       ),

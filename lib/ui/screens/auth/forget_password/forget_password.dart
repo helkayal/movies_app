@@ -17,7 +17,10 @@ import '../login/login.dart';
 import 'forget_passwordview.dart';
 
 class ForgetPasswordScreen extends StatelessWidget {
-  const ForgetPasswordScreen({super.key});
+  final void Function(Locale)? onLocaleChange;
+  const ForgetPasswordScreen({super.key,
+    this.onLocaleChange
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +59,9 @@ class ForgetPasswordScreen extends StatelessWidget {
             ).showSnackBar(SnackBar(content: Text(state.error)));
           }
         },
-        child: const ForgetPasswordView(),
+        child: ForgetPasswordView(
+          onLocaleChange: onLocaleChange ?? (_) {},
+        ),
       ),
     );
   }
