@@ -30,7 +30,9 @@ class Data {
       this.movieCount, 
       this.limit, 
       this.pageNumber, 
-      this.movies,});
+      this.movies,
+      this.movie, //this for movie details model
+      });
 
   Data.fromJson(dynamic json) {
     movieCount = json['movie_count'];
@@ -42,11 +44,15 @@ class Data {
         movies?.add(Movies.fromJson(v));
       });
     }
+    if (json['movie'] != null) { //this for movie details model
+      movie = Movies.fromJson(json['movie']);
+    }
   }
   int? movieCount;
   int? limit;
   int? pageNumber;
   List<Movies>? movies;
+  Movies? movie; //this for movie details model
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -56,6 +62,9 @@ class Data {
     if (movies != null) {
       map['movies'] = movies?.map((v) => v.toJson()).toList();
     }
+    if (movie != null) { //this for movie details model
+      map['movie'] = movie?.toJson();
+    }
     return map;
   }
 
@@ -63,32 +72,35 @@ class Data {
 
 class Movies {
   Movies({
-      this.id, 
-      this.url, 
-      this.imdbCode, 
-      this.title, 
-      this.titleEnglish, 
-      this.titleLong, 
-      this.slug, 
-      this.year, 
-      this.rating, 
-      this.runtime, 
-      this.genres, 
-      this.summary, 
-      this.descriptionFull, 
-      this.synopsis, 
-      this.ytTrailerCode, 
-      this.language, 
-      this.mpaRating, 
-      this.backgroundImage, 
-      this.backgroundImageOriginal, 
-      this.smallCoverImage, 
-      this.mediumCoverImage, 
-      this.largeCoverImage, 
-      this.state, 
-      this.torrents, 
-      this.dateUploaded, 
-      this.dateUploadedUnix,});
+    this.id,
+    this.url,
+    this.imdbCode,
+    this.title,
+    this.titleEnglish,
+    this.titleLong,
+    this.slug,
+    this.year,
+    this.rating,
+    this.runtime,
+    this.genres,
+    this.likeCount,
+    this.descriptionIntro,
+    this.summary,
+    this.descriptionFull,
+    this.synopsis,
+    this.ytTrailerCode,
+    this.language,
+    this.mpaRating,
+    this.backgroundImage,
+    this.backgroundImageOriginal,
+    this.smallCoverImage,
+    this.mediumCoverImage,
+    this.largeCoverImage,
+    this.state,
+    this.torrents,
+    this.dateUploaded,
+    this.dateUploadedUnix,
+  });
 
   Movies.fromJson(dynamic json) {
     id = json['id'];
@@ -102,6 +114,8 @@ class Movies {
     rating = (json['rating'] as num?)?.toDouble();
     runtime = json['runtime'];
     genres = json['genres'] != null ? json['genres'].cast<String>() : [];
+    likeCount = json['like_count'];
+    descriptionIntro = json['description_intro'];
     summary = json['summary'];
     descriptionFull = json['description_full'];
     synopsis = json['synopsis'];
@@ -123,6 +137,7 @@ class Movies {
     dateUploaded = json['date_uploaded'];
     dateUploadedUnix = json['date_uploaded_unix'];
   }
+
   int? id;
   String? url;
   String? imdbCode;
@@ -134,6 +149,8 @@ class Movies {
   double? rating;
   int? runtime;
   List<String>? genres;
+  int? likeCount;                 // 
+  String? descriptionIntro;       // 
   String? summary;
   String? descriptionFull;
   String? synopsis;
@@ -163,6 +180,8 @@ class Movies {
     map['rating'] = rating;
     map['runtime'] = runtime;
     map['genres'] = genres;
+    map['like_count'] = likeCount;             // 🆕
+    map['description_intro'] = descriptionIntro; // 🆕
     map['summary'] = summary;
     map['description_full'] = descriptionFull;
     map['synopsis'] = synopsis;
@@ -182,8 +201,8 @@ class Movies {
     map['date_uploaded_unix'] = dateUploadedUnix;
     return map;
   }
-
 }
+
 
 class Torrents {
   Torrents({

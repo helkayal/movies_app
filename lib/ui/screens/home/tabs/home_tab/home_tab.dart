@@ -44,7 +44,7 @@ class HomeTab extends StatelessWidget {
                               height: context.height * 0.1,
                             ),
                             Expanded(
-                              child: CarouselSliderSection(movie:movie),
+                              child: CarouselSliderSection(movie:movie,),
                             ),
                             Image.asset(
                               AppAssets.watchNow,
@@ -66,16 +66,14 @@ class HomeTab extends StatelessWidget {
                     Expanded(
                       child: ListView.builder(
                         scrollDirection: Axis.horizontal,
-                        itemCount: movie.length,
+                        itemCount: movie.length ,
                         itemBuilder: (context, index) {
-                          return InkWell(
-                            onTap: () {},
-                            child: CustomMovieImage(
-                              rating: movie[index].rating.toString(),
-                              image: movie[index].mediumCoverImage ??'',
-                              margin: EdgeInsets.only(left: 16),
-                              width: context.width * 0.32,
-                            ),
+                          return CustomMovieImage(
+                            movieDetails: movie[index],
+                            rating: movie[index].rating.toString(),
+                            image: movie[index].mediumCoverImage ??'',
+                            margin: EdgeInsets.only(left: 16),
+                            width: context.width * 0.32,
                           );
                         },
                       ),

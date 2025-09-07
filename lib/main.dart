@@ -1,12 +1,13 @@
 
 
 import 'package:movies_app/core/utils/constants/imports.dart';
+import 'package:movies_app/ui/screens/home/home_screen.dart';
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
 
   runApp(MultiBlocProvider(
     providers: [
-      BlocProvider(create: (context) => MovieBloc(),),
+      BlocProvider(create: (context) => MovieBloc(apiService: ApiService()),),
       BlocProvider(create: (context) => ChangeBgImageBloc(),),
       BlocProvider(create: (context) => ProfileCubit()),
     ],
@@ -22,7 +23,7 @@ class MainApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       themeMode: ThemeMode.dark,
       darkTheme: AppTheme.darkTheme,
-      home: Splash(),
+      home: HomeScreen(),
     );
   }
 }

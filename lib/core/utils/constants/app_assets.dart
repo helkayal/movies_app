@@ -53,5 +53,6 @@ abstract final class AppAssets {
   static const String screen1 = 'assets/icons/screen1.png';
   static const String screen2 = 'assets/icons/screen2.png';
   static const String screen3 = 'assets/icons/screen3.png';
+  static const String defaultImage = 'assets/images/default_image.png';
 
 }
