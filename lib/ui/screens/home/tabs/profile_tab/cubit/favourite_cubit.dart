@@ -1,21 +1,26 @@
-
 import 'package:movies_app/core/utils/constants/imports.dart';
-class FavouriteCubit extends Cubit<FavouriteStates> {
-  late final FavouriteRepositoryImpl repository;
+import 'package:movies_app/core/utils/secure_storage_utils.dart';
 
-  FavouriteCubit() : super(FavouriteInitial()) {
-    // final token = SharedPrefsUtils.getString("token") ?? "";
-    final token =
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4YjhhMmQ0MTY3MDRjYzg5NWNhYzI0MyIsImVtYWlsIjoiaGVsa2F5YWxAZ21haWwuY29tIiwiaWF0IjoxNzU2OTMwNzc4fQ.HRGvVM_qBlIRsxezd_rgnB-cIo-D4N_QPWpmGmZzqhI";
-    final apiService = FavouriteApiService(token: token);
-    final dataSource = FavouriteDataSourceImpl(apiService);
-    repository = FavouriteRepositoryImpl(dataSource);
-  }
+class FavouriteCubit extends Cubit<FavouriteStates> {
+  FavouriteRepositoryImpl? repository;
+
+  FavouriteCubit() : super(FavouriteInitial());
 
   Future<void> loadFavourites() async {
     emit(FavouriteLoading());
     try {
-      final response = await repository.fetchFavourites();
+      // get token asynchronously
+      final token = await SecureStorageUtils().getToken();
+      if (token == null) {
+        throw Exception("No token found, please login again");
+      }
+
+      // init repository here
+      final apiService = FavouriteApiService(token: token);
+      final dataSource = FavouriteDataSourceImpl(apiService);
+      repository = FavouriteRepositoryImpl(dataSource);
+
+      final response = await repository!.fetchFavourites();
 
       final List<dynamic> favouriteJson = response["data"];
       final favourites = favouriteJson.map((e) {

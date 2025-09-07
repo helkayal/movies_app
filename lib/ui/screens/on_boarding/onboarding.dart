@@ -1,4 +1,3 @@
-
 import 'package:movies_app/core/utils/constants/imports.dart';
 
 class Onboarding extends StatelessWidget {
@@ -20,7 +19,7 @@ class Onboarding extends StatelessWidget {
               context.read<OnboardingCubit>().currentPage,
             );
           } else if (state is OnboardingFinished) {
-            Navigator.pushReplacement(context, AppRoutes.home);
+            Navigator.pushReplacement(context, AppRoutes.login);
           }
         },
         builder: (context, state) {
