@@ -1,13 +1,55 @@
-import 'package:http/http.dart' as http;
+// import 'package:http/http.dart' as http;
+// import 'package:movies_app/core/services/common/common.dart';
+
+// class HistoryApiService {
+//   HistoryApiService();
+
+//   Future<Map<String, dynamic>> getMovieById(String id) async {
+//     final response = await http.get(
+//       Uri.parse('https://yts.mx/api/v2/movie_details.json?movie_id=$id'),
+//     );
+//     return handleResponse(response);
+//   }
+// }
+
+import 'package:dio/dio.dart';
 import 'package:movies_app/core/services/common/common.dart';
+import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 class HistoryApiService {
-  HistoryApiService();
+  final Dio _dio;
+
+  HistoryApiService()
+    : _dio = Dio(
+        BaseOptions(
+          baseUrl: 'https://yts.mx/api/v2',
+          connectTimeout: const Duration(seconds: 10),
+          receiveTimeout: const Duration(seconds: 10),
+        ),
+      ) {
+    _dio.interceptors.add(
+      PrettyDioLogger(
+        requestHeader: true,
+        requestBody: true,
+        responseBody: true,
+        responseHeader: false,
+        error: true,
+        compact: true,
+        maxWidth: 90,
+      ),
+    );
+  }
 
   Future<Map<String, dynamic>> getMovieById(String id) async {
-    final response = await http.get(
-      Uri.parse('https://yts.mx/api/v2/movie_details.json?movie_id=$id'),
-    );
-    return handleResponse(response);
+    try {
+      final response = await _dio.get(
+        '/movie_details.json',
+        queryParameters: {'movie_id': id},
+      );
+      return handleDioResponse(response);
+    } on DioException catch (e) {
+      handleDioError(e);
+      rethrow;
+    }
   }
 }

@@ -13,7 +13,7 @@ class FavouriteList extends StatelessWidget {
           );
         } else if (state is FavouriteLoaded) {
           if (state.favourites.isEmpty) {
-            return const Center(child: Text("Your Wish List is empty"));
+            return Center(child: Image.asset(AppAssets.emptyList));
           }
           return CustomGrideView(rowItemCount: 3, movie: state.favourites);
         } else if (state is FavouriteError) {
