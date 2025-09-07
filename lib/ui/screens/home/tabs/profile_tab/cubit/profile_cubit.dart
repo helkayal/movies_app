@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movies_app/core/utils/secure_storage_utils.dart';
 import 'package:movies_app/data/datasources/Api/profile_api_service.dart';
@@ -65,9 +66,30 @@ class ProfileCubit extends Cubit<ProfileStates> {
     try {
       final repository = await _initRepository();
       await repository.deleteProfile();
+      // to do : delete token
+      // to do : delete history
       emit(ProfileDeleted());
     } catch (e) {
       final errorMessage = _extractErrorMessage(e);
+      emit(ProfileError(errorMessage));
+    }
+  }
+
+  Future<void> resetPassword({
+    required String oldPassword,
+    required String newPassword,
+  }) async {
+    emit(ProfileLoading());
+    try {
+      final repository = await _initRepository();
+      await repository.resetPassword(
+        oldPassword: oldPassword,
+        newPassword: newPassword,
+      );
+      emit(PasswordResetSuccess());
+    } catch (e) {
+      final errorMessage = e.toString().replaceFirst("Exception: ", "");
+
       emit(ProfileError(errorMessage));
     }
   }

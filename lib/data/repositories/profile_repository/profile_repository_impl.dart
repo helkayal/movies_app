@@ -30,4 +30,15 @@ class ProfileRepositoryImpl implements ProfileRepository {
   Future<void> deleteProfile() {
     return dataSource.deleteProfile();
   }
+
+  @override
+  Future<Map<String, dynamic>> resetPassword({
+    required String oldPassword,
+    required String newPassword,
+  }) {
+    return dataSource.resetPassword(
+      oldPassword: oldPassword,
+      newPassword: newPassword,
+    );
+  }
 }

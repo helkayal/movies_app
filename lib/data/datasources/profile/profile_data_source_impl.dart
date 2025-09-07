@@ -30,4 +30,15 @@ class ProfileDataSourceImpl implements ProfileDataSource {
   Future<void> deleteProfile() async {
     await apiService.deleteProfile();
   }
+
+  @override
+  Future<Map<String, dynamic>> resetPassword({
+    required String oldPassword,
+    required String newPassword,
+  }) {
+    return apiService.resetPassword({
+      "oldPassword": oldPassword,
+      "newPassword": newPassword,
+    });
+  }
 }

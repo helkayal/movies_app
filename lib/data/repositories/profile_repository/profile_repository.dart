@@ -7,4 +7,8 @@ abstract class ProfileRepository {
     required String phone,
   });
   Future<void> deleteProfile();
+  Future<Map<String, dynamic>> resetPassword({
+    required String oldPassword,
+    required String newPassword,
+  });
 }
