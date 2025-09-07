@@ -14,9 +14,16 @@ class ProfileRepositoryImpl implements ProfileRepository {
   @override
   Future<Map<String, dynamic>> updateProfile({
     required String name,
+    required String email,
     required int avatar,
+    required String phone,
   }) {
-    return dataSource.updateProfile(name: name, avatar: avatar);
+    return dataSource.updateProfile(
+      name: name,
+      email: email,
+      avatar: avatar,
+      phone: phone,
+    );
   }
 
   @override

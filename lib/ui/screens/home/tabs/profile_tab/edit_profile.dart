@@ -1,4 +1,3 @@
-
 import 'package:movies_app/core/utils/constants/imports.dart';
 
 class EditProfile extends StatefulWidget {
@@ -10,6 +9,7 @@ class EditProfile extends StatefulWidget {
 
 class _EditProfileState extends State<EditProfile> {
   final TextEditingController nameController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
   final TextEditingController phoneController = TextEditingController();
 
   int selectedAvatarId = 1;
@@ -103,6 +103,7 @@ class _EditProfileState extends State<EditProfile> {
             ).showSnackBar(SnackBar(content: Text("Error: ${state.message}")));
           } else if (state is ProfileLoaded) {
             nameController.text = state.user.name;
+            emailController.text = state.user.email;
             phoneController.text = state.user.phone;
             selectedAvatarId = state.user.avaterId;
           }
@@ -134,13 +135,19 @@ class _EditProfileState extends State<EditProfile> {
               CustomTextField(
                 hint: 'Name',
                 controller: nameController,
-                prefixIcon: Icon(Icons.person, color: AppColors.white),
+                prefixIcon: Image.asset(AppAssets.name),
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 10),
+              CustomTextField(
+                hint: 'Email',
+                controller: emailController,
+                prefixIcon: Image.asset(AppAssets.email),
+              ),
+              const SizedBox(height: 10),
               CustomTextField(
                 hint: 'Phone',
                 controller: phoneController,
-                prefixIcon: Icon(Icons.phone, color: AppColors.white),
+                prefixIcon: Image.asset(AppAssets.call),
               ),
               const Spacer(),
               CustomButton(
@@ -155,7 +162,9 @@ class _EditProfileState extends State<EditProfile> {
                 text: 'Update Data',
                 onClick: () => context.read<ProfileCubit>().updateProfile(
                   name: nameController.text,
+                  email: emailController.text,
                   avatar: selectedAvatarId,
+                  phone: phoneController.text,
                 ),
               ),
               const SizedBox(height: 40),
