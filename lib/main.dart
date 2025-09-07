@@ -1,5 +1,7 @@
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:movies_app/ui/screens/auth/local_provider/local_provider.dart';
+import 'package:provider/provider.dart'; // ✅ استدعاء Provider
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:movies_app/firebase_options.dart';
@@ -18,7 +20,7 @@ import 'package:movies_app/data/datasources/Api/dioclient.dart';
 
 // localization
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'l10n/app_localizations.dart';
+import 'l10n/app_localizations.dart'; // ✅ ملف الـ Provider
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -31,8 +33,9 @@ void main() async {
   final completed = await onboardingRepository.isOnboardingCompleted();
 
   runApp(
-    MultiBlocProvider(
+    MultiProvider(
       providers: [
+        ChangeNotifierProvider(create: (_) => LocaleProvider()), // ✅ Provider للـ Locale
         BlocProvider(create: (_) => MovieBloc()),
         BlocProvider(create: (_) => ProfileCubit()),
         BlocProvider(create: (_) => AuthBloc(authApis: authApis)),
@@ -43,28 +46,14 @@ void main() async {
   );
 }
 
-class MainApp extends StatefulWidget {
+class MainApp extends StatelessWidget {
   final bool onboardingCompleted;
   const MainApp({super.key, required this.onboardingCompleted});
 
-  static _MainAppState? of(BuildContext context) =>
-      context.findAncestorStateOfType<_MainAppState>();
-
-  @override
-  State<MainApp> createState() => _MainAppState();
-}
-
-class _MainAppState extends State<MainApp> {
-  Locale _locale = const Locale('en');
-
-  void setLocale(Locale locale) {
-    setState(() {
-      _locale = locale;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
+    final localeProvider = Provider.of<LocaleProvider>(context); // ✅ جلب الـ Locale من الـ Provider
+
     return ScreenUtilInit(
       designSize: const Size(375, 812),
       minTextAdapt: true,
@@ -74,7 +63,7 @@ class _MainAppState extends State<MainApp> {
           debugShowCheckedModeBanner: false,
           themeMode: ThemeMode.dark,
           darkTheme: AppTheme.darkTheme,
-          locale: _locale,
+          locale: localeProvider.locale, // ✅ استخدام الـ Locale من الـ Provider
           supportedLocales: const [Locale('en'), Locale('ar')],
           localizationsDelegates: const [
             AppLocalizations.delegate,
@@ -82,12 +71,8 @@ class _MainAppState extends State<MainApp> {
             GlobalWidgetsLocalizations.delegate,
             GlobalCupertinoLocalizations.delegate,
           ],
-          home: widget.onboardingCompleted
-              ? LoginScreen(
-            key: const Key('loginScreen'),
-            // تمرير setLocale لربطه مع LoginView
-            onLocaleChange: setLocale,
-          )
+          home: onboardingCompleted
+              ? const LoginScreen(key: Key('loginScreen')) // مش محتاجين onLocaleChange بعد كده
               : const OnboardingIntro(),
         );
       },

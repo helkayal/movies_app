@@ -1,22 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:provider/provider.dart'; // ✅ استدعاء Provider
 import '../../../../data/datasources/google/google_auth.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../authbloc/authbloc.dart';
 import '../authbloc/authevent.dart';
 import '../authbloc/authstate.dart';
 import '../../../../core/utils/constants/imports.dart';
+import '../local_provider/local_provider.dart'; // ✅ Provider
 
 class LoginView extends StatefulWidget {
   final bool isLoading;
-  final void Function(Locale) onLocaleChange;
   final GoogleAuth googleAuth = GoogleAuth();
 
-   LoginView({
-    super.key,
-    this.isLoading = false,
-    required this.onLocaleChange,
-  });
+   LoginView({super.key, this.isLoading = false});
 
   @override
   State<LoginView> createState() => _LoginViewState();
@@ -185,19 +182,15 @@ class _LoginViewState extends State<LoginView> {
             SizedBox(height: height * 0.02),
 
             // Language Switcher
-            LanguageSwitcher(onLocaleChange: widget.onLocaleChange),
+            LanguageSwitcher(), // ✅ مش هنبعت onLocaleChange بعد كده
           ],
         ),
       ),
     );
   }
 }
-
-// Language Switcher
 class LanguageSwitcher extends StatefulWidget {
-  final void Function(Locale) onLocaleChange;
-
-  const LanguageSwitcher({super.key, required this.onLocaleChange});
+  const LanguageSwitcher({super.key});
 
   @override
   State<LanguageSwitcher> createState() => _LanguageSwitcherState();
@@ -210,14 +203,15 @@ class _LanguageSwitcherState extends State<LanguageSwitcher> {
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
+    final localeProvider = Provider.of<LocaleProvider>(context); // ✅ Provider
+
+    // تحديث الزر حسب اللغة الحالية
+    isArabic = localeProvider.locale.languageCode == 'ar';
 
     return GestureDetector(
       onTap: () {
-        setState(() {
-          isArabic = !isArabic;
-          final newLocale = isArabic ? const Locale('ar') : const Locale('en');
-          widget.onLocaleChange(newLocale);
-        });
+        final newLocale = isArabic ? const Locale('en') : const Locale('ar');
+        localeProvider.setLocale(newLocale);
       },
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 300),
