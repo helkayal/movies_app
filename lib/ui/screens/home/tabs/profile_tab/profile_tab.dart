@@ -2,6 +2,8 @@ import 'package:movies_app/core/utils/constants/imports.dart';
 import 'package:movies_app/ui/screens/home/tabs/profile_tab/cubit/history_cubit.dart';
 import 'package:movies_app/ui/screens/home/tabs/profile_tab/widgets/history_list.dart';
 
+import '../../../../../l10n/app_localizations.dart';
+
 class ProfileTab extends StatefulWidget {
   final List<Movies> movie;
   const ProfileTab({super.key, required this.movie});
@@ -32,7 +34,7 @@ class _ProfileTabState extends State<ProfileTab> {
       AppAssets.avatar8,
       AppAssets.avatar9,
     ];
-
+    final loc = AppLocalizations.of(context)!;
     return BlocBuilder<ProfileCubit, ProfileStates>(
       builder: (context, state) {
         if (state is ProfileLoading) {
@@ -41,7 +43,7 @@ class _ProfileTabState extends State<ProfileTab> {
           );
         }
 
-        String userName = "Guest";
+        String userName = loc.guest;
         String avatarPath = avatars[0];
 
         if (state is ProfileLoaded) {
@@ -51,8 +53,7 @@ class _ProfileTabState extends State<ProfileTab> {
 
         if (state is ProfileError) {
           return Center(
-            child: Text(
-              "Error: ${state.message}",
+            child: Text("${loc.error}: ${state.message}",
               style: AppTextStyles.whiteBold20,
             ),
           );
@@ -83,15 +84,15 @@ class _ProfileTabState extends State<ProfileTab> {
                     Column(
                       spacing: 10,
                       children: [
-                        Text('12', style: AppTextStyles.whiteBold36),
-                        Text('Wish List', style: AppTextStyles.whiteBold24),
+                        Text("12", style: AppTextStyles.whiteBold36),
+                        Text(loc.wishList, style: AppTextStyles.whiteBold24),
                       ],
                     ),
                     Column(
                       spacing: 10,
                       children: [
-                        Text('10', style: AppTextStyles.whiteBold36),
-                        Text('History', style: AppTextStyles.whiteBold24),
+                        Text("10", style: AppTextStyles.whiteBold36),
+                        Text(loc.history, style: AppTextStyles.whiteBold24),
                       ],
                     ),
                   ],
@@ -108,7 +109,7 @@ class _ProfileTabState extends State<ProfileTab> {
                     SizedBox(
                       width: context.width * 0.62,
                       child: CustomButton(
-                        text: 'Edit Profile',
+                        text: loc.editProfile,
                         onClick: () {
                           Navigator.push(context, AppRoutes.editProfile).then((
                             updated,
@@ -123,7 +124,7 @@ class _ProfileTabState extends State<ProfileTab> {
                     SizedBox(
                       width: context.width * 0.32,
                       child: CustomButton(
-                        text: 'Exit',
+                        text: loc.exit,
                         onClick: () async {
                           context.read<ProfileCubit>().deleteProfile();
                           if (!context.mounted) return;
@@ -158,7 +159,7 @@ class _ProfileTabState extends State<ProfileTab> {
                       children: [
                         Image.asset(AppAssets.icWishList, height: 30),
                         const SizedBox(height: 4),
-                        Text("Wish List", style: AppTextStyles.whiteRegular20),
+                        Text(loc.wishList, style: AppTextStyles.whiteRegular20),
                         SizedBox(height: 10),
                       ],
                     ),
@@ -167,7 +168,7 @@ class _ProfileTabState extends State<ProfileTab> {
                       children: [
                         Image.asset(AppAssets.icHistory, height: 30),
                         const SizedBox(height: 4),
-                        Text("History", style: AppTextStyles.whiteRegular20),
+                        Text(loc.history, style: AppTextStyles.whiteRegular20),
                         SizedBox(height: 10),
                       ],
                     ),

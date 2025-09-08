@@ -1,11 +1,14 @@
 import 'package:movies_app/core/utils/constants/imports.dart';
 
+import '../../../../l10n/app_localizations.dart';
+
 class HomeTab extends StatelessWidget {
   final List<Movies> movie;
   const HomeTab({super.key, required this.movie});
 
   @override
   Widget build(BuildContext context) {
+
           return Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -61,7 +64,7 @@ class HomeTab extends StatelessWidget {
                 height: context.height * 0.28,
                 child: Column(
                   children: [
-                    seeMoreSection(),
+                    seeMoreSection(context),
                     const SizedBox(height: 12),
                     Expanded(
                       child: ListView.builder(
@@ -89,13 +92,14 @@ class HomeTab extends StatelessWidget {
     }
   }
 
-  Padding seeMoreSection() {
+  Padding seeMoreSection(BuildContext context) {
+    final loc = AppLocalizations.of(context)!;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: Row(
         children: [
           Text(
-            'Action',
+            loc.action,
             style: TextStyle(
               color: AppColors.white,
               fontSize: 20,
@@ -106,7 +110,7 @@ class HomeTab extends StatelessWidget {
           InkWell(
             onTap: () {},
             child: Text(
-              'See More',
+              loc.seeMore,
               style: TextStyle(
                 color: AppColors.yellow,
                 fontSize: 16,
