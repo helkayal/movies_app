@@ -9,7 +9,7 @@ abstract class MovieState extends Equatable {
 }
 //list of movies states
 class MovieSuccess extends MovieState {
-  final MovieDataModel movies;
+  final ListMoviesModel movies;
 
   const MovieSuccess(this.movies);
 
@@ -18,10 +18,10 @@ class MovieSuccess extends MovieState {
 }
 //movie details states
 class MovieDetailsSuccess extends MovieState {
-  final Movies? movie;
+  final Movie movie;
   const MovieDetailsSuccess({required this.movie});
   @override
-  List<Object> get props => [?movie];
+  List<Object> get props => [movie];
 }
 //Shared
 final class MovieInitial extends MovieState {}

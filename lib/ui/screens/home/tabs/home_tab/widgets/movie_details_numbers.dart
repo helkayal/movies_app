@@ -20,7 +20,7 @@ class MovieDetailsNumbers extends StatelessWidget {
         color: AppColors.darkGrey,
       ),
       child: Row(
-        // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        spacing: 14,
         children: [
           Image.asset(image),
           Text(text, style: AppTextStyles.whiteBold20),

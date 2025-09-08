@@ -5,7 +5,8 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movies_app/data/datasources/Api/movie_api_service.dart';
-import 'package:movies_app/data/model/movie_dm.dart';
+import 'package:movies_app/data/model/list_movies_model.dart';
+import 'package:movies_app/data/model/movie_details_model.dart';
 
 part 'movie_event.dart';
 part 'movie_state.dart';
@@ -25,7 +26,7 @@ class MovieBloc extends Bloc<MovieEvent, MovieState> {
     emit(MovieLoading());
     
     try {
-      final MovieDataModel movies = await ApiService.getMovies();
+      final ListMoviesModel movies = await ApiService.getMovies();
       emit(MovieSuccess(movies));
     } catch (e) {
       emit(MovieError(e.toString()));
@@ -39,7 +40,7 @@ class MovieBloc extends Bloc<MovieEvent, MovieState> {
     emit(MovieLoading());
 
     try {
-      final MovieDataModel response  = await ApiService.getMovieDetails(movieId: event.movieId);
+      final MovieDetailsModel response  = await ApiService.getMovieDetails(movieId: event.movieId);
       if(response.data?.movie != null && response.status == 'ok'){
         emit(MovieDetailsSuccess(movie: response.data!.movie!));
       }else{

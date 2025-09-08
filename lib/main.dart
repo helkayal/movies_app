@@ -1,4 +1,5 @@
 import 'package:movies_app/ui/screens/auth/local_provider/local_provider.dart';
+import 'package:movies_app/ui/screens/home/home_screen.dart';
 import 'package:provider/provider.dart'; // ✅ استدعاء Provider
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -75,11 +76,12 @@ class MainApp extends StatelessWidget {
             GlobalWidgetsLocalizations.delegate,
             GlobalCupertinoLocalizations.delegate,
           ],
-          home: onboardingCompleted
-              ? const LoginScreen(
-                  key: Key('loginScreen'),
-                ) // مش محتاجين onLocaleChange بعد كده
-              : const OnboardingIntro(),
+          home: HomeScreen(),
+          // onboardingCompleted
+          //     ? const LoginScreen(
+          //         key: Key('loginScreen'),
+          //       ) // مش محتاجين onLocaleChange بعد كده
+          //     : const OnboardingIntro(),
         );
       },
     );

@@ -1,5 +1,6 @@
 // lib/authapi/authapis.dart
-import 'apiconstants.dart';
+import 'package:movies_app/data/datasources/Api/api_constants.dart';
+
 import 'dioclient.dart';
 
 class AuthApis {

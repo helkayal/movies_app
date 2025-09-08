@@ -1,5 +1,5 @@
 import 'package:movies_app/core/utils/constants/imports.dart';
-import 'package:movies_app/ui/screens/home/tabs/home_tab/movie_detials.dart';
+import 'package:movies_app/ui/screens/home/tabs/home_tab/movie_details_screen.dart';
 
 class CustomMovieImage extends StatelessWidget {
   final double? width;
@@ -83,7 +83,7 @@ void _onMoviePressed(BuildContext context, Movies movie) {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => MovieDetails(movieId: movie.id!),
+        builder: (context) => MovieDetailsScreen(movieId: movie.id!),
       ),
     );
   

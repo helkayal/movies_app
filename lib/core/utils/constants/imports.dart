@@ -37,4 +37,4 @@ export 'package:movies_app/ui/screens/home/tabs/profile_tab/cubit/favourite_stat
 export 'package:movies_app/data/datasources/Api/favourite_api_service.dart';
 export 'package:movies_app/data/datasources/favourite/favourite_data_source_impl.dart';
 export 'package:movies_app/data/repositories/favourite/favourite_repository_impl.dart';
-export 'package:movies_app/data/model/movie_dm.dart';
+export 'package:movies_app/data/model/list_movies_model.dart';

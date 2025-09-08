@@ -1,8 +1,8 @@
 // lib/core/network/dio_client.dart
 import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:movies_app/data/datasources/Api/api_constants.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
-import 'apiconstants.dart';
 
 class DioClient {
   final Dio _dio = Dio();
@@ -10,7 +10,7 @@ class DioClient {
 
   DioClient() {
     _dio.options = BaseOptions(
-      baseUrl: ApiConstants.baseUrl,
+      baseUrl: ApiConstants.dioClientBaseUrl,
       connectTimeout: const Duration(seconds: 30),
       receiveTimeout: const Duration(seconds: 30),
       headers: {'Content-Type': 'application/json'},

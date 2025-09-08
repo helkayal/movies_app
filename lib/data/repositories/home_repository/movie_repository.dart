@@ -1,4 +1,4 @@
-import 'package:movies_app/data/model/movie_dm.dart';
+import 'package:movies_app/data/model/list_movies_model.dart';
 
 class MovieRepository {
   static List<String> getGenres({required List<Movies> movies}) {

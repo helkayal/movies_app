@@ -53,7 +53,7 @@ abstract final class AppAssets {
   static const String screen2 = 'assets/icons/screen2.png';
   static const String screen3 = 'assets/icons/screen3.png';
   static const String defaultImage = 'assets/images/default_image.png';
-  static const String eg = 'assets/icons/eg.png';
-  static const String us = 'assets/icons/us.png';
   static const String videologo = 'assets/icons/videologo.png';
+  static const String screenShot = 'assets/images/screenShot.jpg';
+  static const String defaultPersonImage = 'https://www.shutterstock.com/image-vector/default-avatar-profile-icon-vector-600nw-1745180411.jpg';
 }
