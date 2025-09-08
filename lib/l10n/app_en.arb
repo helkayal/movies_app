@@ -17,5 +17,27 @@
   "passwordsDoNotMatch": "Passwords do not match",
   "verifyEmail": "Verify Email",
   "enterEmail": "Please enter your email",
-  "enterValidEmail": "Please enter a valid email"
+  "enterValidEmail": "Please enter a valid email",
+  "action":"Action",
+  "seeMore":"See More",
+  "search": "Search",
+    "editProfile": "Edit Profile",
+    "profileUpdatedSuccessfully": "Profile updated successfully",
+      "error": "Error",
+      "name": "Name",
+      "phone": "Phone",
+      "deleteAccount": "Delete Account",
+      "updateData": "Update Data",
+      "guest": "Guest",
+        "wishList": "Wish List",
+        "history": "History",
+        "exit": "Exit",
+        "watch":"Watch",
+                 "screenShots":"ScreenShots",
+                 "similar":"Similar",
+                 "summary": "Summary",
+                    "genres": "Genres",
+                    "cast": "Cast"
+
+
 }

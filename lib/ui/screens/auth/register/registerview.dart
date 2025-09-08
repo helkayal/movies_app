@@ -25,12 +25,11 @@ class RegisterView extends StatefulWidget {
 
 class _RegisterViewState extends State<RegisterView> {
   int selectedIndex = 0;
-  bool isArabic = true; // التحكم بلغة الشاشة locally
+  bool isArabic = false; // يبدأ بالإنجليزي
   final TextEditingController nameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-  final TextEditingController confirmPasswordController =
-      TextEditingController();
+  final TextEditingController confirmPasswordController = TextEditingController();
   final TextEditingController phoneController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
@@ -65,8 +64,7 @@ class _RegisterViewState extends State<RegisterView> {
             appBar: AppBar(
               backgroundColor: Colors.black,
               leading: IconButton(
-                onPressed: () =>
-                    Navigator.pushReplacement(context, AppRoutes.login),
+                onPressed: () => Navigator.pushReplacement(context, AppRoutes.login),
                 icon: Icon(Icons.arrow_back, color: AppColors.yellow),
               ),
               centerTitle: true,
@@ -103,12 +101,12 @@ class _RegisterViewState extends State<RegisterView> {
                                 ),
                                 boxShadow: isSelected
                                     ? [
-                                        BoxShadow(
-                                          color: Colors.black26,
-                                          blurRadius: 10,
-                                          offset: Offset(0, 5),
-                                        ),
-                                      ]
+                                  BoxShadow(
+                                    color: Colors.black26,
+                                    blurRadius: 10,
+                                    offset: Offset(0, 5),
+                                  ),
+                                ]
                                     : [],
                               ),
                             ),
@@ -119,51 +117,20 @@ class _RegisterViewState extends State<RegisterView> {
                     SizedBox(height: 10),
                     Text(loc.avatar, style: AppTextStyles.whiteRegular16),
                     SizedBox(height: height * 0.015),
-                    _buildTextField(
-                      width,
-                      loc.name,
-                      AppAssets.name,
-                      nameController,
-                      false,
-                    ),
+                    _buildTextField(width, loc.name, AppAssets.name, nameController, false),
                     SizedBox(height: height * 0.015),
-                    _buildTextField(
-                      width,
-                      loc.email,
-                      AppAssets.email,
-                      emailController,
-                      false,
-                    ),
+                    _buildTextField(width, loc.email, AppAssets.email, emailController, false),
                     SizedBox(height: height * 0.015),
-                    _buildTextField(
-                      width,
-                      loc.password,
-                      AppAssets.lock,
-                      passwordController,
-                      true,
-                    ),
+                    _buildTextField(width, loc.password, AppAssets.lock, passwordController, true),
                     SizedBox(height: height * 0.015),
-                    _buildTextField(
-                      width,
-                      loc.confirmPassword,
-                      AppAssets.lock,
-                      confirmPasswordController,
-                      true,
-                    ),
+                    _buildTextField(width, loc.confirmPassword, AppAssets.lock, confirmPasswordController, true),
                     SizedBox(height: height * 0.015),
-                    _buildTextField(
-                      width,
-                      loc.phoneNumber,
-                      AppAssets.call,
-                      phoneController,
-                      false,
-                    ),
+                    _buildTextField(width, loc.phoneNumber, AppAssets.call, phoneController, false),
                     SizedBox(height: height * 0.015),
                     ElevatedButton(
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {
-                          if (passwordController.text !=
-                              confirmPasswordController.text) {
+                          if (passwordController.text != confirmPasswordController.text) {
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(content: Text(loc.passwordsDoNotMatch)),
                             );
@@ -194,6 +161,7 @@ class _RegisterViewState extends State<RegisterView> {
                       ),
                     ),
                     SizedBox(height: height * 0.02),
+                    // Language Switcher يبدأ بالإنجليزي
                     LanguageSwitcher(
                       isArabic: isArabic,
                       onChanged: (val) {
@@ -214,12 +182,12 @@ class _RegisterViewState extends State<RegisterView> {
   }
 
   Widget _buildTextField(
-    double width,
-    String hint,
-    String icon,
-    TextEditingController controller,
-    bool isPassword,
-  ) {
+      double width,
+      String hint,
+      String icon,
+      TextEditingController controller,
+      bool isPassword,
+      ) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: width * 0.03),
       child: CustomTextField(
@@ -261,19 +229,22 @@ class LanguageSwitcher extends StatelessWidget {
         ),
         child: Stack(
           children: [
+            // العلم العربي على اليمين
             Align(
               alignment: Alignment.centerRight,
               child: Image.asset(AppAssets.eg),
             ),
+            // العلم الإنجليزي على الشمال
             Align(
               alignment: Alignment.centerLeft,
               child: Image.asset(AppAssets.us),
             ),
+            // الدائرة المتحركة
             AnimatedAlign(
               duration: const Duration(milliseconds: 300),
               alignment: isArabic
-                  ? Alignment.centerRight
-                  : Alignment.centerLeft,
+                  ? Alignment.centerRight   // العربي على اليمين
+                  : Alignment.centerLeft,   // الإنجليزي على الشمال
               child: Container(
                 width: 32,
                 height: 32,

@@ -1,5 +1,7 @@
 import 'package:movies_app/core/utils/constants/imports.dart';
 
+import '../../../../../l10n/app_localizations.dart';
+
 class EditProfile extends StatefulWidget {
   const EditProfile({super.key});
 
@@ -140,9 +142,10 @@ class _EditProfileState extends State<EditProfile> {
 
   @override
   Widget build(BuildContext context) {
+    final loc = AppLocalizations.of(context)!;
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Edit Profile'),
+        title: Text(loc.editProfile),
         leading: IconButton(
           onPressed: () => Navigator.pop(context, false),
           icon: Icon(Icons.arrow_back, color: AppColors.yellow),
@@ -152,7 +155,7 @@ class _EditProfileState extends State<EditProfile> {
         listener: (context, state) {
           if (state is ProfileUpdated) {
             ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text("Profile updated successfully")),
+               SnackBar(content: Text(loc.profileUpdatedSuccessfully)),
             );
             Navigator.pop(context, true);
           } else if (state is ProfileDeleted) {
@@ -169,11 +172,14 @@ class _EditProfileState extends State<EditProfile> {
           } else if (state is ProfileError) {
             ScaffoldMessenger.of(
               context,
+
             ).showSnackBar(SnackBar(content: Text(state.message)));
           } else if (state is PasswordResetError) {
             ScaffoldMessenger.of(
               context,
-            ).showSnackBar(SnackBar(content: Text(state.message)));
+            ).showSnackBar(SnackBar(
+                content: Text("${loc.error}: ${state.message}")));
+
           } else if (state is ProfileLoaded) {
             nameController.text = state.user.name;
             emailController.text = state.user.email;
@@ -206,7 +212,7 @@ class _EditProfileState extends State<EditProfile> {
                 ),
               ),
               CustomTextField(
-                hint: 'Name',
+                hint: loc.name,
                 controller: nameController,
                 prefixIcon: Image.asset(AppAssets.name),
               ),
@@ -218,7 +224,7 @@ class _EditProfileState extends State<EditProfile> {
               ),
               const SizedBox(height: 10),
               CustomTextField(
-                hint: 'Phone',
+                hint: loc.phone,
                 controller: phoneController,
                 prefixIcon: Image.asset(AppAssets.call),
               ),
@@ -232,7 +238,7 @@ class _EditProfileState extends State<EditProfile> {
               ),
               const Spacer(),
               CustomButton(
-                text: 'Delete Account',
+                text: loc.deleteAccount,
                 onClick: () => context.read<ProfileCubit>().deleteProfile(),
                 backgroundColor: AppColors.red,
                 textColor: AppColors.white,
@@ -240,7 +246,7 @@ class _EditProfileState extends State<EditProfile> {
               ),
               const SizedBox(height: 20),
               CustomButton(
-                text: 'Update Data',
+                text: loc.updateData,
                 onClick: () => context.read<ProfileCubit>().updateProfile(
                   name: nameController.text,
                   email: emailController.text,
