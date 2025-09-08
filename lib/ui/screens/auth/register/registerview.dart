@@ -263,11 +263,11 @@ class LanguageSwitcher extends StatelessWidget {
           children: [
             Align(
               alignment: Alignment.centerRight,
-              child: Image.asset(AppAssets.eg),
+              child: Image.asset(AppAssets.icAr),
             ),
             Align(
               alignment: Alignment.centerLeft,
-              child: Image.asset(AppAssets.us),
+              child: Image.asset(AppAssets.icEn),
             ),
             AnimatedAlign(
               duration: const Duration(milliseconds: 300),
