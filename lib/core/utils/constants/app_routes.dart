@@ -21,11 +21,11 @@ abstract final class AppRoutes {
   }
 
   static Route get register {
-    return MaterialPageRoute(builder: (_) => const Register());
+    return MaterialPageRoute(builder: (_) => const RegisterScreen());
   }
 
   static Route get forgetPassword {
-    return MaterialPageRoute(builder: (_) => const ForgetPassword());
+    return MaterialPageRoute(builder: (_) => const ForgetPasswordScreen());
   }
 
   static Route get home {

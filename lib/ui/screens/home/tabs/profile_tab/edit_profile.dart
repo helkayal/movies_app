@@ -1,4 +1,3 @@
-
 import 'package:movies_app/core/utils/constants/imports.dart';
 
 class EditProfile extends StatefulWidget {
@@ -10,7 +9,13 @@ class EditProfile extends StatefulWidget {
 
 class _EditProfileState extends State<EditProfile> {
   final TextEditingController nameController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
   final TextEditingController phoneController = TextEditingController();
+
+  final TextEditingController oldPasswordController = TextEditingController();
+  final TextEditingController newPasswordController = TextEditingController();
+
+  final GlobalKey<FormState> _passwordFormKey = GlobalKey<FormState>();
 
   int selectedAvatarId = 1;
 
@@ -78,6 +83,61 @@ class _EditProfileState extends State<EditProfile> {
     );
   }
 
+  void _showResetPasswordSheet() {
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: AppColors.black,
+      shape: const RoundedRectangleBorder(
+        side: BorderSide(color: AppColors.darkGrey, width: 2),
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      builder: (context) {
+        return Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Form(
+            key: _passwordFormKey,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text("Reset Password", style: AppTextStyles.whiteRegular20),
+                const SizedBox(height: 20),
+                CustomTextField(
+                  hint: 'Old Password',
+                  controller: oldPasswordController,
+                  prefixIcon: Image.asset(AppAssets.lock),
+                  isPassword: true,
+                ),
+                const SizedBox(height: 10),
+                CustomTextField(
+                  hint: 'New Password',
+                  controller: newPasswordController,
+                  prefixIcon: Image.asset(AppAssets.lock),
+                  isPassword: true,
+                ),
+                const SizedBox(height: 20),
+                CustomButton(
+                  text: 'Reset',
+                  onClick: () {
+                    if (_passwordFormKey.currentState!.validate()) {
+                      context.read<ProfileCubit>().resetPassword(
+                        oldPassword: oldPasswordController.text.trim(),
+                        newPassword: newPasswordController.text.trim(),
+                      );
+                      oldPasswordController.clear();
+                      newPasswordController.clear();
+                      Navigator.pop(context);
+                    }
+                  },
+                ),
+                const SizedBox(height: 20),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -97,12 +157,26 @@ class _EditProfileState extends State<EditProfile> {
             Navigator.pop(context, true);
           } else if (state is ProfileDeleted) {
             Navigator.push(context, AppRoutes.login);
+          } else if (state is PasswordResetSuccess) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text(
+                  "Password changed successfully, please login again",
+                ),
+              ),
+            );
+            Navigator.pushReplacement(context, AppRoutes.login);
           } else if (state is ProfileError) {
             ScaffoldMessenger.of(
               context,
-            ).showSnackBar(SnackBar(content: Text("Error: ${state.message}")));
+            ).showSnackBar(SnackBar(content: Text(state.message)));
+          } else if (state is PasswordResetError) {
+            ScaffoldMessenger.of(
+              context,
+            ).showSnackBar(SnackBar(content: Text(state.message)));
           } else if (state is ProfileLoaded) {
             nameController.text = state.user.name;
+            emailController.text = state.user.email;
             phoneController.text = state.user.phone;
             selectedAvatarId = state.user.avaterId;
           }
@@ -134,13 +208,27 @@ class _EditProfileState extends State<EditProfile> {
               CustomTextField(
                 hint: 'Name',
                 controller: nameController,
-                prefixIcon: Icon(Icons.person, color: AppColors.white),
+                prefixIcon: Image.asset(AppAssets.name),
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 10),
+              CustomTextField(
+                hint: 'Email',
+                controller: emailController,
+                prefixIcon: Image.asset(AppAssets.email),
+              ),
+              const SizedBox(height: 10),
               CustomTextField(
                 hint: 'Phone',
                 controller: phoneController,
-                prefixIcon: Icon(Icons.phone, color: AppColors.white),
+                prefixIcon: Image.asset(AppAssets.call),
+              ),
+              const SizedBox(height: 20),
+              InkWell(
+                onTap: _showResetPasswordSheet,
+                child: Text(
+                  "Reset Password",
+                  style: AppTextStyles.whiteRegular20,
+                ),
               ),
               const Spacer(),
               CustomButton(
@@ -155,7 +243,9 @@ class _EditProfileState extends State<EditProfile> {
                 text: 'Update Data',
                 onClick: () => context.read<ProfileCubit>().updateProfile(
                   name: nameController.text,
+                  email: emailController.text,
                   avatar: selectedAvatarId,
+                  phone: phoneController.text,
                 ),
               ),
               const SizedBox(height: 40),

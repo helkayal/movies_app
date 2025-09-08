@@ -19,8 +19,7 @@ abstract final class AppAssets {
   static const String profile = 'assets/images/profile.png';
   static const String searchIcon = 'assets/images/search_icon.png';
   static const String watchNow = 'assets/images/watch_now.png';
-  static const String forgetPassword =
-      'assets/images/forgotPassword.png';
+  static const String forgetPassword = 'assets/images/forgotPassword.png';
   static const String avatar1 = 'assets/images/avatar1.png';
   static const String avatar2 = 'assets/images/avatar2.png';
   static const String avatar3 = 'assets/images/avatar3.png';
@@ -54,5 +53,7 @@ abstract final class AppAssets {
   static const String screen2 = 'assets/icons/screen2.png';
   static const String screen3 = 'assets/icons/screen3.png';
   static const String defaultImage = 'assets/images/default_image.png';
-
+  static const String eg = 'assets/icons/eg.png';
+  static const String us = 'assets/icons/us.png';
+  static const String videologo = 'assets/icons/videologo.png';
 }

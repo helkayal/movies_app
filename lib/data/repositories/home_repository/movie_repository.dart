@@ -35,8 +35,11 @@ class MovieRepository {
     if (searchedMovie.isEmpty) {
       return [];
     } else {
-      return movies.where((movie) => movie.title!.toLowerCase().startsWith(searchedMovie),
-          ).toList();
+      return movies
+          .where(
+            (movie) => movie.title!.toLowerCase().startsWith(searchedMovie),
+          )
+          .toList();
     }
   }
 }

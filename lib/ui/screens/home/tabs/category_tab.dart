@@ -1,9 +1,8 @@
-
 import 'package:movies_app/core/utils/constants/imports.dart';
 
 class CategoryTab extends StatefulWidget {
-  List<Movies> movie;
-  CategoryTab({super.key, required this.movie});
+  final List<Movies> movie;
+  const CategoryTab({super.key, required this.movie});
 
   @override
   State<CategoryTab> createState() => _CategoryTabState();
@@ -15,10 +14,10 @@ class _CategoryTabState extends State<CategoryTab> {
   @override
   void initState() {
     super.initState();
-    //علشان خاطر اجيب اول فئه كان لازم اعمل init state بتحددلى ان اول عنصر هو 0 
-    //خصوصا ان الليست فاضيه فى الاول ولما ادوس على زرار الفئه الفانكشن الى بتجيب الافلام تشتغل مع كل زرار 
-    // عملت ليسته جديده عشان دى الى هتخزن الافلام حسب الفئه 
-    //ولما اقفل وافتح التابه دى هتبقى اول قيمة هى الى selected طبعا عشان ال0 
+    //علشان خاطر اجيب اول فئه كان لازم اعمل init state بتحددلى ان اول عنصر هو 0
+    //خصوصا ان الليست فاضيه فى الاول ولما ادوس على زرار الفئه الفانكشن الى بتجيب الافلام تشتغل مع كل زرار
+    // عملت ليسته جديده عشان دى الى هتخزن الافلام حسب الفئه
+    //ولما اقفل وافتح التابه دى هتبقى اول قيمة هى الى selected طبعا عشان ال0
     movieByGenre = MovieRepository.getMoviesByGenres(
       genre: MovieRepository.getGenres(movies: widget.movie)[0],
       movies: widget.movie,

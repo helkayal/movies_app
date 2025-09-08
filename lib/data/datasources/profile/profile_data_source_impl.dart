@@ -14,13 +14,31 @@ class ProfileDataSourceImpl implements ProfileDataSource {
   @override
   Future<Map<String, dynamic>> updateProfile({
     required String name,
+    required String email,
     required int avatar,
+    required String phone,
   }) async {
-    return await apiService.updateProfile({"name": name, "avaterId": avatar});
+    return await apiService.updateProfile({
+      "name": name,
+      "email": email,
+      "avaterId": avatar,
+      "phone": phone,
+    });
   }
 
   @override
   Future<void> deleteProfile() async {
     await apiService.deleteProfile();
+  }
+
+  @override
+  Future<Map<String, dynamic>> resetPassword({
+    required String oldPassword,
+    required String newPassword,
+  }) {
+    return apiService.resetPassword({
+      "oldPassword": oldPassword,
+      "newPassword": newPassword,
+    });
   }
 }
