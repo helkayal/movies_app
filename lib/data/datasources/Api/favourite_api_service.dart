@@ -40,4 +40,38 @@ class FavouriteApiService {
       rethrow;
     }
   }
+
+  Future<Map<String, dynamic>> addFavourite(Map<String, dynamic> body) async {
+    try {
+      final response = await _dio.post('/favorites/add', data: body);
+      return handleDioResponse(response);
+    } on DioException catch (e) {
+      handleDioError(e);
+      rethrow;
+    }
+  }
+
+  Future<Map<String, dynamic>> isMovieFavourite({
+    required String movieId,
+  }) async {
+    try {
+      final response = await _dio.get('/favorites/is-favorite/$movieId');
+      return handleDioResponse(response);
+    } on DioException catch (e) {
+      handleDioError(e);
+      rethrow;
+    }
+  }
+
+  Future<Map<String, dynamic>> removeMovieFromFavourite({
+    required String movieId,
+  }) async {
+    try {
+      final response = await _dio.get('/favorites/remove/$movieId');
+      return handleDioResponse(response);
+    } on DioException catch (e) {
+      handleDioError(e);
+      rethrow;
+    }
+  }
 }

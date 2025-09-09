@@ -1,6 +1,7 @@
 import 'package:movies_app/ui/screens/auth/local_provider/local_provider.dart';
 import 'package:movies_app/ui/screens/home/bloc/movie_details_bloc/movie_details_bloc.dart';
 import 'package:movies_app/ui/screens/home/home_screen.dart';
+import 'package:movies_app/ui/screens/home/tabs/profile_tab/cubit/history_cubit.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -27,14 +28,7 @@ void main() async {
 
   bool completed = false;
 
-  try {
-    await Firebase.initializeApp(
-      options: DefaultFirebaseOptions.currentPlatform,
-    );
-    print("✅ Firebase initialized successfully");
-  } catch (e) {
-    print("❌ Firebase init error: $e");
-  }
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
   try {
     final dioClient = DioClient();
@@ -44,7 +38,6 @@ void main() async {
       OnboardingDataSourceImpl(),
     );
     completed = await onboardingRepository.isOnboardingCompleted();
-    print("👉 Onboarding Completed: $completed");
 
     runApp(
       MultiProvider(
@@ -53,6 +46,8 @@ void main() async {
           BlocProvider(create: (context) => MovieDetailsBloc()),
           BlocProvider(create: (_) => MovieBloc(apiService: ApiService())),
           BlocProvider(create: (_) => ProfileCubit()),
+          BlocProvider(create: (_) => FavouriteCubit()),
+          BlocProvider(create: (_) => HistoryCubit()),
           BlocProvider(create: (_) => AuthBloc(authApis: authApis)),
           BlocProvider(create: (_) => ChangeBgImageBloc()),
         ],

@@ -1,5 +1,4 @@
 import 'package:movies_app/core/utils/constants/imports.dart';
-import 'package:movies_app/data/model/movie_details_model.dart';
 import 'package:movies_app/ui/screens/home/tabs/home_tab/movie_details_screen.dart';
 
 class CustomMovieImage extends StatelessWidget {
@@ -11,7 +10,8 @@ class CustomMovieImage extends StatelessWidget {
     super.key,
     this.width,
     this.height,
-    this.margin,required this.movieDetails,
+    this.margin,
+    required this.movieDetails,
   });
 
   @override
@@ -54,10 +54,12 @@ class CustomMovieImage extends StatelessWidget {
             ),
           ),
         ),
-        placeholder: (context, url) => Center(child: Padding(
-          padding: const EdgeInsets.all(20),
-          child: CircularProgressIndicator(color: AppColors.yellow,),
-        )),
+        placeholder: (context, url) => Center(
+          child: Padding(
+            padding: const EdgeInsets.all(20),
+            child: CircularProgressIndicator(color: AppColors.yellow),
+          ),
+        ),
         errorWidget: (context, url, error) => Container(
           clipBehavior: Clip.antiAlias,
           width: width,
@@ -65,21 +67,24 @@ class CustomMovieImage extends StatelessWidget {
           margin: margin,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(16),
-            image: DecorationImage(image: AssetImage(AppAssets.defaultImage), fit: BoxFit.fill),
-          ))
+            image: DecorationImage(
+              image: AssetImage(AppAssets.defaultImage),
+              fit: BoxFit.fill,
+            ),
+          ),
+        ),
       ),
     );
   }
 }
+
 //THE FUNCTION THAT WILL TAKE THE MOVIE ID AND NAVIGATE
 // i ADDED HERE CAUSE IT'S THE MAIN WIDGET NOT GRIDE VIEW OR LIST VIEW
 void _onMoviePressed(BuildContext context, Movie movie) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => MovieDetailsScreen(movieId: movie.id!),
-      ),
-    );
-  
+  Navigator.push(
+    context,
+    MaterialPageRoute(
+      builder: (context) => MovieDetailsScreen(movieId: movie.id!),
+    ),
+  );
 }
-
