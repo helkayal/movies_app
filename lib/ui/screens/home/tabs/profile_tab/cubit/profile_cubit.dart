@@ -7,15 +7,27 @@ import 'package:movies_app/data/datasources/profile/profile_data_source_impl.dar
 import 'package:movies_app/data/model/user_dm.dart';
 import 'package:movies_app/data/repositories/profile_repository/profile_repository_impl.dart';
 import 'package:movies_app/ui/screens/home/tabs/profile_tab/cubit/profile_states.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class ProfileCubit extends Cubit<ProfileStates> {
   ProfileCubit() : super(ProfileInitial());
 
   Future<ProfileRepositoryImpl> _initRepository() async {
-    final token = await SecureStorageUtils().getToken();
+    // نحاول نجيب التوكن من التخزين
+    String? token = await SecureStorageUtils().getToken();
+
+    // لو مفيش توكن، نجرب ناخد بيانات المستخدم من Firebase (حالة جوجل)
     if (token == null) {
-      throw Exception("No token found, please login again");
+      final user = FirebaseAuth.instance.currentUser;
+      if (user != null) {
+        // نخزن على الأقل الإيميل عشان نستخدمه
+        await SecureStorageUtils().saveToken(user.uid); // بنخزن الـ uid كتوكن بديل
+        token = user.uid;
+      } else {
+        throw Exception("No token found, please login again");
+      }
     }
+
     final apiService = ProfileApiService(token: token);
     final dataSource = ProfileDataSourceImpl(apiService);
     return ProfileRepositoryImpl(dataSource);
@@ -65,8 +77,8 @@ class ProfileCubit extends Cubit<ProfileStates> {
     try {
       final repository = await _initRepository();
       await repository.deleteProfile();
-      // to do : delete token
-      // to do : delete history
+      await SecureStorageUtils().logout();
+      // نمسح التوكن كمان
       emit(ProfileDeleted());
     } catch (e) {
       final errorMessage = _extractErrorMessage(e);
@@ -88,7 +100,6 @@ class ProfileCubit extends Cubit<ProfileStates> {
       emit(PasswordResetSuccess());
     } catch (e) {
       final errorMessage = e.toString().replaceFirst("Exception: ", "");
-
       emit(PasswordResetError(errorMessage));
     }
   }

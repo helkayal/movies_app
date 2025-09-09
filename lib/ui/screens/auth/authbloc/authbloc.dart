@@ -1,5 +1,6 @@
 // lib/ui/screens/auth/authbloc/authbloc.dart
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../data/datasources/Api/authapi.dart';
 import '../../../../data/datasources/google/google_auth.dart';
@@ -16,6 +17,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       emit(AuthLoading());
       try {
         final result = await authApis.login(event.email, event.password);
+
+        // ✅ خزّن التوكن
+        final prefs = await SharedPreferences.getInstance();
+        await prefs.setString("token", result['token'] ?? '');
+
         emit(
           LoginSuccess(
             message: result['message'] ?? 'Login Successful',
@@ -33,10 +39,20 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       try {
         final userCredential = await googleAuth.loginWithGoogle();
         if (userCredential != null) {
+          final user = userCredential.user;
+          final token = await user?.getIdToken() ?? "";
+
+          // ✅ خزّن بيانات جوجل
+          final prefs = await SharedPreferences.getInstance();
+          await prefs.setString("token", token);
+          await prefs.setString("name", user?.displayName ?? "Guest");
+          await prefs.setString("email", user?.email ?? "");
+          await prefs.setString("photoUrl", user?.photoURL ?? "");
+
           emit(
             LoginSuccess(
               message: "Login Successful with Google",
-              token: await userCredential.user?.getIdToken() ?? "",
+              token: token,
             ),
           );
         } else {
@@ -91,6 +107,13 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           phone: event.phone,
           avaterId: event.avaterId,
         );
+
+        // ✅ خزّن التوكن من الريجيستر
+        final prefs = await SharedPreferences.getInstance();
+        if (result['data']?['token'] != null) {
+          await prefs.setString("token", result['data']['token']);
+        }
+
         emit(
           RegisterSuccess(
             message: result['message'] ?? 'Register Successful',

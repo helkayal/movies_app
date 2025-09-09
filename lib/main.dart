@@ -1,7 +1,7 @@
 import 'package:movies_app/ui/screens/auth/local_provider/local_provider.dart';
 import 'package:movies_app/ui/screens/home/bloc/movie_details_bloc/movie_details_bloc.dart';
 import 'package:movies_app/ui/screens/home/home_screen.dart';
-import 'package:provider/provider.dart'; // ✅ استدعاء Provider
+import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:movies_app/firebase_options.dart';
@@ -20,35 +20,48 @@ import 'package:movies_app/data/datasources/Api/dioclient.dart';
 
 // localization
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'l10n/app_localizations.dart'; // ✅ ملف الـ Provider
+import 'l10n/app_localizations.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
-  final dioClient = DioClient();
-  final authApis = AuthApis(dioClient);
+  bool completed = false;
 
-  final onboardingRepository = OnboardingRepositoryImpl(
-    OnboardingDataSourceImpl(),
-  );
-  final completed = await onboardingRepository.isOnboardingCompleted();
+  try {
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
+    print("✅ Firebase initialized successfully");
+  } catch (e) {
+    print("❌ Firebase init error: $e");
+  }
 
-  runApp(
-    MultiProvider(
-      providers: [
-        ChangeNotifierProvider(
-          create: (_) => LocaleProvider(),
-        ), // ✅ Provider للـ Locale
-        BlocProvider(create: (context) => MovieDetailsBloc()),
-        BlocProvider(create: (_) => MovieBloc(apiService: ApiService())),
-        BlocProvider(create: (_) => ProfileCubit()),
-        BlocProvider(create: (_) => AuthBloc(authApis: authApis)),
-        BlocProvider(create: (_) => ChangeBgImageBloc()),
-      ],
-      child: MainApp(onboardingCompleted: completed),
-    ),
-  );
+  try {
+    final dioClient = DioClient();
+    final authApis = AuthApis(dioClient);
+
+    final onboardingRepository = OnboardingRepositoryImpl(
+      OnboardingDataSourceImpl(),
+    );
+    completed = await onboardingRepository.isOnboardingCompleted();
+    print("👉 Onboarding Completed: $completed");
+
+    runApp(
+      MultiProvider(
+        providers: [
+          ChangeNotifierProvider(create: (_) => LocaleProvider()),
+          BlocProvider(create: (context) => MovieDetailsBloc()),
+          BlocProvider(create: (_) => MovieBloc(apiService: ApiService())),
+          BlocProvider(create: (_) => ProfileCubit()),
+          BlocProvider(create: (_) => AuthBloc(authApis: authApis)),
+          BlocProvider(create: (_) => ChangeBgImageBloc()),
+        ],
+        child: MainApp(onboardingCompleted: completed),
+      ),
+    );
+  } catch (e) {
+    print("❌ Error before runApp: $e");
+  }
 }
 
 class MainApp extends StatelessWidget {
@@ -57,9 +70,7 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final localeProvider = Provider.of<LocaleProvider>(
-      context,
-    ); // ✅ جلب الـ Locale من الـ Provider
+    final localeProvider = Provider.of<LocaleProvider>(context);
 
     return ScreenUtilInit(
       designSize: const Size(375, 812),
@@ -70,7 +81,7 @@ class MainApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           themeMode: ThemeMode.dark,
           darkTheme: AppTheme.darkTheme,
-          locale: localeProvider.locale, // ✅ استخدام الـ Locale من الـ Provider
+          locale: localeProvider.locale,
           supportedLocales: const [Locale('en'), Locale('ar')],
           localizationsDelegates: const [
             AppLocalizations.delegate,
@@ -78,12 +89,9 @@ class MainApp extends StatelessWidget {
             GlobalWidgetsLocalizations.delegate,
             GlobalCupertinoLocalizations.delegate,
           ],
-          home: OnboardingIntro(),
-          // onboardingCompleted
-          //     ? const LoginScreen(
-          //         key: Key('loginScreen'),
-          //       ) // مش محتاجين onLocaleChange بعد كده
-          //     : const OnboardingIntro(),
+          home: onboardingCompleted
+              ? const LoginScreen(key: Key('loginScreen'))
+              : const OnboardingIntro(),
         );
       },
     );

@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:movies_app/core/utils/constants/imports.dart';
 import 'package:movies_app/data/model/movie_details_model.dart';
 import 'package:movies_app/ui/screens/home/tabs/profile_tab/cubit/history_cubit.dart';
@@ -14,6 +15,8 @@ class ProfileTab extends StatefulWidget {
 }
 
 class _ProfileTabState extends State<ProfileTab> {
+  final User? firebaseUser = FirebaseAuth.instance.currentUser; // ✅ يجيب بيانات جوجل
+
   @override
   void initState() {
     super.initState();
@@ -36,6 +39,7 @@ class _ProfileTabState extends State<ProfileTab> {
       AppAssets.avatar9,
     ];
     final loc = AppLocalizations.of(context)!;
+
     return BlocBuilder<ProfileCubit, ProfileStates>(
       builder: (context, state) {
         if (state is ProfileLoading) {
@@ -47,6 +51,14 @@ class _ProfileTabState extends State<ProfileTab> {
         String userName = loc.guest;
         String avatarPath = avatars[0];
 
+        // ✅ لو اليوزر من Firebase (جوجل)
+        if (firebaseUser != null) {
+          userName = firebaseUser?.displayName ?? "Guest"; // ✅ String
+          avatarPath = firebaseUser?.photoURL ?? avatars[0]; // صورة جوجل
+        }
+
+
+        // ✅ لو اليوزر من API
         if (state is ProfileLoaded) {
           userName = state.user.name;
           avatarPath = avatars[state.user.avaterId - 1];
@@ -54,7 +66,8 @@ class _ProfileTabState extends State<ProfileTab> {
 
         if (state is ProfileError) {
           return Center(
-            child: Text("${loc.error}: ${state.message}",
+            child: Text(
+              "${loc.error}: ${state.message}",
               style: AppTextStyles.whiteBold20,
             ),
           );
@@ -74,7 +87,13 @@ class _ProfileTabState extends State<ProfileTab> {
                     Column(
                       spacing: 15,
                       children: [
-                        Image.asset(
+                        firebaseUser?.photoURL != null
+                            ? CircleAvatar(
+                          radius: context.width * 0.12,
+                          backgroundImage:
+                          NetworkImage(firebaseUser!.photoURL!),
+                        )
+                            : Image.asset(
                           avatarPath,
                           width: context.width * 0.25,
                           fit: BoxFit.contain,
@@ -113,8 +132,8 @@ class _ProfileTabState extends State<ProfileTab> {
                         text: loc.editProfile,
                         onClick: () {
                           Navigator.push(context, AppRoutes.editProfile).then((
-                            updated,
-                          ) {
+                              updated,
+                              ) {
                             if (updated == true && context.mounted) {
                               context.read<ProfileCubit>().getProfile();
                             }
@@ -127,12 +146,16 @@ class _ProfileTabState extends State<ProfileTab> {
                       child: CustomButton(
                         text: loc.exit,
                         onClick: () async {
+                          // ✅ لو جوجل اعمل signOut من Firebase
+                          if (firebaseUser != null) {
+                            await FirebaseAuth.instance.signOut();
+                          }
                           context.read<ProfileCubit>().deleteProfile();
                           if (!context.mounted) return;
                           Navigator.pushAndRemoveUntil(
                             context,
                             AppRoutes.login,
-                            (route) => false,
+                                (route) => false,
                           );
                         },
                         icon: Image.asset(AppAssets.icExit),
