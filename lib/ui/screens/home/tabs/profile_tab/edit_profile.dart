@@ -94,6 +94,7 @@ class _EditProfileState extends State<EditProfile> {
         borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
       ),
       builder: (context) {
+        final loc = AppLocalizations.of(context)!;
         return Padding(
           padding: const EdgeInsets.all(16.0),
           child: Form(
@@ -101,7 +102,7 @@ class _EditProfileState extends State<EditProfile> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Text("Reset Password", style: AppTextStyles.whiteRegular20),
+                Text(loc.resetPassword, style: AppTextStyles.whiteRegular20),
                 const SizedBox(height: 20),
                 CustomTextField(
                   hint: 'Old Password',
@@ -162,9 +163,9 @@ class _EditProfileState extends State<EditProfile> {
             Navigator.push(context, AppRoutes.login);
           } else if (state is PasswordResetSuccess) {
             ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(
+              SnackBar(
                 content: Text(
-                  "Password changed successfully, please login again",
+                loc.passwordChangedSuccess,
                 ),
               ),
             );
@@ -232,7 +233,7 @@ class _EditProfileState extends State<EditProfile> {
               InkWell(
                 onTap: _showResetPasswordSheet,
                 child: Text(
-                  "Reset Password",
+                 loc.resetPassword,
                   style: AppTextStyles.whiteRegular20,
                 ),
               ),

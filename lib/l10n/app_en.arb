@@ -37,7 +37,10 @@
                  "similar":"Similar",
                  "summary": "Summary",
                     "genres": "Genres",
-                    "cast": "Cast"
+                    "cast": "Cast",
+                     "passwordChangedSuccess": "Password changed successfully, please login again",
+                      "resetPassword": "Reset Password",
+                      "reset": "Reset"
 
 
 }

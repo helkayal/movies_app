@@ -78,7 +78,7 @@ class MainApp extends StatelessWidget {
             GlobalWidgetsLocalizations.delegate,
             GlobalCupertinoLocalizations.delegate,
           ],
-          home: HomeScreen(),
+          home: OnboardingIntro(),
           // onboardingCompleted
           //     ? const LoginScreen(
           //         key: Key('loginScreen'),

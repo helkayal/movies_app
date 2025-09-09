@@ -118,4 +118,14 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get cast => 'Cast';
+
+  @override
+  String get passwordChangedSuccess =>
+      'Password changed successfully, please login again';
+
+  @override
+  String get resetPassword => 'Reset Password';
+
+  @override
+  String get reset => 'Reset';
 }

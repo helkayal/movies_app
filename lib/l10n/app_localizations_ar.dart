@@ -72,7 +72,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get search => 'بحث';
 
   @override
-  String get editProfile => 'Edit Profile';
+  String get editProfile => 'تعديل الملف الشخصي';
 
   @override
   String get profileUpdatedSuccessfully => 'تم تحديث الملف الشخصي بنجاح';
@@ -118,4 +118,14 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get cast => 'الممثلون';
+
+  @override
+  String get passwordChangedSuccess =>
+      'تم تغيير كلمة المرور بنجاح، يرجى تسجيل الدخول مرة أخرى';
+
+  @override
+  String get resetPassword => 'إعادة تعيين كلمة المرور';
+
+  @override
+  String get reset => 'إعادة تعيين';
 }

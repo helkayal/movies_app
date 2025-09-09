@@ -21,7 +21,7 @@
   "action": "اكشن",
   "seeMore": "عرض المزيد",
   "search": "بحث",
-  "edit_profile": "تعديل الملف الشخصي",
+  "editProfile": "تعديل الملف الشخصي",
   "profileUpdatedSuccessfully": "تم تحديث الملف الشخصي بنجاح",
   "error": "خطأ",
   "name": "الاسم",
@@ -37,5 +37,8 @@
   "similar": "مماثل",
   "summary": "ملخص",
   "genres": "الأنواع",
-  "cast": "الممثلون"
+  "cast": "الممثلون",
+  "passwordChangedSuccess": "تم تغيير كلمة المرور بنجاح، يرجى تسجيل الدخول مرة أخرى",
+    "resetPassword": "إعادة تعيين كلمة المرور",
+    "reset": "إعادة تعيين"
 }
