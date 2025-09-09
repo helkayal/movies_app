@@ -13,7 +13,7 @@ class MovieBloc extends Bloc<MovieEvent, MovieState> {
   final ApiService apiService;
   MovieBloc({required this.apiService}) : super(MovieInitial()) {
     on<FetchMoviesEvent>(_onFetchMovies);
-    on<GetMovieDetails>(_onGetMovieDetailsWithSuggestions);
+    // on<GetMovieDetails>(_onGetMovieDetailsWithSuggestions);
     // on<GetSuggestedMovies>(_onGetSuggestedMovies);
   }
 
@@ -33,40 +33,40 @@ class MovieBloc extends Bloc<MovieEvent, MovieState> {
   }
 
   //get movie details
-  FutureOr<void> _onGetMovieDetailsWithSuggestions(
-    GetMovieDetails event,
-    Emitter<MovieState> emit,
-  ) async {
-    emit(MovieLoading());
+  // FutureOr<void> _onGetMovieDetailsWithSuggestions(
+  //   GetMovieDetails event,
+  //   Emitter<MovieState> emit,
+  // ) async {
+  //   emit(MovieLoading());
 
-    try {
-      final MovieDataModel suggested = await ApiService.getMovieSuggestions(
-        movieId: event.movieId,
-      );
-      final MovieDataModel movieResponse = await ApiService.getMovieDetails(
-        movieId: event.movieId,
-      );
-      if (movieResponse.data?.movie != null && movieResponse.status == 'ok') {
-        // if (suggested.data?.movies != null && suggested.status == 'ok') {
-          emit(
-            MovieDetailsSuccess(
-              movie: movieResponse.data!.movie!,
-              suggestedMovies: suggested.data?.movies ?? [],
-            ),
-          );
-        // }
-      } else {
-        emit(
-          MovieError(
-            movieResponse.statusMessage ??
-                '${movieResponse.status}: Failed to load movie details',
-          ),
-        );
-      }
-    } catch (e) {
-      emit(MovieError('movie bloc details screen error ${e.toString()}'));
-    }
-  }
+  //   try {
+  //     final MovieDataModel suggested = await ApiService.getMovieSuggestions(
+  //       movieId: event.movieId,
+  //     );
+  //     final MovieDataModel movieResponse = await ApiService.getMovieDetails(
+  //       movieId: event.movieId,
+  //     );
+  //     if (movieResponse.data?.movie != null && movieResponse.status == 'ok') {
+  //       // if (suggested.data?.movies != null && suggested.status == 'ok') {
+  //         emit(
+  //           MovieDetailsSuccess(
+  //             movie: movieResponse.data!.movie!,
+  //             suggestedMovies: suggested.data?.movies ?? [],
+  //           ),
+  //         );
+  //       // }
+  //     } else {
+  //       emit(
+  //         MovieError(
+  //           movieResponse.statusMessage ??
+  //               '${movieResponse.status}: Failed to load movie details',
+  //         ),
+  //       );
+  //     }
+  //   } catch (e) {
+  //     emit(MovieError('movie bloc details screen error ${e.toString()}'));
+  //   }
+  // }
   // //get suggested movies
   // FutureOr<void> _onGetSuggestedMovies(
   //   GetSuggestedMovies event,
