@@ -61,4 +61,61 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get enterValidEmail => 'Please enter a valid email';
+
+  @override
+  String get action => 'Action';
+
+  @override
+  String get seeMore => 'See More';
+
+  @override
+  String get search => 'Search';
+
+  @override
+  String get editProfile => 'Edit Profile';
+
+  @override
+  String get profileUpdatedSuccessfully => 'Profile updated successfully';
+
+  @override
+  String get error => 'Error';
+
+  @override
+  String get phone => 'Phone';
+
+  @override
+  String get deleteAccount => 'Delete Account';
+
+  @override
+  String get updateData => 'Update Data';
+
+  @override
+  String get guest => 'Guest';
+
+  @override
+  String get wishList => 'Wish List';
+
+  @override
+  String get history => 'History';
+
+  @override
+  String get exit => 'Exit';
+
+  @override
+  String get watch => 'Watch';
+
+  @override
+  String get screenShots => 'ScreenShots';
+
+  @override
+  String get similar => 'Similar';
+
+  @override
+  String get summary => 'Summary';
+
+  @override
+  String get genres => 'Genres';
+
+  @override
+  String get cast => 'Cast';
 }

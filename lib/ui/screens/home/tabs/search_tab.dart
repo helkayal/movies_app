@@ -2,6 +2,8 @@
 import 'package:movies_app/core/utils/constants/imports.dart';
 import 'package:movies_app/data/model/movie_details_model.dart';
 
+import '../../../../l10n/app_localizations.dart';
+
 class SearchTab extends StatefulWidget {
   final List<Movie> movie;
   const SearchTab({super.key, required this.movie});
@@ -17,6 +19,7 @@ class _SearchTabState extends State<SearchTab> {
 
   @override
   Widget build(BuildContext context) {
+    final loc = AppLocalizations.of(context)!;
     return Padding(
       padding: const EdgeInsets.all(16),
       child: GestureDetector(
@@ -31,7 +34,7 @@ class _SearchTabState extends State<SearchTab> {
                 Expanded(
                   child: CustomTextField(
                     controller: _searchController,
-                    hint: 'Search',
+                    hint: loc.search,
                     prefixIcon: Image.asset(
                       AppAssets.searchIcon,
                       width: context.width * 0.08,

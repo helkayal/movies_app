@@ -61,4 +61,61 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get enterValidEmail => 'الرجاء إدخال بريد إلكتروني صحيح';
+
+  @override
+  String get action => 'اكشن';
+
+  @override
+  String get seeMore => 'عرض المزيد';
+
+  @override
+  String get search => 'بحث';
+
+  @override
+  String get editProfile => 'Edit Profile';
+
+  @override
+  String get profileUpdatedSuccessfully => 'تم تحديث الملف الشخصي بنجاح';
+
+  @override
+  String get error => 'خطأ';
+
+  @override
+  String get phone => 'الهاتف';
+
+  @override
+  String get deleteAccount => 'حذف الحساب';
+
+  @override
+  String get updateData => 'تحديث البيانات';
+
+  @override
+  String get guest => 'زائر';
+
+  @override
+  String get wishList => 'قائمة الرغبات';
+
+  @override
+  String get history => 'السجل';
+
+  @override
+  String get exit => 'خروج';
+
+  @override
+  String get watch => 'شاهد';
+
+  @override
+  String get screenShots => 'لقطات الشاشة';
+
+  @override
+  String get similar => 'مماثل';
+
+  @override
+  String get summary => 'ملخص';
+
+  @override
+  String get genres => 'الأنواع';
+
+  @override
+  String get cast => 'الممثلون';
 }
