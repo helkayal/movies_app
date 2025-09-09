@@ -40,13 +40,7 @@ class _HomeScreenState extends State<HomeScreen> {
               HomeTab(movies: movieList!),
               SearchTab(movie: movieList),
               CategoryTab(movie: movieList),
-              MultiBlocProvider(
-                providers: [
-                  BlocProvider(create: (_) => FavouriteCubit()),
-                  BlocProvider(create: (_) => HistoryCubit()),
-                ],
-                child: ProfileTab(movie: movieList),
-              ),
+              ProfileTab(movie: movieList),
             ];
             return _buildHomeBody(screens);
           } else {

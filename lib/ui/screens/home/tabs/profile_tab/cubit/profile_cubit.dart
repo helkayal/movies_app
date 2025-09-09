@@ -16,17 +16,20 @@ class ProfileCubit extends Cubit<ProfileStates> {
     // نحاول نجيب التوكن من التخزين
     String? token = await SecureStorageUtils().getToken();
 
-    // لو مفيش توكن، نجرب ناخد بيانات المستخدم من Firebase (حالة جوجل)
     if (token == null) {
-      final user = FirebaseAuth.instance.currentUser;
-      if (user != null) {
-        // نخزن على الأقل الإيميل عشان نستخدمه
-        await SecureStorageUtils().saveToken(user.uid); // بنخزن الـ uid كتوكن بديل
-        token = user.uid;
-      } else {
-        throw Exception("No token found, please login again");
-      }
+      throw Exception("No token found, please login again");
     }
+    // // لو مفيش توكن، نجرب ناخد بيانات المستخدم من Firebase (حالة جوجل)
+    // if (token == null) {
+    //   final user = FirebaseAuth.instance.currentUser;
+    //   if (user != null) {
+    //     // نخزن على الأقل الإيميل عشان نستخدمه
+    //     await SecureStorageUtils().saveToken(user.uid); // بنخزن الـ uid كتوكن بديل
+    //     token = user.uid;
+    //   } else {
+    //     throw Exception("No token found, please login again");
+    //   }
+    // }
 
     final apiService = ProfileApiService(token: token);
     final dataSource = ProfileDataSourceImpl(apiService);
