@@ -8,7 +8,7 @@ class MovieDetailsImageSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      constraints: BoxConstraints(maxHeight: context.height * 0.7),
+      constraints: BoxConstraints(maxHeight: context.height * 0.66),
       decoration: BoxDecoration(
         image: DecorationImage(
           image: NetworkImage(movie?.largeCoverImage ?? ''),
@@ -29,16 +29,16 @@ class MovieDetailsImageSection extends StatelessWidget {
               padding: EdgeInsets.only(top: context.height * 0.28),
               child: Image.asset(AppAssets.video),
             ),
-            SizedBox(height: context.height * 0.16),
+            SizedBox(height: context.height * 0.14),
             Text(
               movie?.title ?? '',
               style: AppTextStyles.whiteBold20,
               textAlign: TextAlign.center,
             ),
-            SizedBox(height: 10),
+            SizedBox(height: 14),
             Text(
               movie?.year.toString() ?? '',
-              style: AppTextStyles.whiteBold20,
+              style: AppTextStyles.whiteBold20.copyWith(color: Color(0xFFADADAD)),
             ),
           ],
         ),

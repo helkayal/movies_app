@@ -1,10 +1,5 @@
 import 'package:movies_app/core/utils/constants/imports.dart';
-import 'package:movies_app/data/model/movie_details_model.dart';
-import 'package:movies_app/ui/screens/home/tabs/home_tab/widgets/cast_section.dart';
-import 'package:movies_app/ui/screens/home/tabs/home_tab/widgets/movie_details_image_section.dart';
-import 'package:movies_app/ui/screens/home/tabs/home_tab/widgets/movie_details_numbers.dart';
-import 'package:movies_app/ui/screens/home/tabs/home_tab/widgets/movie_genres_section.dart';
-import 'package:movies_app/ui/screens/home/tabs/home_tab/widgets/screen_shot_container.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class MovieDetailsScreen extends StatefulWidget {
   final int movieId;
@@ -21,6 +16,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
 
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<MovieBloc, MovieState>(
@@ -49,6 +45,11 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
     required Movie? movie,
     required List<Movie> suggestedMovies,
   }) {
+    final List<String?> screenShots = [
+      movie?.largeScreenshotImage1,
+      movie?.largeScreenshotImage2,
+      movie?.largeScreenshotImage3,
+    ];
     return SafeArea(
       child: Scaffold(
         extendBodyBehindAppBar:
@@ -83,86 +84,57 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                   children: [
                     CustomButton(
                       text: 'watch',
-                      onClick: () {},
+                      onClick: () {
+                        if(movie!.url != null){
+                          _launchMovieUrl(movie.url!);
+                        }
+                      },
                       backgroundColor: AppColors.red,
                       borderColor: AppColors.red,
                       textColor: AppColors.white,
                     ),
                     SizedBox(height: context.height * 0.03),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        MovieDetailsNumbers(
-                          text: movie?.likeCount.toString() ?? '',
-                          image: AppAssets.love,
-                        ),
-                        MovieDetailsNumbers(
-                          text: movie?.runtime.toString() ?? '',
-                          image: AppAssets.timer,
-                        ),
-                        MovieDetailsNumbers(
-                          text: movie?.rating!.toDouble().toString() ?? '',
-                          image: AppAssets.star,
-                        ),
-                      ],
+                    _buildReactsWidget(movie),
+                    SizedBox(height: context.height * 0.01),
+                    MovieSections(
+                      title: 'Screen Shots',
+                      widget: ListView.builder(
+                        padding: EdgeInsets.zero,
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount: screenShots.length,
+                        itemBuilder: (context, index) {
+                          return ScreenShotContainer(image: screenShots[index]);
+                        },
+                      ),
                     ),
-                    SizedBox(height: context.height * 0.03),
-                    // ===== Screen Shots =====
-                    Text("Screen Shots", style: AppTextStyles.whiteBold24),
-                    ScreenShotContainer(
-                      image: movie?.largeScreenshotImage1 ?? '',
+                    MovieSections(
+                      title: 'Similar',
+                      widget: CustomGrideView(
+                        padding: EdgeInsets.zero,
+                        shrinkWrap: true,
+                        physics: NeverScrollableScrollPhysics(),
+                        movie: suggestedMovies,
+                      ),
                     ),
-                    ScreenShotContainer(
-                      image: movie?.largeScreenshotImage2 ?? '',
+                    MovieSections(
+                      title: "Summary",
+                      widget: Text(
+                        movie!.descriptionFull!.isEmpty
+                            ? 'No description available'
+                            : movie.descriptionFull!,
+                        style: AppTextStyles.whiteRegular16,
+                        softWrap: true, // يخلي النص يكسر السطر تلقائي
+                      ),
                     ),
-                    ScreenShotContainer(
-                      image: movie?.largeScreenshotImage3 ?? '',
+                    MovieSections(
+                      title: 'Cast',
+                      widget: _buildCastSection(movie),
                     ),
-                    // ListView.builder(
-                    //   itemCount: _screenShots.length,
-                    //   itemBuilder: (BuildContext context, int index) {
-                    //     return CachedNetworkImage(
-                    //       imageUrl: _screenShots[index],
-                    //       imageBuilder: (context, imageProvider) =>
-                    //           ScreenShotContainer(image: imageProvider),
-
-                    //       placeholder: (context, url) => Center(
-                    //         child: Padding(
-                    //           padding: const EdgeInsets.all(20),
-                    //           child: CircularProgressIndicator(
-                    //             color: AppColors.yellow,
-                    //           ),
-                    //         ),
-                    //       ),
-                    //       errorWidget: (context, url, error) => ScreenShotContainer(image: AssetImage(AppAssets.defaultScreenShotImage)),
-                    //     );
-                    //   },
-                    // ),
-                    // ===== Similar =====
-                    Text("Similar", style: AppTextStyles.whiteBold24),
-                    CustomGrideView(
-                      padding: EdgeInsets.zero,
-                      shrinkWrap: true,
-                      physics: NeverScrollableScrollPhysics(),
-                      movie: suggestedMovies,
+                    MovieSections(
+                      title: 'Genres',
+                      widget: _buildMovieGenresSection(movie),
                     ),
-                    // ===== Summary =====
-                    const SizedBox(height: 12),
-                    Text("Summary", style: AppTextStyles.whiteBold24),
-                    const SizedBox(height: 12),
-                    Text(
-                      movie!.descriptionFull!.isEmpty
-                          ? 'No description available'
-                          : movie.descriptionFull!,
-                      style: AppTextStyles.whiteRegular16,
-                      softWrap: true, // يخلي النص يكسر السطر تلقائي
-                    ),
-                    const SizedBox(height: 16),
-                    CastSection(movie: movie),
-                    const SizedBox(height: 16),
-                    // ===== Genres =====
-                    MovieGenresSection(movie: movie),
-                    const SizedBox(height: 16),
                   ],
                 ),
               ),
@@ -170,6 +142,126 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
           ),
         ),
       ),
+    );
+  }
+
+  SizedBox _buildReactsWidget(Movie? movie) {
+    return SizedBox(
+      height: context.height * 0.06,
+      child: Row(
+        spacing: 6,
+        children: [
+          MovieDetailsNumbers(
+            text: movie?.likeCount.toString() ?? '',
+            image: AppAssets.love,
+          ),
+          MovieDetailsNumbers(
+            text: movie?.runtime.toString() ?? '',
+            image: AppAssets.timer,
+          ),
+          MovieDetailsNumbers(
+            text: movie?.rating!.toDouble().toString() ?? '',
+            image: AppAssets.negma,
+          ),
+        ],
+      ),
+    );
+  }
+  Future<void> _launchMovieUrl(String url)async{
+    context.showLoading();
+    final Uri uri = Uri.parse(url);
+    if(await canLaunchUrl(uri)){
+      await launchUrl(uri, mode: LaunchMode.externalApplication);
+    }else{
+      context.showSnackBar("Could not launch the link",isError: true);
+    }
+  }
+  
+
+  ListView _buildCastSection(Movie movie) {
+    return ListView.builder(
+      padding: EdgeInsets.zero,
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      itemCount: movie.cast?.length,
+      itemBuilder: (context, index) {
+        final cast = movie.cast![index];
+        return Container(
+          padding: EdgeInsets.all(10),
+          margin: EdgeInsets.only(bottom: 8),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(16),
+            color: AppColors.darkGrey,
+          ),
+          child: Row(
+            spacing: 10,
+            children: [
+              Container(
+                width: context.width * 0.15,
+                clipBehavior: Clip.antiAlias,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Image.network(
+                  cast.urlSmallImage ?? AppAssets.defaultPersonImage,
+                ),
+              ),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  spacing: 10,
+                  children: [
+                    Text(
+                      'Name : ${cast.name}',
+                      style: AppTextStyles.whiteRegular16,
+                    ),
+                    Text(
+                      'Character : ${cast.characterName}',
+                      style: AppTextStyles.whiteRegular16,
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  GridView _buildMovieGenresSection(Movie movie) {
+    List<String> getMovieGenres(Movie movie) {
+      final List<String> genresList = [];
+      for (String genre in movie.genres!) {
+        genresList.add(genre);
+      }
+      return genresList;
+    }
+
+    return GridView.builder(
+      padding: EdgeInsets.zero,
+      shrinkWrap: true,
+      physics: NeverScrollableScrollPhysics(),
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 3,
+        mainAxisSpacing: 10,
+        crossAxisSpacing: 16,
+        childAspectRatio: 2.5,
+      ),
+      itemCount: getMovieGenres(movie).length,
+      itemBuilder: (BuildContext context, int index) {
+        return Container(
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+            color: AppColors.darkGrey,
+            borderRadius: BorderRadius.circular(12),
+          ),
+          child: Text(
+            getMovieGenres(movie)[index],
+            style: AppTextStyles.whiteRegular16,
+          ),
+        );
+      },
     );
   }
 }

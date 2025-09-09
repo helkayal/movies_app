@@ -37,3 +37,9 @@ export 'package:movies_app/ui/screens/home/tabs/profile_tab/cubit/favourite_stat
 export 'package:movies_app/data/datasources/Api/favourite_api_service.dart';
 export 'package:movies_app/data/datasources/favourite/favourite_data_source_impl.dart';
 export 'package:movies_app/data/repositories/favourite/favourite_repository_impl.dart';
+
+export 'package:movies_app/data/model/movie_details_model.dart';
+export 'package:movies_app/ui/screens/home/tabs/home_tab/widgets/movie_details_image_section.dart';
+export 'package:movies_app/ui/screens/home/tabs/home_tab/widgets/movie_details_numbers.dart';
+export 'package:movies_app/ui/screens/home/tabs/home_tab/widgets/movie_sections.dart';
+export 'package:movies_app/ui/screens/home/tabs/home_tab/widgets/screen_shot_container.dart';
