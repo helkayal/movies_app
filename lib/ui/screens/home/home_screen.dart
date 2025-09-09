@@ -17,14 +17,13 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
-@override
-void initState() {
-  super.initState();
-  WidgetsBinding.instance.addPostFrameCallback((_) {
-        context.read<MovieBloc>().add(FetchMoviesEvent());
-  });
-}
-
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<MovieBloc>().add(FetchMoviesEvent());
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -54,13 +53,10 @@ void initState() {
             return Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(
-                  'home screen error',
-                  style: AppTextStyles.whiteRegular16,
-                ),
+                Text('home screen error', style: AppTextStyles.whiteRegular16),
                 IconButton(
                   onPressed: () {
-                      context.read<MovieBloc>().add(FetchMoviesEvent());
+                    context.read<MovieBloc>().add(FetchMoviesEvent());
                   },
                   icon: Icon(Icons.refresh_rounded, color: AppColors.lightGrey),
                 ),

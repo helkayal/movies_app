@@ -1,5 +1,4 @@
 import 'package:movies_app/core/utils/constants/imports.dart';
-import 'package:movies_app/data/model/movie_details_model.dart';
 
 class MovieDetailsImageSection extends StatelessWidget {
   final Movie? movie;
@@ -38,7 +37,9 @@ class MovieDetailsImageSection extends StatelessWidget {
             SizedBox(height: 14),
             Text(
               movie?.year.toString() ?? '',
-              style: AppTextStyles.whiteBold20.copyWith(color: Color(0xFFADADAD)),
+              style: AppTextStyles.whiteBold20.copyWith(
+                color: Color(0xFFADADAD),
+              ),
             ),
           ],
         ),

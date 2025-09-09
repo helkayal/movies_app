@@ -1,4 +1,5 @@
 import 'package:movies_app/ui/screens/auth/local_provider/local_provider.dart';
+import 'package:movies_app/ui/screens/home/bloc/movie_details_bloc/movie_details_bloc.dart';
 import 'package:movies_app/ui/screens/home/home_screen.dart';
 import 'package:provider/provider.dart'; // ✅ استدعاء Provider
 import 'package:firebase_core/firebase_core.dart';
@@ -39,6 +40,7 @@ void main() async {
         ChangeNotifierProvider(
           create: (_) => LocaleProvider(),
         ), // ✅ Provider للـ Locale
+        BlocProvider(create: (context) => MovieDetailsBloc()),
         BlocProvider(create: (_) => MovieBloc(apiService: ApiService())),
         BlocProvider(create: (_) => ProfileCubit()),
         BlocProvider(create: (_) => AuthBloc(authApis: authApis)),
