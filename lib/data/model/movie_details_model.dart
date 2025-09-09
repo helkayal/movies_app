@@ -1,160 +1,153 @@
-class MovieDetailsModel {
-  MovieDetailsModel({
-      this.status, 
-      this.statusMessage, 
-      this.data,});
+class MovieDataModel {
+  final String? status;
+  final String? statusMessage;
+  final Data? data;
 
-  MovieDetailsModel.fromJson(dynamic json) {
-    status = json['status'];
-    statusMessage = json['status_message'];
-    data = json['data'] != null ? Data.fromJson(json['data']) : null;
+  MovieDataModel({this.status, this.statusMessage, this.data});
+
+  factory MovieDataModel.fromJson(Map<String, dynamic> json) {
+    return MovieDataModel(
+      status: json['status'],
+      statusMessage: json['status_message'],
+      data: json['data'] != null ? Data.fromJson(json['data']) : null,
+    );
   }
-  String? status;
-  String? statusMessage;
-  Data? data;
-
-  Map<String, dynamic> toJson() {
-    final map = <String, dynamic>{};
-    map['status'] = status;
-    map['status_message'] = statusMessage;
-    if (data != null) {
-      map['data'] = data?.toJson();
-    }
-    return map;
-  }
-
 }
 
 class Data {
-  Data({
-      this.movie,});
+  final Movie? movie;
+  final List<Movie>? movies;
+  final int? movieCount;
+  final int? limit;
+  final int? pageNumber;
 
-  Data.fromJson(dynamic json) {
-    movie = json['movie'] != null ? Movie.fromJson(json['movie']) : null;
+  Data({this.movie, this.movies, this.movieCount, this.limit, this.pageNumber});
+
+  factory Data.fromJson(Map<String, dynamic> json) {
+    return Data(
+      movie: json['movie'] != null ? Movie.fromJson(json['movie']) : null,
+      movies: json['movies'] != null 
+          ? (json['movies'] as List).map((i) => Movie.fromJson(i)).toList()
+          : null,
+      movieCount: json['movie_count'],
+      limit: json['limit'],
+      pageNumber: json['page_number'],
+    );
   }
-  Movie? movie;
-
-  Map<String, dynamic> toJson() {
-    final map = <String, dynamic>{};
-    if (movie != null) {
-      map['movie'] = movie?.toJson();
-    }
-    return map;
-  }
-
 }
 
 class Movie {
-  Movie({
-      this.id, 
-      this.url, 
-      this.imdbCode, 
-      this.title, 
-      this.titleEnglish, 
-      this.titleLong, 
-      this.slug, 
-      this.year, 
-      this.rating, 
-      this.runtime, 
-      this.genres, 
-      this.likeCount, 
-      this.descriptionIntro, 
-      this.descriptionFull, 
-      this.ytTrailerCode, 
-      this.language, 
-      this.mpaRating, 
-      this.backgroundImage, 
-      this.backgroundImageOriginal, 
-      this.smallCoverImage, 
-      this.mediumCoverImage, 
-      this.largeCoverImage, 
-      this.mediumScreenshotImage1, 
-      this.mediumScreenshotImage2, 
-      this.mediumScreenshotImage3, 
-      this.largeScreenshotImage1, 
-      this.largeScreenshotImage2, 
-      this.largeScreenshotImage3, 
-      this.cast, 
-      this.torrents, 
-      this.dateUploaded, 
-      this.dateUploadedUnix,});
+  final int? id;
+  final String? url;
+  final String? imdbCode;
+  final String? title;
+  final String? titleEnglish;
+  final String? titleLong;
+  final String? slug;
+  final int? year;
+  final double? rating;
+  final int? runtime;
+  final List<String>? genres;
+  final String? ytTrailerCode;
+  final String? language;
+  final String? mediumCoverImage;
+  
+  // Extra parameters for Movie details
+  final int? likeCount;
+  final String? descriptionIntro;
+  final String? descriptionFull;
+  final String? mpaRating;
+  final String? backgroundImage;
+  final String? backgroundImageOriginal;
+  final String? smallCoverImage;
+  final String? largeCoverImage;
+  final String? mediumScreenshotImage1;
+  final String? mediumScreenshotImage2;
+  final String? mediumScreenshotImage3;
+  final String? largeScreenshotImage1;
+  final String? largeScreenshotImage2;
+  final String? largeScreenshotImage3;
+  final List<Cast>? cast;
+  final List<Torrents>? torrents;
+  final String? dateUploaded;
+  final int? dateUploadedUnix;
 
-  Movie.fromJson(dynamic json) {
-    id = json['id'];
-    url = json['url'];
-    imdbCode = json['imdb_code'];
-    title = json['title'];
-    titleEnglish = json['title_english'];
-    titleLong = json['title_long'];
-    slug = json['slug'];
-    year = json['year'];
-    rating = json['rating'];
-    runtime = json['runtime'];
-    genres = json['genres'] != null ? json['genres'].cast<String>() : [];
-    likeCount = json['like_count'];
-    descriptionIntro = json['description_intro'];
-    descriptionFull = json['description_full'];
-    ytTrailerCode = json['yt_trailer_code'];
-    language = json['language'];
-    mpaRating = json['mpa_rating'];
-    backgroundImage = json['background_image'];
-    backgroundImageOriginal = json['background_image_original'];
-    smallCoverImage = json['small_cover_image'];
-    mediumCoverImage = json['medium_cover_image'];
-    largeCoverImage = json['large_cover_image'];
-    mediumScreenshotImage1 = json['medium_screenshot_image1'];
-    mediumScreenshotImage2 = json['medium_screenshot_image2'];
-    mediumScreenshotImage3 = json['medium_screenshot_image3'];
-    largeScreenshotImage1 = json['large_screenshot_image1'];
-    largeScreenshotImage2 = json['large_screenshot_image2'];
-    largeScreenshotImage3 = json['large_screenshot_image3'];
-    if (json['cast'] != null) {
-      cast = [];
-      json['cast'].forEach((v) {
-        cast?.add(Cast.fromJson(v));
-      });
-    }
-    if (json['torrents'] != null) {
-      torrents = [];
-      json['torrents'].forEach((v) {
-        torrents?.add(Torrents.fromJson(v));
-      });
-    }
-    dateUploaded = json['date_uploaded'];
-    dateUploadedUnix = json['date_uploaded_unix'];
+  Movie({
+    this.id,
+    this.url,
+    this.imdbCode,
+    this.title,
+    this.titleEnglish,
+    this.titleLong,
+    this.slug,
+    this.year,
+    this.rating,
+    this.runtime,
+    this.genres,
+    this.ytTrailerCode,
+    this.language,
+    this.mediumCoverImage,
+    this.likeCount,
+    this.descriptionIntro,
+    this.descriptionFull,
+    this.mpaRating,
+    this.backgroundImage,
+    this.backgroundImageOriginal,
+    this.smallCoverImage,
+    this.largeCoverImage,
+    this.mediumScreenshotImage1,
+    this.mediumScreenshotImage2,
+    this.mediumScreenshotImage3,
+    this.largeScreenshotImage1,
+    this.largeScreenshotImage2,
+    this.largeScreenshotImage3,
+    this.cast,
+    this.torrents,
+    this.dateUploaded,
+    this.dateUploadedUnix,
+  });
+
+  // Factory constructor for both list and details
+  factory Movie.fromJson(Map<String, dynamic> json) {
+    return Movie(
+      id: json['id'],
+      url: json['url'],
+      imdbCode: json['imdb_code'],
+      title: json['title'],
+      titleEnglish: json['title_english'],
+      titleLong: json['title_long'],
+      slug: json['slug'],
+      year: json['year'],
+      rating: (json['rating'] as num?)?.toDouble(),
+      runtime: json['runtime'],
+      genres: json['genres'] != null ? List<String>.from(json['genres']) : [],
+      ytTrailerCode: json['yt_trailer_code'],
+      language: json['language'],
+      mediumCoverImage: json['medium_cover_image'],
+      likeCount: json['like_count'],
+      descriptionIntro: json['description_intro'],
+      descriptionFull: json['description_full'],
+      mpaRating: json['mpa_rating'],
+      backgroundImage: json['background_image'],
+      backgroundImageOriginal: json['background_image_original'],
+      smallCoverImage: json['small_cover_image'],
+      largeCoverImage: json['large_cover_image'],
+      mediumScreenshotImage1: json['medium_screenshot_image1'],
+      mediumScreenshotImage2: json['medium_screenshot_image2'],
+      mediumScreenshotImage3: json['medium_screenshot_image3'],
+      largeScreenshotImage1: json['large_screenshot_image1'],
+      largeScreenshotImage2: json['large_screenshot_image2'],
+      largeScreenshotImage3: json['large_screenshot_image3'],
+      cast: json['cast'] != null
+          ? (json['cast'] as List).map((v) => Cast.fromJson(v)).toList()
+          : null,
+      torrents: json['torrents'] != null
+          ? (json['torrents'] as List).map((v) => Torrents.fromJson(v)).toList()
+          : null,
+      dateUploaded: json['date_uploaded'],
+      dateUploadedUnix: json['date_uploaded_unix'],
+    );
   }
-  int? id;
-  String? url;
-  String? imdbCode;
-  String? title;
-  String? titleEnglish;
-  String? titleLong;
-  String? slug;
-  int? year;
-  double? rating;
-  int? runtime;
-  List<String>? genres;
-  int? likeCount;
-  String? descriptionIntro;
-  String? descriptionFull;
-  String? ytTrailerCode;
-  String? language;
-  String? mpaRating;
-  String? backgroundImage;
-  String? backgroundImageOriginal;
-  String? smallCoverImage;
-  String? mediumCoverImage;
-  String? largeCoverImage;
-  String? mediumScreenshotImage1;
-  String? mediumScreenshotImage2;
-  String? mediumScreenshotImage3;
-  String? largeScreenshotImage1;
-  String? largeScreenshotImage2;
-  String? largeScreenshotImage3;
-  List<Cast>? cast;
-  List<Torrents>? torrents;
-  String? dateUploaded;
-  int? dateUploadedUnix;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -169,16 +162,16 @@ class Movie {
     map['rating'] = rating;
     map['runtime'] = runtime;
     map['genres'] = genres;
+    map['yt_trailer_code'] = ytTrailerCode;
+    map['language'] = language;
+    map['medium_cover_image'] = mediumCoverImage;
     map['like_count'] = likeCount;
     map['description_intro'] = descriptionIntro;
     map['description_full'] = descriptionFull;
-    map['yt_trailer_code'] = ytTrailerCode;
-    map['language'] = language;
     map['mpa_rating'] = mpaRating;
     map['background_image'] = backgroundImage;
     map['background_image_original'] = backgroundImageOriginal;
     map['small_cover_image'] = smallCoverImage;
-    map['medium_cover_image'] = mediumCoverImage;
     map['large_cover_image'] = largeCoverImage;
     map['medium_screenshot_image1'] = mediumScreenshotImage1;
     map['medium_screenshot_image2'] = mediumScreenshotImage2;
@@ -196,7 +189,6 @@ class Movie {
     map['date_uploaded_unix'] = dateUploadedUnix;
     return map;
   }
-
 }
 
 class Torrents {

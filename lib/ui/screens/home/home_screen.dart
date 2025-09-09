@@ -17,11 +17,14 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
-  @override
-  void initState() {
-    super.initState();
-    context.read<MovieBloc>().add(FetchMoviesEvent());
-  }
+@override
+void initState() {
+  super.initState();
+  WidgetsBinding.instance.addPostFrameCallback((_) {
+        context.read<MovieBloc>().add(FetchMoviesEvent());
+  });
+}
+
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +38,7 @@ class _HomeScreenState extends State<HomeScreen> {
           } else if (state is MovieSuccess) {
             final movieList = state.movies.data?.movies;
             final List<Widget> screens = [
-              HomeTab(movie: movieList!),
+              HomeTab(movies: movieList!),
               SearchTab(movie: movieList),
               CategoryTab(movie: movieList),
               MultiBlocProvider(
@@ -52,14 +55,12 @@ class _HomeScreenState extends State<HomeScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  state.props.toString(),
+                  'home screen error',
                   style: AppTextStyles.whiteRegular16,
                 ),
                 IconButton(
                   onPressed: () {
-                    setState(() {
-                      ApiService.getMovies();
-                    });
+                      context.read<MovieBloc>().add(FetchMoviesEvent());
                   },
                   icon: Icon(Icons.refresh_rounded, color: AppColors.lightGrey),
                 ),

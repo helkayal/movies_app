@@ -1,8 +1,9 @@
 import 'package:movies_app/core/utils/constants/imports.dart';
+import 'package:movies_app/data/model/movie_details_model.dart';
 
 class HomeTab extends StatelessWidget {
-  final List<Movies> movie;
-  const HomeTab({super.key, required this.movie});
+  final List<Movie> movies;
+  const HomeTab({super.key, required this.movies});
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +14,7 @@ class HomeTab extends StatelessWidget {
                 flex: 3,
                 child: BlocBuilder<ChangeBgImageBloc,ChangeBgImageState>(
                   builder: (context, state) {
-                    String imagePath = movie[0].mediumCoverImage ?? ''; //default image => first image in api
+                    String imagePath = movies[0].mediumCoverImage ?? ''; //default image => first image in api
                     if(state is ChangeBgImageSuccess){
                       imagePath = state.imagePath;
                     }
@@ -44,7 +45,7 @@ class HomeTab extends StatelessWidget {
                               height: context.height * 0.1,
                             ),
                             Expanded(
-                              child: CarouselSliderSection(movie:movie,),
+                              child: CarouselSliderSection(movies:movies,),
                             ),
                             Image.asset(
                               AppAssets.watchNow,
@@ -66,12 +67,10 @@ class HomeTab extends StatelessWidget {
                     Expanded(
                       child: ListView.builder(
                         scrollDirection: Axis.horizontal,
-                        itemCount: movie.length ,
+                        itemCount: movies.length ,
                         itemBuilder: (context, index) {
                           return CustomMovieImage(
-                            movieDetails: movie[index],
-                            rating: movie[index].rating.toString(),
-                            image: movie[index].mediumCoverImage ??'',
+                            movieDetails: movies[index],
                             margin: EdgeInsets.only(left: 16),
                             width: context.width * 0.32,
                           );
@@ -101,15 +100,12 @@ class HomeTab extends StatelessWidget {
             ),
           ),
           const Spacer(),
-          InkWell(
-            onTap: () {},
-            child: Text(
-              'See More',
-              style: TextStyle(
-                color: AppColors.yellow,
-                fontSize: 16,
-                fontWeight: FontWeight.w400,
-              ),
+          Text(
+            'See More',
+            style: TextStyle(
+              color: AppColors.yellow,
+              fontSize: 16,
+              fontWeight: FontWeight.w400,
             ),
           ),
           const SizedBox(width: 2),

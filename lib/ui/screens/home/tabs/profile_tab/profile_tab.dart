@@ -1,11 +1,12 @@
 import 'package:movies_app/core/utils/constants/imports.dart';
 import 'package:movies_app/core/utils/secure_storage_utils.dart';
+import 'package:movies_app/data/model/movie_details_model.dart';
 import 'package:movies_app/ui/screens/home/tabs/profile_tab/cubit/history_cubit.dart';
 import 'package:movies_app/ui/screens/home/tabs/profile_tab/cubit/history_states.dart';
 import 'package:movies_app/ui/screens/home/tabs/profile_tab/widgets/history_list.dart';
 
 class ProfileTab extends StatefulWidget {
-  final List<Movies> movie;
+  final List<Movie> movie;
   const ProfileTab({super.key, required this.movie});
 
   @override

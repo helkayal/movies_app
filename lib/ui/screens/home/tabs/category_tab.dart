@@ -1,7 +1,8 @@
 import 'package:movies_app/core/utils/constants/imports.dart';
+import 'package:movies_app/data/model/movie_details_model.dart';
 
 class CategoryTab extends StatefulWidget {
-  final List<Movies> movie;
+  final List<Movie> movie;
   const CategoryTab({super.key, required this.movie});
 
   @override
@@ -10,7 +11,7 @@ class CategoryTab extends StatefulWidget {
 
 class _CategoryTabState extends State<CategoryTab> {
   int selecteButton = 0;
-  List<Movies> movieByGenre = [];
+  List<Movie> movieByGenre = [];
   @override
   void initState() {
     super.initState();

@@ -1,19 +1,22 @@
 import 'package:movies_app/core/utils/constants/imports.dart';
+import 'package:movies_app/data/model/movie_details_model.dart';
 
 class CustomGrideView extends StatelessWidget {
-  final List<Movies>? movie;
+  final List<Movie>? movie;
   final int rowItemCount;
   final bool shrinkWrap ;
   final ScrollPhysics? physics;
+  final EdgeInsetsGeometry? padding;
   const CustomGrideView({
     super.key,
     required this.movie,
-    this.rowItemCount = 2, this.shrinkWrap = false, this.physics,
+    this.rowItemCount = 2, this.shrinkWrap = false, this.physics, this.padding,
   });
 
   @override
   Widget build(BuildContext context) {
     return GridView.builder(
+      padding: padding,
       shrinkWrap: shrinkWrap,
       physics: physics,
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -26,8 +29,6 @@ class CustomGrideView extends StatelessWidget {
       itemBuilder: (context, index) {
         return CustomMovieImage(
           movieDetails: movie![index],
-          image: movie?[index].mediumCoverImage ?? '',
-          rating: movie?[index].rating.toString() ?? '',
         );
       },
     );

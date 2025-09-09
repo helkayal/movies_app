@@ -8,10 +8,18 @@ class ScreenShotContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 12),
-      child: ClipRRect(
-        borderRadius: BorderRadiusGeometry.circular(16),
-        child: Image.network(image),
-      ),
+      child: Container(
+        height: context.height * 0.3,
+        width: context.width,
+      clipBehavior: Clip.antiAlias,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(16),
+          image: DecorationImage(
+            image: NetworkImage(image),
+            fit: BoxFit.cover,
+          ),
+        ),
+      )
     );
   }
 }

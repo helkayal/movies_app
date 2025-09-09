@@ -1,4 +1,4 @@
-import 'package:movies_app/data/model/list_movies_model.dart';
+import 'package:movies_app/data/model/movie_details_model.dart';
 
 abstract class HistoryStates {}
 
@@ -7,7 +7,7 @@ class HistoryInitial extends HistoryStates {}
 class HistoryLoading extends HistoryStates {}
 
 class HistoryLoaded extends HistoryStates {
-  final List<Movies> movies;
+  final List<Movie> movies;
   HistoryLoaded(this.movies);
 }
 

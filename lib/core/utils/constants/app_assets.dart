@@ -56,4 +56,7 @@ abstract final class AppAssets {
   static const String videologo = 'assets/icons/videologo.png';
   static const String screenShot = 'assets/images/screenShot.jpg';
   static const String defaultPersonImage = 'https://www.shutterstock.com/image-vector/default-avatar-profile-icon-vector-600nw-1745180411.jpg';
+  static const String defaultMovieImage = 'https://tse3.mm.bing.net/th/id/OIP.xwcCFaOnbBQiLTVvtSrS_gHaJ2?r=0&rs=1&pid=ImgDetMain&o=7&rm=3';
+  static const String defaultScreenShotImage = 'https://www.ismoc.net/images/video-placeholder.png';
+  
 }

@@ -16,9 +16,10 @@ class CastSection extends StatelessWidget {
         ),
         const SizedBox(height: 12),
         ListView.builder(
+          padding: EdgeInsets.zero,
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
-          itemCount: 4,
+          itemCount: movie.cast?.length,
           itemBuilder: (context, index) {
             final cast = movie.cast![index];
             return 
@@ -33,25 +34,28 @@ class CastSection extends StatelessWidget {
                     spacing: 10,
                     children: [
                       Container(
+                        width: context.width * 0.15,
                         clipBehavior: Clip.antiAlias,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10)
                         ),
                         child: Image.network(cast.urlSmallImage ?? AppAssets.defaultPersonImage),
                       ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        spacing: 10,
-                        children: [
-                          Text(
-                            'Name : ${cast.name}',
-                            style: AppTextStyles.whiteRegular16,
-                          ),
-                          Text(
-                            'Character : ${cast.characterName}',
-                            style: AppTextStyles.whiteRegular16,
-                          ),
-                        ],
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          spacing: 10,
+                          children: [
+                            Text(
+                              'Name : ${cast.name}',
+                              style: AppTextStyles.whiteRegular16,
+                            ),
+                            Text(
+                              'Character : ${cast.characterName}',
+                              style: AppTextStyles.whiteRegular16,
+                            ),
+                          ],
+                        ),
                       ),
                     ],
                   ),

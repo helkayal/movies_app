@@ -3,18 +3,23 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:movies_app/data/datasources/Api/api_constants.dart';
 import 'package:movies_app/data/model/movie_details_model.dart';
-import 'package:movies_app/data/model/list_movies_model.dart';
 
 class ApiService {
   //Get All movies
-  static Future<ListMoviesModel> getMovies() async {
+  static Future<MovieDataModel> getMovies({
+    int limit = 50,
+    int page = 1,
+    String sortedBy = 'rating',
+  }) async {
     try {
       var response = await http.get(
-        Uri.parse('${ApiConstants.baseUrl}${ApiConstants.movie}'),
+        Uri.parse(
+          '${ApiConstants.baseUrl}${ApiConstants.movie}?limit=$limit&sort_by=$sortedBy&page=$page',
+        ),
       );
       var json = jsonDecode(response.body);
       if (response.statusCode == 200) {
-        ListMoviesModel myResponse = ListMoviesModel.fromJson(json);
+        MovieDataModel myResponse = MovieDataModel.fromJson(json);
         return myResponse;
       } else {
         throw Exception('Failed to recieve data: ${response.statusCode}');
@@ -28,27 +33,51 @@ class ApiService {
   }
 
   //get movie details
-  static Future<MovieDetailsModel> getMovieDetails({required int movieId,}) async {
+  static Future<MovieDataModel> getMovieDetails({
+    required int movieId,
+  }) async {
     try {
       var response = await http.get(
         Uri.parse(
           '${ApiConstants.baseUrl}${ApiConstants.movieDetails}?movie_id=$movieId&with_cast=true&with_images=true',
         ),
       );
-      print(
-        '🌐 Request URL: ${ApiConstants.baseUrl}${ApiConstants.movieDetails}?movie_id=$movieId',
-      );
-      // نظهر الـ response عشان نشوف المشكلة
-      print('Response status: ${response.statusCode}');
-      print('Response body: ${response.body}');
-      // نتأكد أن الـ response مش فاضي
       if (response.body.isEmpty) {
         throw Exception('Empty response from server');
       }
       var json = jsonDecode(response.body);
       if (response.statusCode == 200) {
-        final MovieDetailsModel myResponse = MovieDetailsModel.fromJson(json);
+        final MovieDataModel myResponse = MovieDataModel.fromJson(json);
         if (myResponse.data?.movie != null) {
+          return myResponse;
+        } else {
+          throw Exception('movie details can not be found');
+        }
+      } else {
+        throw Exception('Failed to recieve data: ${response.statusCode}');
+      }
+    } catch (e) {
+      throw Exception('catch erro: ${e.toString()}');
+    }
+  }
+
+  //get movie suggestions
+  static Future<MovieDataModel> getMovieSuggestions({
+    required int movieId,
+  }) async {
+    try {
+      var response = await http.get(
+        Uri.parse(
+          '${ApiConstants.baseUrl}${ApiConstants.movieSuggestions}?movie_id=$movieId',
+        ),
+      );
+      if (response.body.isEmpty) {
+        throw Exception('Empty response from server');
+      }
+      var json = jsonDecode(response.body);
+      if (response.statusCode == 200) {
+        final MovieDataModel myResponse = MovieDataModel.fromJson(json);
+        if (myResponse.data?.movies != null) {
           return myResponse;
         } else {
           throw Exception('movie details can not be found');

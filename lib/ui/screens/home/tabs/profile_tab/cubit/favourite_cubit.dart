@@ -1,5 +1,6 @@
 import 'package:movies_app/core/utils/constants/imports.dart';
 import 'package:movies_app/core/utils/secure_storage_utils.dart';
+import 'package:movies_app/data/model/movie_details_model.dart';
 
 class FavouriteCubit extends Cubit<FavouriteStates> {
   FavouriteRepositoryImpl? repository;
@@ -24,7 +25,7 @@ class FavouriteCubit extends Cubit<FavouriteStates> {
 
       final List<dynamic> favouriteJson = response["data"];
       final favourites = favouriteJson.map((e) {
-        return Movies(
+        return Movie(
           id: int.tryParse(e['movieId'] ?? ''),
           title: e['name'],
           rating: (e['rating'] as num?)?.toDouble(),

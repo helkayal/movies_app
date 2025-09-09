@@ -1,8 +1,9 @@
 
 import 'package:movies_app/core/utils/constants/imports.dart';
+import 'package:movies_app/data/model/movie_details_model.dart';
 
 class SearchTab extends StatefulWidget {
-  final List<Movies> movie;
+  final List<Movie> movie;
   const SearchTab({super.key, required this.movie});
 
   @override
@@ -12,7 +13,7 @@ class SearchTab extends StatefulWidget {
 class _SearchTabState extends State<SearchTab> {
   final TextEditingController _searchController = TextEditingController();
   Timer? _debounceTimer;
-  List<Movies> searchedMovies = [];
+  List<Movie> searchedMovies = [];
 
   @override
   Widget build(BuildContext context) {

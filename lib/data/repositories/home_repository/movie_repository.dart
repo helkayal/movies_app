@@ -1,7 +1,8 @@
-import 'package:movies_app/data/model/list_movies_model.dart';
+
+import 'package:movies_app/data/model/movie_details_model.dart';
 
 class MovieRepository {
-  static List<String> getGenres({required List<Movies> movies}) {
+  static List<String> getGenres({required List<Movie> movies}) {
     //عملت set فاضيه عشان اقدر اضيف فيها كل list هتيجى من ال Api وتمنع تكرار  اى حاجه
     Set<String> genersSet = {};
     // هجيب ال geners عن طريق اللوب واضيفها جوا ال سيت
@@ -14,11 +15,11 @@ class MovieRepository {
     return genersSet.toList();
   }
 
-  static List<Movies> getMoviesByGenres({
+  static List<Movie> getMoviesByGenres({
     required String genre,
-    required List<Movies> movies,
+    required List<Movie> movies,
   }) {
-    List<Movies> moviesByGenres = [];
+    List<Movie> moviesByGenres = [];
     for (var movie in movies) {
       final List<String>? movieGeners = movie.genres;
       if (movieGeners!.contains(genre)) {
@@ -28,9 +29,9 @@ class MovieRepository {
     return moviesByGenres;
   }
 
-  static List<Movies> addSearchedValueToSearchedList({
+  static List<Movie> addSearchedValueToSearchedList({
     required String searchedMovie,
-    required List<Movies> movies,
+    required List<Movie> movies,
   }) {
     if (searchedMovie.isEmpty) {
       return [];

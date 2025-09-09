@@ -13,6 +13,7 @@ class MovieGenresSection extends StatelessWidget {
         Text("Genres", style: AppTextStyles.whiteBold24),
         const SizedBox(height: 12),
         GridView.builder(
+          padding: EdgeInsets.zero,
           shrinkWrap: true,
           physics: NeverScrollableScrollPhysics(),
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(

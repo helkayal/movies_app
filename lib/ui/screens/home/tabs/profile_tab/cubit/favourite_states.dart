@@ -1,6 +1,5 @@
 
-
-import 'package:movies_app/data/model/list_movies_model.dart';
+import 'package:movies_app/data/model/movie_details_model.dart';
 
 abstract class FavouriteStates {}
 
@@ -9,7 +8,7 @@ class FavouriteInitial extends FavouriteStates {}
 class FavouriteLoading extends FavouriteStates {}
 
 class FavouriteLoaded extends FavouriteStates {
-  final List<Movies> favourites;
+  final List<Movie> favourites;
 
   FavouriteLoaded(this.favourites);
 }

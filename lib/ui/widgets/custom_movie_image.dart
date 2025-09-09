@@ -1,17 +1,14 @@
 import 'package:movies_app/core/utils/constants/imports.dart';
+import 'package:movies_app/data/model/movie_details_model.dart';
 import 'package:movies_app/ui/screens/home/tabs/home_tab/movie_details_screen.dart';
 
 class CustomMovieImage extends StatelessWidget {
   final double? width;
   final double? height;
-  final String image;
-  final String rating;
-  final Movies movieDetails;
+  final Movie movieDetails;
   final EdgeInsetsGeometry? margin;
   const CustomMovieImage({
     super.key,
-    required this.image,
-    required this.rating,
     this.width,
     this.height,
     this.margin,required this.movieDetails,
@@ -24,7 +21,7 @@ class CustomMovieImage extends StatelessWidget {
         _onMoviePressed(context, movieDetails);
       },
       child: CachedNetworkImage(
-        imageUrl: image,
+        imageUrl: movieDetails.mediumCoverImage ?? '',
         imageBuilder: (context, imageProvider) => Container(
           clipBehavior: Clip.antiAlias,
           width: width,
@@ -48,7 +45,7 @@ class CustomMovieImage extends StatelessWidget {
               child: Row(
                 children: [
                   Text(
-                    rating,
+                    movieDetails.rating.toString() ?? '',
                     style: TextStyle(color: AppColors.white, fontSize: 16),
                   ),
                   Expanded(child: Image.asset(AppAssets.star)),
@@ -76,10 +73,7 @@ class CustomMovieImage extends StatelessWidget {
 }
 //THE FUNCTION THAT WILL TAKE THE MOVIE ID AND NAVIGATE
 // i ADDED HERE CAUSE IT'S THE MAIN WIDGET NOT GRIDE VIEW OR LIST VIEW
-void _onMoviePressed(BuildContext context, Movies movie) {
-  print(movie.id!);
-  print('==================');
-
+void _onMoviePressed(BuildContext context, Movie movie) {
     Navigator.push(
       context,
       MaterialPageRoute(

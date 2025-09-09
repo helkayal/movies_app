@@ -6,13 +6,23 @@ import 'package:movies_app/ui/screens/home/tabs/home_tab/widgets/movie_details_n
 import 'package:movies_app/ui/screens/home/tabs/home_tab/widgets/movie_genres_section.dart';
 import 'package:movies_app/ui/screens/home/tabs/home_tab/widgets/screen_shot_container.dart';
 
-class MovieDetailsScreen extends StatelessWidget {
+class MovieDetailsScreen extends StatefulWidget {
   final int movieId;
   const MovieDetailsScreen({super.key, required this.movieId});
 
   @override
+  State<MovieDetailsScreen> createState() => _MovieDetailsScreenState();
+}
+
+class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
+  @override
+  void initState() {
+    context.read<MovieBloc>().add(GetMovieDetails(movieId: widget.movieId));
+
+    super.initState();
+  }
+  @override
   Widget build(BuildContext context) {
-    context.read<MovieBloc>().add(GetMovieDetails(movieId: movieId));
     return BlocBuilder<MovieBloc, MovieState>(
       builder: (context, state) {
         if (state is MovieError) {
@@ -20,7 +30,11 @@ class MovieDetailsScreen extends StatelessWidget {
             child: Text(state.message, style: AppTextStyles.whiteBold20),
           );
         } else if (state is MovieDetailsSuccess) {
-          return _buildMovieDetails(context, movie: state.movie);
+          return _buildMovieDetails(
+            context,
+            movie: state.movie,
+            suggestedMovies: state.suggestedMovies,
+          );
         } else {
           return Center(
             child: CircularProgressIndicator(color: AppColors.yellow),
@@ -30,7 +44,11 @@ class MovieDetailsScreen extends StatelessWidget {
     );
   }
 
-  SafeArea _buildMovieDetails(BuildContext context, {required Movie? movie}) {
+  SafeArea _buildMovieDetails(
+    BuildContext context, {
+    required Movie? movie,
+    required List<Movie> suggestedMovies,
+  }) {
     return SafeArea(
       child: Scaffold(
         extendBodyBehindAppBar:
@@ -40,6 +58,7 @@ class MovieDetailsScreen extends StatelessWidget {
           elevation: 0, // يشيل الظل
           leading: IconButton(
             onPressed: () {
+              // context.read<MovieBloc>().add(FetchMoviesEvent());
               Navigator.pop(context);
             },
             icon: Icon(Icons.arrow_back_ios, color: Colors.white),
@@ -99,33 +118,33 @@ class MovieDetailsScreen extends StatelessWidget {
                     ScreenShotContainer(
                       image: movie?.largeScreenshotImage3 ?? '',
                     ),
+                    // ListView.builder(
+                    //   itemCount: _screenShots.length,
+                    //   itemBuilder: (BuildContext context, int index) {
+                    //     return CachedNetworkImage(
+                    //       imageUrl: _screenShots[index],
+                    //       imageBuilder: (context, imageProvider) =>
+                    //           ScreenShotContainer(image: imageProvider),
+
+                    //       placeholder: (context, url) => Center(
+                    //         child: Padding(
+                    //           padding: const EdgeInsets.all(20),
+                    //           child: CircularProgressIndicator(
+                    //             color: AppColors.yellow,
+                    //           ),
+                    //         ),
+                    //       ),
+                    //       errorWidget: (context, url, error) => ScreenShotContainer(image: AssetImage(AppAssets.defaultScreenShotImage)),
+                    //     );
+                    //   },
+                    // ),
                     // ===== Similar =====
                     Text("Similar", style: AppTextStyles.whiteBold24),
                     CustomGrideView(
+                      padding: EdgeInsets.zero,
                       shrinkWrap: true,
                       physics: NeverScrollableScrollPhysics(),
-                      movie: [
-                        Movies(
-                          mediumCoverImage:
-                              'https://wallpapercave.com/wp/wp1945933.jpg',
-                          rating: 7.9,
-                        ),
-                        Movies(
-                          mediumCoverImage:
-                              'https://wallpapercave.com/wp/wp1945933.jpg',
-                          rating: 1.5,
-                        ),
-                        Movies(
-                          mediumCoverImage:
-                              'https://wallpapercave.com/wp/wp1945933.jpg',
-                          rating: 7.5,
-                        ),
-                        Movies(
-                          mediumCoverImage:
-                              'https://wallpapercave.com/wp/wp1945933.jpg',
-                          rating: 5.2,
-                        ),
-                      ],
+                      movie: suggestedMovies,
                     ),
                     // ===== Summary =====
                     const SizedBox(height: 12),

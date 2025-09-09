@@ -1,5 +1,5 @@
 import 'package:movies_app/data/datasources/history/history_datasource.dart';
-import 'package:movies_app/data/model/list_movies_model.dart';
+import 'package:movies_app/data/model/movie_details_model.dart';
 import 'package:movies_app/data/repositories/history/history_repository.dart';
 
 class HistoryRepositoryImpl implements HistoryRepository {
@@ -12,15 +12,15 @@ class HistoryRepositoryImpl implements HistoryRepository {
   }
 
   @override
-  Future<List<Movies>> getHistoryMovies() async {
+  Future<List<Movie>> getHistoryMovies() async {
     // final ids = await dataSource.getMovieIds();
     final ids = [10, 333, 8473, 99];
-    List<Movies> movies = [];
+    List<Movie> movies = [];
 
     for (final id in ids) {
       final response = await dataSource.getMovieById(id.toString());
       final movieJson = response["data"]["movie"];
-      movies.add(Movies.fromJson(movieJson));
+      movies.add(Movie.fromJson(movieJson));
     }
 
     return movies;
