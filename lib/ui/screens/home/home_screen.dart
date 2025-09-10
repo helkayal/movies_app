@@ -20,9 +20,9 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      context.read<MovieBloc>().add(FetchMoviesEvent());
-    });
+    // WidgetsBinding.instance.addPostFrameCallback((_) {
+    context.read<MovieBloc>().add(FetchMoviesEvent());
+    // });
   }
 
   @override
