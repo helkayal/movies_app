@@ -81,10 +81,15 @@ class CustomMovieImage extends StatelessWidget {
 //THE FUNCTION THAT WILL TAKE THE MOVIE ID AND NAVIGATE
 // i ADDED HERE CAUSE IT'S THE MAIN WIDGET NOT GRIDE VIEW OR LIST VIEW
 void _onMoviePressed(BuildContext context, Movie movie) {
+  final historyCubit = context.read<HistoryCubit>();
+
   Navigator.push(
     context,
     MaterialPageRoute(
       builder: (context) => MovieDetailsScreen(movieId: movie.id!),
     ),
-  );
+  ).then((_) {
+    // Reload history when back
+    historyCubit.loadHistory();
+  });
 }

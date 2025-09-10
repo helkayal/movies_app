@@ -16,7 +16,7 @@ class FavouriteAdded extends FavouriteStates {}
 
 class FavouriteRemoved extends FavouriteStates {}
 
-class isFavouriteLoaded extends FavouriteStates {}
+class IsMovieFavourited extends FavouriteStates {}
 
 class FavouriteError extends FavouriteStates {
   final String message;

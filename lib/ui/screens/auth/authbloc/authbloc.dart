@@ -20,7 +20,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
         // ✅ خزّن التوكن
         final prefs = await SharedPreferences.getInstance();
-        await prefs.setString("token", result['token'] ?? '');
+        // await prefs.setString("token", result['token'] ?? '');
+        await prefs.setBool("isGoogleLoggedIn", false);
 
         emit(
           LoginSuccess(
@@ -39,21 +40,19 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       try {
         final userCredential = await googleAuth.loginWithGoogle();
         if (userCredential != null) {
-          final user = userCredential.user;
-          final token = await user?.getIdToken() ?? "";
+          // final user = userCredential.user;
+          // final token = await user?.getIdToken() ?? "";
 
           // ✅ خزّن بيانات جوجل
           final prefs = await SharedPreferences.getInstance();
-          await prefs.setString("token", token);
-          await prefs.setString("name", user?.displayName ?? "Guest");
-          await prefs.setString("email", user?.email ?? "");
-          await prefs.setString("photoUrl", user?.photoURL ?? "");
+          // await prefs.setString("token", token);
+          // await prefs.setString("name", user?.displayName ?? "Guest");
+          // await prefs.setString("email", user?.email ?? "");
+          // await prefs.setString("photoUrl", user?.photoURL ?? "");
+          await prefs.setBool("isGoogleLoggedIn", true);
 
           emit(
-            LoginSuccess(
-              message: "Login Successful with Google",
-              token: token,
-            ),
+            LoginSuccess(message: "Login Successful with Google", token: ""),
           );
         } else {
           emit(AuthFailure("Google Sign-In canceled"));

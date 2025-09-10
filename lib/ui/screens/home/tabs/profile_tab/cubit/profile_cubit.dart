@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movies_app/core/utils/secure_storage_utils.dart';
+import 'package:movies_app/core/utils/shared_prefs_utils.dart';
 import 'package:movies_app/data/datasources/Api/profile_api_service.dart';
 import 'package:movies_app/data/datasources/profile/profile_data_source_impl.dart';
 import 'package:movies_app/data/model/user_dm.dart';
@@ -83,6 +84,18 @@ class ProfileCubit extends Cubit<ProfileStates> {
       await SecureStorageUtils().logout();
       // نمسح التوكن كمان
       emit(ProfileDeleted());
+    } catch (e) {
+      final errorMessage = _extractErrorMessage(e);
+      emit(ProfileError(errorMessage));
+    }
+  }
+
+  Future<void> logOut() async {
+    emit(ProfileLoading());
+    try {
+      await SecureStorageUtils().logout();
+      await SharedPrefsUtils.saveBool("isGoogleLoggedIn", false);
+      emit(LogedOut());
     } catch (e) {
       final errorMessage = _extractErrorMessage(e);
       emit(ProfileError(errorMessage));
