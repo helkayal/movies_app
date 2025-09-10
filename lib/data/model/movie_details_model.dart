@@ -26,7 +26,7 @@ class Data {
   factory Data.fromJson(Map<String, dynamic> json) {
     return Data(
       movie: json['movie'] != null ? Movie.fromJson(json['movie']) : null,
-      movies: json['movies'] != null 
+      movies: json['movies'] != null
           ? (json['movies'] as List).map((i) => Movie.fromJson(i)).toList()
           : null,
       movieCount: json['movie_count'],
@@ -51,7 +51,7 @@ class Movie {
   final String? ytTrailerCode;
   final String? language;
   final String? mediumCoverImage;
-  
+
   // Extra parameters for Movie details
   final int? likeCount;
   final String? descriptionIntro;
@@ -189,24 +189,48 @@ class Movie {
     map['date_uploaded_unix'] = dateUploadedUnix;
     return map;
   }
+
+  /// Convert only essential fields for history
+  Map<String, dynamic> toHistoryMap() {
+    return {
+      'id': id,
+      'title': title,
+      'rating': rating,
+      'year': year,
+      'mediumCoverImage':
+          largeCoverImage ?? mediumCoverImage ?? smallCoverImage,
+    };
+  }
+
+  /// Create a Movie object from history map
+  factory Movie.fromHistoryMap(Map<String, dynamic> map) {
+    return Movie(
+      id: map['id'],
+      title: map['title'],
+      rating: (map['rating'] as num?)?.toDouble(),
+      year: map['year'],
+      mediumCoverImage: map['mediumCoverImage'],
+    );
+  }
 }
 
 class Torrents {
   Torrents({
-      this.url, 
-      this.hash, 
-      this.quality, 
-      this.type, 
-      this.isRepack, 
-      this.videoCodec, 
-      this.bitDepth, 
-      this.audioChannels, 
-      this.seeds, 
-      this.peers, 
-      this.size, 
-      this.sizeBytes, 
-      this.dateUploaded, 
-      this.dateUploadedUnix,});
+    this.url,
+    this.hash,
+    this.quality,
+    this.type,
+    this.isRepack,
+    this.videoCodec,
+    this.bitDepth,
+    this.audioChannels,
+    this.seeds,
+    this.peers,
+    this.size,
+    this.sizeBytes,
+    this.dateUploaded,
+    this.dateUploadedUnix,
+  });
 
   Torrents.fromJson(dynamic json) {
     url = json['url'];
@@ -257,15 +281,10 @@ class Torrents {
     map['date_uploaded_unix'] = dateUploadedUnix;
     return map;
   }
-
 }
 
 class Cast {
-  Cast({
-      this.name, 
-      this.characterName, 
-      this.urlSmallImage, 
-      this.imdbCode,});
+  Cast({this.name, this.characterName, this.urlSmallImage, this.imdbCode});
 
   Cast.fromJson(dynamic json) {
     name = json['name'];
@@ -286,5 +305,4 @@ class Cast {
     map['imdb_code'] = imdbCode;
     return map;
   }
-
 }

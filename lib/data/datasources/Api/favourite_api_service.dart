@@ -67,7 +67,7 @@ class FavouriteApiService {
     required String movieId,
   }) async {
     try {
-      final response = await _dio.get('/favorites/remove/$movieId');
+      final response = await _dio.delete('/favorites/remove/$movieId');
       return handleDioResponse(response);
     } on DioException catch (e) {
       handleDioError(e);

@@ -1,8 +1,13 @@
 import 'package:movies_app/core/utils/constants/imports.dart';
 
-class FavouriteList extends StatelessWidget {
+class FavouriteList extends StatefulWidget {
   const FavouriteList({super.key});
 
+  @override
+  State<FavouriteList> createState() => _FavouriteListState();
+}
+
+class _FavouriteListState extends State<FavouriteList> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<FavouriteCubit, FavouriteStates>(

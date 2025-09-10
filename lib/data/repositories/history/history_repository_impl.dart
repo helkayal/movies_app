@@ -7,22 +7,17 @@ class HistoryRepositoryImpl implements HistoryRepository {
   HistoryRepositoryImpl(this.dataSource);
 
   @override
-  Future<Map<String, dynamic>> getMovieById(String id) {
-    return dataSource.getMovieById(id);
+  Future<void> addMovie(Movie movie) {
+    return dataSource.addMovie(movie);
   }
 
   @override
-  Future<List<Movie>> getHistoryMovies() async {
-    // final ids = await dataSource.getMovieIds();
-    final ids = [10, 333, 8473, 99];
-    List<Movie> movies = [];
+  Future<void> clearHistory() {
+    return dataSource.clearHistory();
+  }
 
-    for (final id in ids) {
-      final response = await dataSource.getMovieById(id.toString());
-      final movieJson = response["data"]["movie"];
-      movies.add(Movie.fromJson(movieJson));
-    }
-
-    return movies;
+  @override
+  Future<List<Movie>> getHistoryMovies() {
+    return dataSource.getHistoryMovies();
   }
 }

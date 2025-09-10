@@ -1,6 +1,5 @@
 import 'package:movies_app/ui/screens/auth/local_provider/local_provider.dart';
 import 'package:movies_app/ui/screens/home/bloc/movie_details_bloc/movie_details_bloc.dart';
-import 'package:movies_app/ui/screens/home/home_screen.dart';
 import 'package:movies_app/ui/screens/home/tabs/profile_tab/cubit/history_cubit.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
