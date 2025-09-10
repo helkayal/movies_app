@@ -87,5 +87,10 @@ void _onMoviePressed(BuildContext context, Movie movie) {
     MaterialPageRoute(
       builder: (context) => MovieDetailsScreen(movieId: movie.id!),
     ),
-  );
+  ).then((_) {
+    // Reload history when back
+    if (context.mounted) {
+      context.read<HistoryCubit>().loadHistory();
+    }
+  });
 }
