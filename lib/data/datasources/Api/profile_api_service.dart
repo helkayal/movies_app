@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:movies_app/core/services/common/common.dart';
+import 'package:movies_app/data/datasources/history/history_service.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 class ProfileApiService {
@@ -54,6 +55,7 @@ class ProfileApiService {
   Future<Map<String, dynamic>> deleteProfile() async {
     try {
       final response = await _dio.delete('/profile');
+      HistoryService.clearHistory();
       return handleDioResponse(response);
     } on DioException catch (e) {
       handleDioError(e);
