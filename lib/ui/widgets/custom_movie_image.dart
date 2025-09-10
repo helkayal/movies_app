@@ -1,5 +1,6 @@
 import 'package:movies_app/core/utils/constants/imports.dart';
 import 'package:movies_app/ui/screens/home/tabs/home_tab/movie_details_screen.dart';
+import 'package:movies_app/ui/screens/home/tabs/profile_tab/cubit/history_cubit.dart';
 
 class CustomMovieImage extends StatelessWidget {
   final double? width;
@@ -45,7 +46,7 @@ class CustomMovieImage extends StatelessWidget {
               child: Row(
                 children: [
                   Text(
-                    movieDetails.rating.toString() ?? '',
+                    movieDetails.rating.toString(),
                     style: TextStyle(color: AppColors.white, fontSize: 16),
                   ),
                   Expanded(child: Image.asset(AppAssets.star)),

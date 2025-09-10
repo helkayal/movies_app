@@ -14,6 +14,7 @@ import 'package:movies_app/ui/screens/home/tabs/home_tab/widgets/movie_sections.
 import 'package:movies_app/ui/screens/home/tabs/home_tab/widgets/screen_shot_container.dart';
 import 'package:movies_app/ui/screens/home/tabs/profile_tab/cubit/favourite_cubit.dart';
 import 'package:movies_app/ui/screens/home/tabs/profile_tab/cubit/favourite_states.dart';
+import 'package:movies_app/ui/screens/home/tabs/profile_tab/cubit/history_cubit.dart';
 import 'package:movies_app/ui/widgets/custom_button.dart';
 import 'package:movies_app/ui/widgets/custom_gride_view.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -28,6 +29,7 @@ class MovieDetailsScreen extends StatefulWidget {
 
 class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
   bool isFav = false;
+  bool _savedToHistory = false;
 
   @override
   void initState() {
@@ -57,9 +59,23 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
             child: Text(state.message, style: AppTextStyles.whiteBold20),
           );
         } else if (state is MovieDetailsSuccess) {
+          final movie = state.movie;
+          // Save to history here
+          if (!_savedToHistory) {
+            _savedToHistory = true;
+            context.read<HistoryCubit>().addMovie(
+              Movie(
+                id: movie.id,
+                title: movie.title,
+                rating: movie.rating,
+                year: movie.year,
+                mediumCoverImage: movie.mediumCoverImage,
+              ),
+            );
+          }
           return _buildMovieDetails(
             context,
-            movie: state.movie,
+            movie: movie,
             suggestedMovies: state.suggestedMovies,
           );
         } else {
@@ -91,12 +107,6 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
             onPressed: () => Navigator.pop(context),
             icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
           ),
-          // actions: [
-          //   IconButton(
-          //     onPressed: () {},
-          //     icon: const Icon(Icons.bookmark, color: Colors.white, size: 30),
-          //   ),
-          // ],
           actions: [
             BlocConsumer<FavouriteCubit, FavouriteStates>(
               listener: (context, state) {
