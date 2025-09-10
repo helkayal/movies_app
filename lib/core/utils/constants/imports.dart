@@ -2,7 +2,6 @@ export 'package:flutter/material.dart';
 export 'package:flutter_bloc/flutter_bloc.dart';
 export 'package:movies_app/ui/screens/home/bloc/change_bg_image_bloc/change_bg_image_bloc.dart';
 export 'package:movies_app/ui/screens/home/tabs/profile_tab/cubit/profile_cubit.dart';
-export 'package:movies_app/ui/screens/splash/splash.dart';
 export 'package:movies_app/core/theme/app_theme.dart';
 export 'package:movies_app/core/theme/app_colors.dart';
 export 'package:movies_app/core/theme/app_text_styles.dart';
