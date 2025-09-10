@@ -1,5 +1,5 @@
 import 'package:movies_app/data/datasources/history/history_datasource.dart';
-import 'package:movies_app/data/model/movie_details_model.dart';
+import 'package:movies_app/data/model/movie_data_model.dart';
 import 'package:movies_app/data/repositories/history/history_repository.dart';
 
 class HistoryRepositoryImpl implements HistoryRepository {

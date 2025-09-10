@@ -22,7 +22,7 @@
 //   }
 // }
 import 'package:movies_app/data/datasources/history/history_service.dart';
-import 'package:movies_app/data/model/movie_details_model.dart';
+import 'package:movies_app/data/model/movie_data_model.dart';
 import 'history_datasource.dart';
 
 class HistoryDataSourceImpl implements HistoryDataSource {

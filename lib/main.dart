@@ -26,9 +26,11 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   bool completed = false;
-
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-
+  // this line make this exception => FirebaseException ([core/duplicate-app] A Firebase App named "[DEFAULT]" already exists)
+  //this means it initialize more than once
+  // await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  
+  await Firebase.initializeApp();
   try {
     final dioClient = DioClient();
     final authApis = AuthApis(dioClient);

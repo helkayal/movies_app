@@ -93,7 +93,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:movies_app/data/datasources/Api/api_constants.dart';
-import 'package:movies_app/data/model/movie_details_model.dart';
+import 'package:movies_app/data/model/movie_data_model.dart';
 
 class ApiService {
   // Get all movies (unchanged)

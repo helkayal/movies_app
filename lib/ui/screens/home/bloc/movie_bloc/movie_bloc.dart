@@ -4,7 +4,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movies_app/data/datasources/Api/movie_api_service.dart';
-import 'package:movies_app/data/model/movie_details_model.dart';
+import 'package:movies_app/data/model/movie_data_model.dart';
 
 part 'movie_event.dart';
 part 'movie_state.dart';

@@ -1,5 +1,5 @@
 import 'package:movies_app/core/utils/constants/imports.dart';
-import 'package:movies_app/data/model/movie_details_model.dart';
+import 'package:movies_app/data/model/movie_data_model.dart';
 import 'package:movies_app/l10n/app_localizations.dart';
 
 class HomeTab extends StatelessWidget {

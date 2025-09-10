@@ -2,7 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movies_app/data/datasources/history/history_datasource_impl.dart';
 import 'package:movies_app/data/repositories/history/history_repository_impl.dart';
 import 'package:movies_app/ui/screens/home/tabs/profile_tab/cubit/history_states.dart';
-import 'package:movies_app/data/model/movie_details_model.dart';
+import 'package:movies_app/data/model/movie_data_model.dart';
 
 class HistoryCubit extends Cubit<HistoryStates> {
   late final HistoryRepositoryImpl repository;

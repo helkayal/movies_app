@@ -1,6 +1,5 @@
 import 'package:movies_app/core/utils/constants/imports.dart';
 import 'package:movies_app/ui/screens/home/tabs/home_tab/movie_details_screen.dart';
-import 'package:movies_app/ui/screens/home/tabs/profile_tab/cubit/history_cubit.dart';
 
 class CustomMovieImage extends StatelessWidget {
   final double? width;

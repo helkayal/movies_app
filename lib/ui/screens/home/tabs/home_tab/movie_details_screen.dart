@@ -4,7 +4,7 @@ import 'package:movies_app/core/theme/app_colors.dart';
 import 'package:movies_app/core/theme/app_text_styles.dart';
 import 'package:movies_app/core/utils/constants/app_assets.dart';
 import 'package:movies_app/core/utils/context_extension.dart';
-import 'package:movies_app/data/model/movie_details_model.dart';
+import 'package:movies_app/data/model/movie_data_model.dart';
 import 'package:movies_app/ui/screens/home/bloc/movie_details_bloc/movie_details_bloc.dart';
 import 'package:movies_app/ui/screens/home/bloc/movie_details_bloc/movie_details_state.dart';
 import 'package:movies_app/ui/screens/home/bloc/movie_details_bloc/movie_details_event.dart';

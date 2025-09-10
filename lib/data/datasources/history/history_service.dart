@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:movies_app/data/model/movie_details_model.dart'; // <-- your Movie class
+import 'package:movies_app/data/model/movie_data_model.dart'; // <-- your Movie class
 
 class HistoryService {
   static const String _key = 'movie_history';
