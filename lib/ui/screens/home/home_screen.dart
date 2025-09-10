@@ -1,5 +1,7 @@
 import 'package:movies_app/core/utils/constants/imports.dart';
+import 'package:movies_app/ui/screens/home/tabs/history_tab.dart';
 import 'package:movies_app/ui/screens/home/tabs/profile_tab/cubit/history_cubit.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -25,24 +27,101 @@ class _HomeScreenState extends State<HomeScreen> {
     // });
   }
 
+  // @override
+  // Widget build(BuildContext context) {
+  //   return SafeArea(
+  //     child: BlocBuilder<MovieBloc, MovieState>(
+  //       builder: (context, state) {
+  //         if (state is MovieLoading) {
+  //           return Center(
+  //             child: CircularProgressIndicator(color: AppColors.yellow),
+  //           );
+  //         } else if (state is MovieSuccess) {
+  //           final movieList = state.movies.data?.movies;
+  //           final List<Widget> screens = [
+  //             HomeTab(movies: movieList!),
+  //             SearchTab(movie: movieList),
+  //             CategoryTab(movie: movieList),
+  //             ProfileTab(movie: movieList),
+  //           ];
+  //           final List<Widget> googleLoggedinScreens = [
+  //             HomeTab(movies: movieList),
+  //             SearchTab(movie: movieList),
+  //             CategoryTab(movie: movieList),
+  //             HistoryTab(),
+  //           ];
+
+  //           if (_isGoogleLoggedIn()) {
+  //             return _buildHomeBody(googleLoggedinScreens);
+  //           } else {
+  //             return _buildHomeBody(screens);
+  //           }
+  //         } else {
+  //           return Column(
+  //             mainAxisAlignment: MainAxisAlignment.center,
+  //             children: [
+  //               Text('home screen error', style: AppTextStyles.whiteRegular16),
+  //               IconButton(
+  //                 onPressed: () {
+  //                   context.read<MovieBloc>().add(FetchMoviesEvent());
+  //                 },
+  //                 icon: Icon(Icons.refresh_rounded, color: AppColors.lightGrey),
+  //               ),
+  //             ],
+  //           );
+  //         }
+  //       },
+  //     ),
+  //   );
+  // }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: BlocBuilder<MovieBloc, MovieState>(
         builder: (context, state) {
           if (state is MovieLoading) {
-            return Center(
+            return const Center(
               child: CircularProgressIndicator(color: AppColors.yellow),
             );
           } else if (state is MovieSuccess) {
             final movieList = state.movies.data?.movies;
-            final List<Widget> screens = [
-              HomeTab(movies: movieList!),
-              SearchTab(movie: movieList),
-              CategoryTab(movie: movieList),
-              ProfileTab(movie: movieList),
-            ];
-            return _buildHomeBody(screens);
+
+            return FutureBuilder<bool>(
+              future: _isGoogleLoggedIn(),
+              builder: (context, snapshot) {
+                if (!snapshot.hasData) {
+                  return const Center(
+                    child: CircularProgressIndicator(color: AppColors.yellow),
+                  );
+                }
+
+                final isGoogleLoggedIn = snapshot.data ?? false;
+
+                if (isGoogleLoggedIn) {
+                  context.read<HistoryCubit>().loadHistory();
+                }
+
+                final List<Widget> screens = [
+                  HomeTab(movies: movieList!),
+                  SearchTab(movie: movieList),
+                  CategoryTab(movie: movieList),
+                  ProfileTab(movie: movieList),
+                ];
+
+                final List<Widget> googleLoggedinScreens = [
+                  HomeTab(movies: movieList),
+                  SearchTab(movie: movieList),
+                  CategoryTab(movie: movieList),
+                  HistoryTab(),
+                ];
+
+                return _buildHomeBody(
+                  isGoogleLoggedIn ? googleLoggedinScreens : screens,
+                  isGoogleLoggedIn,
+                );
+              },
+            );
           } else {
             return Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -62,7 +141,13 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Scaffold _buildHomeBody(List<Widget> screens) {
+  Future<bool> _isGoogleLoggedIn() async {
+    final prefs = await SharedPreferences.getInstance();
+    final bool? isGoogleLoggedIn = prefs.getBool('isGoogleLoggedIn');
+    return isGoogleLoggedIn ?? false;
+  }
+
+  Scaffold _buildHomeBody(List<Widget> screens, bool isGoogleLoggedIn) {
     return Scaffold(
       backgroundColor: AppColors.black,
       body: screens[_selectedIndex],
@@ -109,7 +194,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 _onScreenTab(3);
               },
               child: Image.asset(
-                AppAssets.profile,
+                isGoogleLoggedIn ? AppAssets.historyIcon : AppAssets.profile,
                 color: _selectedIndex == 3 ? AppColors.yellow : AppColors.white,
               ),
             ),

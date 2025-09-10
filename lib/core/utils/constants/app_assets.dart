@@ -18,6 +18,7 @@ abstract final class AppAssets {
   static const String pic2 = 'assets/images/pic2.jpg';
   static const String profile = 'assets/images/profile.png';
   static const String searchIcon = 'assets/images/search_icon.png';
+  static const String historyIcon = 'assets/images/history_icon.png';
   static const String watchNow = 'assets/images/watch_now.png';
   static const String forgetPassword = 'assets/images/forgotPassword.png';
   static const String avatar1 = 'assets/images/avatar1.png';
@@ -55,8 +56,10 @@ abstract final class AppAssets {
   static const String defaultImage = 'assets/images/default_image.png';
   static const String videologo = 'assets/icons/videologo.png';
   static const String screenShot = 'assets/images/screenShot.jpg';
-  static const String defaultPersonImage = 'https://www.shutterstock.com/image-vector/default-avatar-profile-icon-vector-600nw-1745180411.jpg';
-  static const String defaultMovieImage = 'https://tse3.mm.bing.net/th/id/OIP.xwcCFaOnbBQiLTVvtSrS_gHaJ2?r=0&rs=1&pid=ImgDetMain&o=7&rm=3';
-  static const String defaultScreenShotImage = 'https://www.ismoc.net/images/video-placeholder.png';
-  
+  static const String defaultPersonImage =
+      'https://www.shutterstock.com/image-vector/default-avatar-profile-icon-vector-600nw-1745180411.jpg';
+  static const String defaultMovieImage =
+      'https://tse3.mm.bing.net/th/id/OIP.xwcCFaOnbBQiLTVvtSrS_gHaJ2?r=0&rs=1&pid=ImgDetMain&o=7&rm=3';
+  static const String defaultScreenShotImage =
+      'https://www.ismoc.net/images/video-placeholder.png';
 }
