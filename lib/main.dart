@@ -1,5 +1,8 @@
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:movies_app/core/utils/secure_storage_utils.dart';
 import 'package:movies_app/ui/screens/auth/local_provider/local_provider.dart';
 import 'package:movies_app/ui/screens/home/bloc/movie_details_bloc/movie_details_bloc.dart';
+import 'package:movies_app/ui/screens/home/home_screen.dart';
 import 'package:movies_app/ui/screens/home/tabs/profile_tab/cubit/history_cubit.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -26,6 +29,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   bool completed = false;
+  bool loggedInBefore = false;
 
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
@@ -37,6 +41,13 @@ void main() async {
       OnboardingDataSourceImpl(),
     );
     completed = await onboardingRepository.isOnboardingCompleted();
+
+    final FlutterSecureStorage secureStorage = const FlutterSecureStorage();
+    final token = await secureStorage.read(key: 'token');
+
+    if (token != null && token.isNotEmpty) {
+      loggedInBefore = true;
+    }
 
     runApp(
       MultiProvider(
@@ -50,7 +61,10 @@ void main() async {
           BlocProvider(create: (_) => AuthBloc(authApis: authApis)),
           BlocProvider(create: (_) => ChangeBgImageBloc()),
         ],
-        child: MainApp(onboardingCompleted: completed),
+        child: MainApp(
+          onboardingCompleted: completed,
+          loggedInBefore: loggedInBefore,
+        ),
       ),
     );
   } catch (e) {
@@ -60,7 +74,12 @@ void main() async {
 
 class MainApp extends StatelessWidget {
   final bool onboardingCompleted;
-  const MainApp({super.key, required this.onboardingCompleted});
+  final bool loggedInBefore;
+  const MainApp({
+    super.key,
+    required this.onboardingCompleted,
+    required this.loggedInBefore,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -84,7 +103,9 @@ class MainApp extends StatelessWidget {
             GlobalCupertinoLocalizations.delegate,
           ],
           home: onboardingCompleted
-              ? const LoginScreen(key: Key('loginScreen'))
+              ? loggedInBefore
+                    ? HomeScreen()
+                    : const LoginScreen(key: Key('loginScreen'))
               : const OnboardingIntro(),
         );
       },

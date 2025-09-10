@@ -1,5 +1,6 @@
 // lib/ui/screens/auth/authbloc/authbloc.dart
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../data/datasources/Api/authapi.dart';
@@ -42,7 +43,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         final userCredential = await googleAuth.loginWithGoogle();
         if (userCredential != null) {
           final user = userCredential.user;
-          // final token = await user?.getIdToken() ?? "";
+          final token = await user?.getIdToken() ?? "";
+
+          final FlutterSecureStorage storage = const FlutterSecureStorage();
+          await storage.write(key: 'token', value: token);
 
           // ✅ خزّن بيانات جوجل
           final prefs = await SharedPreferences.getInstance();
