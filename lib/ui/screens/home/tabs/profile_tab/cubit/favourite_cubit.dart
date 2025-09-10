@@ -67,19 +67,9 @@ class FavouriteCubit extends Cubit<FavouriteStates> {
         year: year,
       );
 
-      // final List<dynamic> favouriteJson = response["data"];
-      // final favourites = favouriteJson.map((e) {
-      //   return Movie(
-      //     id: int.tryParse(e['movieId'] ?? ''),
-      //     title: e['name'],
-      //     rating: (e['rating'] as num?)?.toDouble(),
-      //     year: int.tryParse(e['year'] ?? ''),
-      //     mediumCoverImage: e['imageURL'],
-      //   );
-      // }).toList();
-
       if (response["message"] == "Added to favourite successfully") {
         emit(FavouriteAdded());
+        loadFavourites();
       } else {
         emit(FavouriteError(response["message"]));
       }
@@ -104,7 +94,8 @@ class FavouriteCubit extends Cubit<FavouriteStates> {
 
       final response = await repository!.isMovieFavourite(movieId: movieId);
 
-      emit(isFavouriteLoaded());
+      emit(IsMovieFavourited());
+      loadFavourites();
       return response["data"];
     } catch (e) {
       return false;
@@ -131,6 +122,7 @@ class FavouriteCubit extends Cubit<FavouriteStates> {
 
       if (response["message"] == "Removed from favourite successfully") {
         emit(FavouriteRemoved());
+        loadFavourites();
       } else {
         emit(FavouriteError(response["message"]));
       }
