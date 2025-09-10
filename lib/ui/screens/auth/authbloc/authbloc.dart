@@ -22,6 +22,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         final prefs = await SharedPreferences.getInstance();
         // await prefs.setString("token", result['token'] ?? '');
         await prefs.setBool("isGoogleLoggedIn", false);
+        await prefs.setString("email", event.email);
 
         emit(
           LoginSuccess(
@@ -40,14 +41,14 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       try {
         final userCredential = await googleAuth.loginWithGoogle();
         if (userCredential != null) {
-          // final user = userCredential.user;
+          final user = userCredential.user;
           // final token = await user?.getIdToken() ?? "";
 
           // ✅ خزّن بيانات جوجل
           final prefs = await SharedPreferences.getInstance();
           // await prefs.setString("token", token);
           // await prefs.setString("name", user?.displayName ?? "Guest");
-          // await prefs.setString("email", user?.email ?? "");
+          await prefs.setString("email", user?.email ?? "");
           // await prefs.setString("photoUrl", user?.photoURL ?? "");
           await prefs.setBool("isGoogleLoggedIn", true);
 
