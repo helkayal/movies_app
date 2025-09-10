@@ -18,6 +18,8 @@ class ProfileUpdated extends ProfileStates {
 
 class ProfileDeleted extends ProfileStates {}
 
+class LogedOut extends ProfileStates {}
+
 class ProfileError extends ProfileStates {
   final String message;
   ProfileError(this.message);

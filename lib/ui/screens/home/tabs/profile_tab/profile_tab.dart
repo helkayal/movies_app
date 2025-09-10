@@ -162,7 +162,7 @@ class _ProfileTabState extends State<ProfileTab>
                     child: CustomButton(
                       text: loc.exit,
                       onClick: () async {
-                        context.read<ProfileCubit>().deleteProfile();
+                        context.read<ProfileCubit>().logOut();
                         if (!context.mounted) return;
                         Navigator.pushAndRemoveUntil(
                           context,
