@@ -13,10 +13,11 @@ class GoogleAuth {
 
       // 👤 حاول تسجيل الدخول بصمت أولًا
       GoogleSignInAccount? googleUser = await googleSignIn.signInSilently();
-      googleUser ??= await googleSignIn.signIn(); // لو مفيش جلسة صامتة افتح نافذة تسجيل
+      googleUser ??= await googleSignIn
+          .signIn(); // لو مفيش جلسة صامتة افتح نافذة تسجيل
 
       if (googleUser == null) {
-        print("❌ User canceled Google Sign-In");
+        // print("❌ User canceled Google Sign-In");
         return null;
       }
 
@@ -43,7 +44,7 @@ class GoogleAuth {
       } catch (e) {
         // ⚠️ لو التوكن انتهت صلاحيته حاول تسجيل الدخول مرة تانية
         if (e is FirebaseAuthException && e.code == 'invalid-credential') {
-          print("⚠️ Token expired. Retrying...");
+          // print("⚠️ Token expired. Retrying...");
           final newGoogleUser = await googleSignIn.signIn();
           if (newGoogleUser == null) return null;
 
@@ -67,16 +68,16 @@ class GoogleAuth {
       }
 
       // 🔄 force refresh token
-      String? freshToken = await user.getIdToken(true);
+      // String? freshToken = await user.getIdToken(true);
 
-      print("✅ Google Sign-In Success: ${user.email}");
-      print("📌 Name: ${user.displayName}");
-      print("📌 Photo: ${user.photoURL}");
-      print("🔑 Fresh Token: $freshToken");
+      // print("✅ Google Sign-In Success: ${user.email}");
+      // print("📌 Name: ${user.displayName}");
+      // print("📌 Photo: ${user.photoURL}");
+      // print("🔑 Fresh Token: $freshToken");
 
       return userCredential;
     } catch (e) {
-      print("🔥 Google Sign-In Error: $e");
+      // print("🔥 Google Sign-In Error: $e");
       rethrow;
     }
   }

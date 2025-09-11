@@ -280,12 +280,16 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
   }
 
   Future<void> _launchMovieUrl(String url) async {
+    if (!mounted) return;
     context.showLoading();
     final Uri uri = Uri.parse(url);
+    if (!mounted) return;
     if (await canLaunchUrl(uri)) {
       await launchUrl(uri, mode: LaunchMode.externalApplication);
     } else {
-      context.showSnackBar("Could not launch the link", isError: true);
+      if (mounted) {
+        context.showSnackBar("Could not launch the link", isError: true);
+      }
     }
   }
 

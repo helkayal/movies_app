@@ -8,7 +8,6 @@ import 'package:movies_app/data/datasources/profile/profile_data_source_impl.dar
 import 'package:movies_app/data/model/user_dm.dart';
 import 'package:movies_app/data/repositories/profile_repository/profile_repository_impl.dart';
 import 'package:movies_app/ui/screens/home/tabs/profile_tab/cubit/profile_states.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
 class ProfileCubit extends Cubit<ProfileStates> {
   ProfileCubit() : super(ProfileInitial());
