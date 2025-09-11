@@ -7,7 +7,6 @@ import 'package:movies_app/core/utils/context_extension.dart';
 import 'package:movies_app/data/model/movie_details_model.dart';
 import 'package:movies_app/ui/screens/home/bloc/movie_details_bloc/movie_details_bloc.dart';
 import 'package:movies_app/ui/screens/home/bloc/movie_details_bloc/movie_details_state.dart';
-import 'package:movies_app/ui/screens/home/bloc/movie_details_bloc/movie_details_event.dart';
 import 'package:movies_app/ui/screens/home/tabs/home_tab/widgets/movie_details_image_section.dart';
 import 'package:movies_app/ui/screens/home/tabs/home_tab/widgets/movie_details_numbers.dart';
 import 'package:movies_app/ui/screens/home/tabs/home_tab/widgets/movie_sections.dart';
@@ -36,10 +35,6 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
   @override
   void initState() {
     super.initState();
-
-    context.read<MovieDetailsBloc>().add(
-      GetMovieDetails(movieId: widget.movieId),
-    );
 
     _checkGoogleLogin();
 
