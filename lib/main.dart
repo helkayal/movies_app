@@ -1,5 +1,4 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:movies_app/core/utils/secure_storage_utils.dart';
 import 'package:movies_app/ui/screens/auth/local_provider/local_provider.dart';
 import 'package:movies_app/ui/screens/home/bloc/movie_details_bloc/movie_details_bloc.dart';
 import 'package:movies_app/ui/screens/home/home_screen.dart';
@@ -55,9 +54,9 @@ void main() async {
           ChangeNotifierProvider(create: (_) => LocaleProvider()),
           BlocProvider(create: (context) => MovieDetailsBloc()),
           BlocProvider(create: (_) => MovieBloc(apiService: ApiService())),
-          BlocProvider(create: (_) => ProfileCubit()),
-          BlocProvider(create: (_) => FavouriteCubit()),
-          BlocProvider(create: (_) => HistoryCubit()),
+          BlocProvider(create: (_) => ProfileCubit()..getProfile()),
+          BlocProvider(create: (_) => FavouriteCubit()..loadFavourites()),
+          BlocProvider(create: (_) => HistoryCubit()..loadHistory()),
           BlocProvider(create: (_) => AuthBloc(authApis: authApis)),
           BlocProvider(create: (_) => ChangeBgImageBloc()),
         ],
@@ -68,7 +67,8 @@ void main() async {
       ),
     );
   } catch (e) {
-    print("❌ Error before runApp: $e");
+    // print("❌ Error before runApp: $e");
+    return null;
   }
 }
 

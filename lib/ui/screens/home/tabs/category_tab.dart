@@ -1,5 +1,4 @@
 import 'package:movies_app/core/utils/constants/imports.dart';
-import 'package:movies_app/data/model/movie_details_model.dart';
 
 class CategoryTab extends StatefulWidget {
   final List<Movie> movie;
