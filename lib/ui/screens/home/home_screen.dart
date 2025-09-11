@@ -26,55 +26,6 @@ class _HomeScreenState extends State<HomeScreen> {
     context.read<MovieBloc>().add(FetchMoviesEvent());
     // });
   }
-
-  // @override
-  // Widget build(BuildContext context) {
-  //   return SafeArea(
-  //     child: BlocBuilder<MovieBloc, MovieState>(
-  //       builder: (context, state) {
-  //         if (state is MovieLoading) {
-  //           return Center(
-  //             child: CircularProgressIndicator(color: AppColors.yellow),
-  //           );
-  //         } else if (state is MovieSuccess) {
-  //           final movieList = state.movies.data?.movies;
-  //           final List<Widget> screens = [
-  //             HomeTab(movies: movieList!),
-  //             SearchTab(movie: movieList),
-  //             CategoryTab(movie: movieList),
-  //             ProfileTab(movie: movieList),
-  //           ];
-  //           final List<Widget> googleLoggedinScreens = [
-  //             HomeTab(movies: movieList),
-  //             SearchTab(movie: movieList),
-  //             CategoryTab(movie: movieList),
-  //             HistoryTab(),
-  //           ];
-
-  //           if (_isGoogleLoggedIn()) {
-  //             return _buildHomeBody(googleLoggedinScreens);
-  //           } else {
-  //             return _buildHomeBody(screens);
-  //           }
-  //         } else {
-  //           return Column(
-  //             mainAxisAlignment: MainAxisAlignment.center,
-  //             children: [
-  //               Text('home screen error', style: AppTextStyles.whiteRegular16),
-  //               IconButton(
-  //                 onPressed: () {
-  //                   context.read<MovieBloc>().add(FetchMoviesEvent());
-  //                 },
-  //                 icon: Icon(Icons.refresh_rounded, color: AppColors.lightGrey),
-  //               ),
-  //             ],
-  //           );
-  //         }
-  //       },
-  //     ),
-  //   );
-  // }
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(

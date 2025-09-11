@@ -98,7 +98,7 @@ import 'package:movies_app/data/model/movie_data_model.dart';
 class ApiService {
   // Get all movies (unchanged)
   static Future<MovieDataModel> getMovies({
-    int limit = 50,
+    int limit = 100,
     int page = 1,
     String sortedBy = 'rating',
   }) async {
