@@ -37,8 +37,7 @@ class ProfileApiService {
       final response = await _dio.get('/profile');
       return handleDioResponse(response);
     } on DioException catch (e) {
-      handleDioError(e);
-      rethrow;
+      throw Exception(handleDioError(e));
     }
   }
 
@@ -47,8 +46,7 @@ class ProfileApiService {
       final response = await _dio.patch('/profile', data: body);
       return handleDioResponse(response);
     } on DioException catch (e) {
-      handleDioError(e);
-      rethrow;
+      throw Exception(handleDioError(e));
     }
   }
 
@@ -58,8 +56,7 @@ class ProfileApiService {
       HistoryService.clearHistory();
       return handleDioResponse(response);
     } on DioException catch (e) {
-      handleDioError(e);
-      rethrow;
+      throw Exception(handleDioError(e));
     }
   }
 
@@ -68,8 +65,7 @@ class ProfileApiService {
       final response = await _dio.patch('/auth/reset-password', data: body);
       return handleDioResponse(response);
     } on DioException catch (e) {
-      handleDioError(e);
-      rethrow;
+      throw Exception(handleDioError(e));
     }
   }
 }

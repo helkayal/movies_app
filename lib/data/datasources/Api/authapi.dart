@@ -1,4 +1,6 @@
 // lib/authapi/authapis.dart
+import 'package:dio/dio.dart';
+import 'package:movies_app/core/services/common/common.dart';
 import 'package:movies_app/data/datasources/Api/api_constants.dart';
 
 import 'dioclient.dart';
@@ -31,11 +33,12 @@ class AuthApis {
         ApiConstants.login,
         data: {'email': email, 'password': password},
       );
-      final body = response.data as Map<String, dynamic>? ?? {};
+      final body = handleDioResponse(response);
+      // final body = response.data as Map<String, dynamic>? ?? {};
       await _saveTokenIfExists(body);
       return body;
-    } catch (e) {
-      rethrow;
+    } on DioException catch (e) {
+      throw Exception(handleDioError(e));
     }
   }
 
@@ -59,11 +62,12 @@ class AuthApis {
           'avaterId': avaterId,
         },
       );
-      final body = response.data as Map<String, dynamic>? ?? {};
+      // final body = response.data as Map<String, dynamic>? ?? {};
+      final body = handleDioResponse(response);
       await _saveTokenIfExists(body);
       return body;
-    } catch (e) {
-      rethrow;
+    } on DioException catch (e) {
+      throw Exception(handleDioError(e));
     }
   }
 
@@ -73,9 +77,10 @@ class AuthApis {
         ApiConstants.forgetPassword,
         data: {'email': email},
       );
-      return response.data as Map<String, dynamic>? ?? {};
-    } catch (e) {
-      rethrow;
+      // return response.data as Map<String, dynamic>? ?? {};
+      return handleDioResponse(response);
+    } on DioException catch (e) {
+      throw Exception(handleDioError(e));
     }
   }
 
@@ -93,9 +98,10 @@ class AuthApis {
           'newPassword': newPassword,
         },
       );
-      return response.data as Map<String, dynamic>? ?? {};
-    } catch (e) {
-      rethrow;
+      // return response.data as Map<String, dynamic>? ?? {};
+      return handleDioResponse(response);
+    } on DioException catch (e) {
+      throw Exception(handleDioError(e));
     }
   }
 }

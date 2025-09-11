@@ -1,9 +1,10 @@
-// lib/ui/screens/auth/authbloc/authbloc.dart
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:dio/dio.dart';
 
 import '../../../../data/datasources/Api/authapi.dart';
 import '../../../../data/datasources/google/google_auth.dart';
+import '../../../../core/services/common/common.dart'; // for handleDioError
 import 'authevent.dart';
 import 'authstate.dart';
 
@@ -18,9 +19,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       try {
         final result = await authApis.login(event.email, event.password);
 
-        // ✅ خزّن التوكن
         final prefs = await SharedPreferences.getInstance();
-        // await prefs.setString("token", result['token'] ?? '');
         await prefs.setBool("isGoogleLoggedIn", false);
         await prefs.setString("email", event.email);
 
@@ -30,8 +29,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
             token: result['token'] ?? '',
           ),
         );
+      } on DioException catch (e) {
+        emit(AuthFailure(handleDioError(e).replaceFirst("Exception: ", "")));
       } catch (e) {
-        emit(AuthFailure(e.toString()));
+        emit(AuthFailure(e.toString().replaceFirst("Exception: ", "")));
       }
     });
 
@@ -42,17 +43,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         final userCredential = await googleAuth.loginWithGoogle();
         if (userCredential != null) {
           final user = userCredential.user;
-          // final token = await user?.getIdToken() ?? "";
 
-          // final FlutterSecureStorage storage = const FlutterSecureStorage();
-          // await storage.write(key: 'token', value: token);
-
-          // ✅ خزّن بيانات جوجل
           final prefs = await SharedPreferences.getInstance();
-          // await prefs.setString("token", token);
-          // await prefs.setString("name", user?.displayName ?? "Guest");
           await prefs.setString("email", user?.email ?? "");
-          // await prefs.setString("photoUrl", user?.photoURL ?? "");
           await prefs.setBool("isGoogleLoggedIn", true);
 
           emit(
@@ -62,7 +55,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           emit(AuthFailure("Google Sign-In canceled"));
         }
       } catch (e) {
-        emit(AuthFailure(e.toString()));
+        emit(AuthFailure(e.toString().replaceFirst("Exception: ", "")));
       }
     });
 
@@ -74,8 +67,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         emit(
           AuthSuccessMessage(message: result['message'] ?? 'Check your email'),
         );
+      } on DioException catch (e) {
+        emit(AuthFailure(handleDioError(e).replaceFirst("Exception: ", "")));
       } catch (e) {
-        emit(AuthFailure(e.toString()));
+        emit(AuthFailure(e.toString().replaceFirst("Exception: ", "")));
       }
     });
 
@@ -93,8 +88,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
             message: result['message'] ?? 'Password Reset Successful',
           ),
         );
+      } on DioException catch (e) {
+        emit(AuthFailure(handleDioError(e).replaceFirst("Exception: ", "")));
       } catch (e) {
-        emit(AuthFailure(e.toString()));
+        emit(AuthFailure(e.toString().replaceFirst("Exception: ", "")));
       }
     });
 
@@ -111,7 +108,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           avaterId: event.avaterId,
         );
 
-        // ✅ خزّن التوكن من الريجيستر
         final prefs = await SharedPreferences.getInstance();
         if (result['data']?['token'] != null) {
           await prefs.setString("token", result['data']['token']);
@@ -123,8 +119,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
             data: result['data'] ?? {},
           ),
         );
+      } on DioException catch (e) {
+        emit(AuthFailure(handleDioError(e).replaceFirst("Exception: ", "")));
       } catch (e) {
-        emit(AuthFailure(e.toString()));
+        emit(AuthFailure(e.toString().replaceFirst("Exception: ", "")));
       }
     });
   }

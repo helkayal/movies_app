@@ -36,8 +36,7 @@ class FavouriteApiService {
       final response = await _dio.get('/favorites/all');
       return handleDioResponse(response);
     } on DioException catch (e) {
-      handleDioError(e);
-      rethrow;
+      throw Exception(handleDioError(e));
     }
   }
 
@@ -46,8 +45,7 @@ class FavouriteApiService {
       final response = await _dio.post('/favorites/add', data: body);
       return handleDioResponse(response);
     } on DioException catch (e) {
-      handleDioError(e);
-      rethrow;
+      throw Exception(handleDioError(e));
     }
   }
 
@@ -58,8 +56,7 @@ class FavouriteApiService {
       final response = await _dio.get('/favorites/is-favorite/$movieId');
       return handleDioResponse(response);
     } on DioException catch (e) {
-      handleDioError(e);
-      rethrow;
+      throw Exception(handleDioError(e));
     }
   }
 
@@ -70,8 +67,7 @@ class FavouriteApiService {
       final response = await _dio.delete('/favorites/remove/$movieId');
       return handleDioResponse(response);
     } on DioException catch (e) {
-      handleDioError(e);
-      rethrow;
+      throw Exception(handleDioError(e));
     }
   }
 }

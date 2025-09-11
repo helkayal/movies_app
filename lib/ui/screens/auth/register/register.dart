@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:movies_app/core/utils/context_extension.dart';
 import '../../../../data/datasources/Api/authapi.dart';
 import '../../../../data/datasources/Api/dioclient.dart';
 import '../../../../core/theme/app_colors.dart';
@@ -35,17 +36,13 @@ class RegisterScreen extends StatelessWidget {
           }
 
           if (state is RegisterSuccess) {
-            ScaffoldMessenger.of(
-              context,
-            ).showSnackBar(SnackBar(content: Text(state.message)));
+            context.showSnackBar(state.message);
             // بعد النجاح انتقل للـ Login
             Navigator.pushReplacement(context, AppRoutes.login);
           }
 
           if (state is AuthFailure) {
-            ScaffoldMessenger.of(
-              context,
-            ).showSnackBar(SnackBar(content: Text(state.error)));
+            context.showSnackBar(state.error);
           }
         },
         child: RegisterView(),
