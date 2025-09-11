@@ -1,3 +1,4 @@
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:movies_app/core/utils/constants/imports.dart';
 
 class CategoryTab extends StatefulWidget {
@@ -32,7 +33,7 @@ class _CategoryTabState extends State<CategoryTab> {
       children: [
         Container(
           margin: EdgeInsets.only(left: 8, top: 16),
-          height: context.height * 0.06,
+          height: 60.h,
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
             itemCount: genersList.length,
@@ -48,7 +49,10 @@ class _CategoryTabState extends State<CategoryTab> {
                   });
                 },
                 child: Container(
-                  padding: EdgeInsets.all(12),
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 16.w,
+                    vertical: 14.h,
+                  ),
                   margin: EdgeInsets.only(left: 8),
                   decoration: BoxDecoration(
                     color: selecteButton == index

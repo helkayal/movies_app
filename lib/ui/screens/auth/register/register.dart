@@ -9,8 +9,8 @@ import '../authbloc/authstate.dart';
 import 'registerview.dart';
 
 class RegisterScreen extends StatelessWidget {
-  final void Function(Locale)? onLocaleChange;
-  const RegisterScreen({super.key, this.onLocaleChange});
+  // final void Function(Locale)? onLocaleChange;
+  const RegisterScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -48,9 +48,7 @@ class RegisterScreen extends StatelessWidget {
             ).showSnackBar(SnackBar(content: Text(state.error)));
           }
         },
-        child:  RegisterView(
-          onLocaleChange: onLocaleChange ?? (_) {},
-        ),
+        child: RegisterView(),
       ),
     );
   }
