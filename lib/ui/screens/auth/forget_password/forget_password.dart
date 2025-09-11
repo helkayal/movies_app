@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:movies_app/core/utils/context_extension.dart';
 
 // Theme & Utils
 import '../../../../core/theme/app_colors.dart';
@@ -18,9 +19,7 @@ import 'forget_passwordview.dart';
 
 class ForgetPasswordScreen extends StatelessWidget {
   final void Function(Locale)? onLocaleChange;
-  const ForgetPasswordScreen({super.key,
-    this.onLocaleChange
-  });
+  const ForgetPasswordScreen({super.key, this.onLocaleChange});
 
   @override
   Widget build(BuildContext context) {
@@ -43,9 +42,7 @@ class ForgetPasswordScreen extends StatelessWidget {
 
           // Success
           if (state is AuthSuccessMessage) {
-            ScaffoldMessenger.of(
-              context,
-            ).showSnackBar(SnackBar(content: Text(state.message)));
+            context.showSnackBar(state.message);
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(builder: (_) => const LoginScreen()),
@@ -54,14 +51,10 @@ class ForgetPasswordScreen extends StatelessWidget {
 
           // Failure
           if (state is AuthFailure) {
-            ScaffoldMessenger.of(
-              context,
-            ).showSnackBar(SnackBar(content: Text(state.error)));
+            context.showSnackBar(state.error);
           }
         },
-        child: ForgetPasswordView(
-          onLocaleChange: onLocaleChange ?? (_) {},
-        ),
+        child: ForgetPasswordView(onLocaleChange: onLocaleChange ?? (_) {}),
       ),
     );
   }

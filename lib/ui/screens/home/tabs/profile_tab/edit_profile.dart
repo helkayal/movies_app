@@ -156,25 +156,17 @@ class _EditProfileState extends State<EditProfile> {
       body: BlocConsumer<ProfileCubit, ProfileStates>(
         listener: (context, state) {
           if (state is ProfileUpdated) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text(loc.profileUpdatedSuccessfully)),
-            );
+            context.showSnackBar(loc.profileUpdatedSuccessfully);
             Navigator.pop(context, true);
           } else if (state is ProfileDeleted) {
             Navigator.push(context, AppRoutes.login);
           } else if (state is PasswordResetSuccess) {
-            ScaffoldMessenger.of(
-              context,
-            ).showSnackBar(SnackBar(content: Text(loc.passwordChangedSuccess)));
+            context.showSnackBar(loc.passwordChangedSuccess);
             Navigator.pushReplacement(context, AppRoutes.login);
           } else if (state is ProfileError) {
-            ScaffoldMessenger.of(
-              context,
-            ).showSnackBar(SnackBar(content: Text(state.message)));
+            context.showSnackBar(state.message);
           } else if (state is PasswordResetError) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text("${loc.error}: ${state.message}")),
-            );
+            context.showSnackBar("${loc.error}: ${state.message}");
           } else if (state is ProfileLoaded) {
             nameController.text = state.user.name;
             emailController.text = state.user.email;

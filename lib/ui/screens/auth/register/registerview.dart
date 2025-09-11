@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movies_app/core/utils/constants/app_routes.dart';
+import 'package:movies_app/core/utils/context_extension.dart';
 import 'package:movies_app/ui/widgets/custom_text_field.dart';
 import 'package:movies_app/ui/widgets/language_switcher.dart';
 import '../../../../core/theme/app_colors.dart';
@@ -157,9 +158,7 @@ class _RegisterViewState extends State<RegisterView> {
                       if (_formKey.currentState!.validate()) {
                         if (passwordController.text !=
                             confirmPasswordController.text) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text(loc.passwordsDoNotMatch)),
-                          );
+                          context.showSnackBar(loc.passwordsDoNotMatch);
                           return;
                         }
                         context.read<AuthBloc>().add(

@@ -9,7 +9,7 @@ extension ContextX on BuildContext {
   void showSnackBar(String message, {bool isError = false}) {
     ScaffoldMessenger.of(this).showSnackBar(
       SnackBar(
-        content: Text(message),
+        content: Text(message, textAlign: TextAlign.center),
         backgroundColor: isError ? AppColors.red : AppColors.darkGrey,
       ),
     );
