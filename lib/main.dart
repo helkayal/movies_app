@@ -22,6 +22,7 @@ import 'package:movies_app/data/datasources/Api/dioclient.dart';
 
 // localization
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'l10n/app_localizations.dart';
 
 void main() async {
@@ -44,7 +45,10 @@ void main() async {
     final FlutterSecureStorage secureStorage = const FlutterSecureStorage();
     final token = await secureStorage.read(key: 'token');
 
-    if (token != null && token.isNotEmpty) {
+    final prefs = await SharedPreferences.getInstance();
+    bool isGoogleLoggedIn = prefs.getBool('isGoogleLoggedIn') ?? false;
+
+    if ((token != null && token.isNotEmpty) || isGoogleLoggedIn) {
       loggedInBefore = true;
     }
 
@@ -52,7 +56,7 @@ void main() async {
       MultiProvider(
         providers: [
           ChangeNotifierProvider(create: (_) => LocaleProvider()),
-          BlocProvider(create: (context) => MovieDetailsBloc()),
+          BlocProvider(create: (_) => MovieDetailsBloc()),
           BlocProvider(create: (_) => MovieBloc(apiService: ApiService())),
           BlocProvider(create: (_) => ProfileCubit()..getProfile()),
           BlocProvider(create: (_) => FavouriteCubit()..loadFavourites()),
