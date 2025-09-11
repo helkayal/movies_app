@@ -1,6 +1,4 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:movies_app/core/utils/constants/imports.dart';
-import 'package:movies_app/ui/screens/home/tabs/profile_tab/cubit/history_cubit.dart';
 import 'package:movies_app/ui/screens/home/tabs/profile_tab/cubit/history_states.dart';
 import 'package:movies_app/ui/screens/home/tabs/profile_tab/widgets/history_list.dart';
 
@@ -21,10 +19,6 @@ class _ProfileTabState extends State<ProfileTab>
   @override
   void initState() {
     super.initState();
-
-    context.read<ProfileCubit>().getProfile();
-    context.read<FavouriteCubit>().loadFavourites();
-    context.read<HistoryCubit>().loadHistory();
 
     _tabController = TabController(length: 2, vsync: this);
   }

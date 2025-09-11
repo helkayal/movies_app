@@ -1,6 +1,4 @@
-
 import 'package:movies_app/core/utils/constants/imports.dart';
-import 'package:movies_app/data/model/movie_data_model.dart';
 
 import '../../../../l10n/app_localizations.dart';
 
@@ -71,6 +69,7 @@ class _SearchTabState extends State<SearchTab> {
       });
     });
   }
+
   @override
   void dispose() {
     _debounceTimer?.cancel();

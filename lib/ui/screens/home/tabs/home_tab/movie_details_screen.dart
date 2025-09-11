@@ -7,7 +7,6 @@ import 'package:movies_app/core/utils/context_extension.dart';
 import 'package:movies_app/data/model/movie_data_model.dart';
 import 'package:movies_app/ui/screens/home/bloc/movie_details_bloc/movie_details_bloc.dart';
 import 'package:movies_app/ui/screens/home/bloc/movie_details_bloc/movie_details_state.dart';
-import 'package:movies_app/ui/screens/home/bloc/movie_details_bloc/movie_details_event.dart';
 import 'package:movies_app/ui/screens/home/tabs/home_tab/widgets/movie_details_image_section.dart';
 import 'package:movies_app/ui/screens/home/tabs/home_tab/widgets/movie_details_numbers.dart';
 import 'package:movies_app/ui/screens/home/tabs/home_tab/widgets/movie_sections.dart';
@@ -17,6 +16,7 @@ import 'package:movies_app/ui/screens/home/tabs/profile_tab/cubit/favourite_stat
 import 'package:movies_app/ui/screens/home/tabs/profile_tab/cubit/history_cubit.dart';
 import 'package:movies_app/ui/widgets/custom_button.dart';
 import 'package:movies_app/ui/widgets/custom_gride_view.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class MovieDetailsScreen extends StatefulWidget {
@@ -30,24 +30,35 @@ class MovieDetailsScreen extends StatefulWidget {
 class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
   bool isFav = false;
   bool _savedToHistory = false;
+  bool _isGoogleLoggedIn = false;
 
   @override
   void initState() {
     super.initState();
 
-    context.read<MovieDetailsBloc>().add(
-      GetMovieDetails(movieId: widget.movieId),
-    );
+    _checkGoogleLogin();
 
     // check if movie is favourite
-    context
-        .read<FavouriteCubit>()
-        .isMovieFavourite(movieId: widget.movieId.toString())
-        .then((fav) {
-          setState(() {
-            isFav = fav;
+    if (!_isGoogleLoggedIn) {
+      context
+          .read<FavouriteCubit>()
+          .isMovieFavourite(movieId: widget.movieId.toString())
+          .then((fav) {
+            setState(() {
+              isFav = fav;
+            });
           });
-        });
+    }
+  }
+
+  Future<void> _checkGoogleLogin() async {
+    final prefs = await SharedPreferences.getInstance();
+    final bool? loggedIn = prefs.getBool('isGoogleLoggedIn');
+    if (mounted) {
+      setState(() {
+        _isGoogleLoggedIn = loggedIn ?? false;
+      });
+    }
   }
 
   @override
@@ -107,51 +118,55 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
             onPressed: () => Navigator.pop(context),
             icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
           ),
-          actions: [
-            BlocConsumer<FavouriteCubit, FavouriteStates>(
-              listener: (context, state) {
-                if (state is FavouriteAdded) {
-                  setState(() => isFav = true);
-                  context.showSnackBar("Added to favourites");
-                } else if (state is FavouriteRemoved) {
-                  setState(() => isFav = false);
-                  context.showSnackBar("Removed from favourites");
-                } else if (state is FavouriteError) {
-                  context.showSnackBar(state.message, isError: true);
-                }
-              },
-              builder: (context, state) {
-                if (state is FavouriteLoading) {
-                  return const Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: CircularProgressIndicator(color: Colors.white),
-                  );
-                }
-                return IconButton(
-                  onPressed: () {
-                    if (isFav) {
-                      context.read<FavouriteCubit>().removeMovieFromFavourite(
-                        movieId: movie!.id.toString(),
+          actions: _isGoogleLoggedIn
+              ? [] // hide if Google logged in
+              : [
+                  BlocConsumer<FavouriteCubit, FavouriteStates>(
+                    listener: (context, state) {
+                      if (state is FavouriteAdded) {
+                        setState(() => isFav = true);
+                        context.showSnackBar("Added to favourites");
+                      } else if (state is FavouriteRemoved) {
+                        setState(() => isFav = false);
+                        context.showSnackBar("Removed from favourites");
+                      } else if (state is FavouriteError) {
+                        context.showSnackBar(state.message, isError: true);
+                      }
+                    },
+                    builder: (context, state) {
+                      if (state is FavouriteLoading) {
+                        return const Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: CircularProgressIndicator(color: Colors.white),
+                        );
+                      }
+                      return IconButton(
+                        onPressed: () {
+                          if (isFav) {
+                            context
+                                .read<FavouriteCubit>()
+                                .removeMovieFromFavourite(
+                                  movieId: movie!.id.toString(),
+                                );
+                          } else {
+                            context.read<FavouriteCubit>().addFavourite(
+                              movieId: movie!.id.toString(),
+                              name: movie.title ?? '',
+                              rating: movie.rating ?? 0.0,
+                              imageURL: movie.mediumCoverImage ?? '',
+                              year: movie.year?.toString() ?? '',
+                            );
+                          }
+                        },
+                        icon: Icon(
+                          Icons.bookmark,
+                          color: isFav ? Colors.yellow : Colors.white,
+                          size: 30,
+                        ),
                       );
-                    } else {
-                      context.read<FavouriteCubit>().addFavourite(
-                        movieId: movie!.id.toString(),
-                        name: movie.title ?? '',
-                        rating: movie.rating ?? 0.0,
-                        imageURL: movie.mediumCoverImage ?? '',
-                        year: movie.year?.toString() ?? '',
-                      );
-                    }
-                  },
-                  icon: Icon(
-                    Icons.bookmark,
-                    color: isFav ? Colors.yellow : Colors.white,
-                    size: 30,
+                    },
                   ),
-                );
-              },
-            ),
-          ],
+                ],
         ),
         body: SingleChildScrollView(
           child: Column(
@@ -260,12 +275,16 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
   }
 
   Future<void> _launchMovieUrl(String url) async {
+    if (!mounted) return;
     context.showLoading();
     final Uri uri = Uri.parse(url);
+    if (!mounted) return;
     if (await canLaunchUrl(uri)) {
       await launchUrl(uri, mode: LaunchMode.externalApplication);
     } else {
-      context.showSnackBar("Could not launch the link", isError: true);
+      if (mounted) {
+        context.showSnackBar("Could not launch the link", isError: true);
+      }
     }
   }
 

@@ -15,7 +15,7 @@ class MovieDetailsNumbers extends StatelessWidget {
       child: Container(
         // width: context.width * 0.28,
         // height: context.height * 0.07,
-        padding: EdgeInsets.symmetric(horizontal: 22,vertical: 10),
+        padding: EdgeInsets.symmetric(horizontal: 22, vertical: 10),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(18),
           color: AppColors.darkGrey,

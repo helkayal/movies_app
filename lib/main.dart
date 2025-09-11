@@ -1,10 +1,10 @@
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:movies_app/ui/screens/auth/local_provider/local_provider.dart';
 import 'package:movies_app/ui/screens/home/bloc/movie_details_bloc/movie_details_bloc.dart';
-import 'package:movies_app/ui/screens/home/tabs/profile_tab/cubit/history_cubit.dart';
+import 'package:movies_app/ui/screens/home/home_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:movies_app/firebase_options.dart';
 
 // Screens
 import 'package:movies_app/ui/screens/auth/login/login.dart';
@@ -26,10 +26,9 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   bool completed = false;
-  // this line make this exception => FirebaseException ([core/duplicate-app] A Firebase App named "[DEFAULT]" already exists)
-  //this means it initialize more than once
+  bool loggedInBefore = false;
+
   // await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  
   await Firebase.initializeApp();
   try {
     final dioClient = DioClient();
@@ -40,29 +39,45 @@ void main() async {
     );
     completed = await onboardingRepository.isOnboardingCompleted();
 
+    final FlutterSecureStorage secureStorage = const FlutterSecureStorage();
+    final token = await secureStorage.read(key: 'token');
+
+    if (token != null && token.isNotEmpty) {
+      loggedInBefore = true;
+    }
+
     runApp(
       MultiProvider(
         providers: [
           ChangeNotifierProvider(create: (_) => LocaleProvider()),
           BlocProvider(create: (context) => MovieDetailsBloc()),
           BlocProvider(create: (_) => MovieBloc(apiService: ApiService())),
-          BlocProvider(create: (_) => ProfileCubit()),
-          BlocProvider(create: (_) => FavouriteCubit()),
-          BlocProvider(create: (_) => HistoryCubit()),
+          BlocProvider(create: (_) => ProfileCubit()..getProfile()),
+          BlocProvider(create: (_) => FavouriteCubit()..loadFavourites()),
+          BlocProvider(create: (_) => HistoryCubit()..loadHistory()),
           BlocProvider(create: (_) => AuthBloc(authApis: authApis)),
           BlocProvider(create: (_) => ChangeBgImageBloc()),
         ],
-        child: MainApp(onboardingCompleted: completed),
+        child: MainApp(
+          onboardingCompleted: completed,
+          loggedInBefore: loggedInBefore,
+        ),
       ),
     );
   } catch (e) {
-    print("❌ Error before runApp: $e");
+    // print("❌ Error before runApp: $e");
+    return null;
   }
 }
 
 class MainApp extends StatelessWidget {
   final bool onboardingCompleted;
-  const MainApp({super.key, required this.onboardingCompleted});
+  final bool loggedInBefore;
+  const MainApp({
+    super.key,
+    required this.onboardingCompleted,
+    required this.loggedInBefore,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -86,7 +101,9 @@ class MainApp extends StatelessWidget {
             GlobalCupertinoLocalizations.delegate,
           ],
           home: onboardingCompleted
-              ? const LoginScreen(key: Key('loginScreen'))
+              ? loggedInBefore
+                    ? HomeScreen()
+                    : const LoginScreen(key: Key('loginScreen'))
               : const OnboardingIntro(),
         );
       },

@@ -7,7 +7,8 @@ class HistoryService {
 
   static Future<void> addToHistory(Movie movie) async {
     final prefs = await SharedPreferences.getInstance();
-    final String? existing = prefs.getString(_key);
+    final String email = prefs.getString('email') ?? '';
+    final String? existing = prefs.getString("${_key}_$email");
     List<Map<String, dynamic>> historyList = [];
 
     if (existing != null) {
@@ -27,12 +28,13 @@ class HistoryService {
       historyList = historyList.sublist(0, 20);
     }
 
-    await prefs.setString(_key, jsonEncode(historyList));
+    await prefs.setString("${_key}_$email", jsonEncode(historyList));
   }
 
   static Future<List<Movie>> getHistory() async {
     final prefs = await SharedPreferences.getInstance();
-    final String? data = prefs.getString(_key);
+    final String email = prefs.getString('email') ?? '';
+    final String? data = prefs.getString("${_key}_$email");
     if (data == null) return [];
 
     final List<dynamic> decoded = jsonDecode(data);
@@ -41,6 +43,7 @@ class HistoryService {
 
   static Future<void> clearHistory() async {
     final prefs = await SharedPreferences.getInstance();
-    await prefs.remove(_key);
+    final String email = prefs.getString('email') ?? '';
+    await prefs.remove("${_key}_$email");
   }
 }

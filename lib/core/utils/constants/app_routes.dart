@@ -35,5 +35,4 @@ abstract final class AppRoutes {
   static Route get editProfile {
     return MaterialPageRoute(builder: (_) => const EditProfile());
   }
-
 }

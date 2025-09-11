@@ -1,4 +1,3 @@
-
 import 'package:movies_app/core/utils/constants/imports.dart';
 
 class OnboardingCubit extends Cubit<OnboardingState> {

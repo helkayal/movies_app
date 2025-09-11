@@ -1,6 +1,5 @@
 import 'package:movies_app/core/utils/constants/imports.dart';
 import 'package:movies_app/ui/screens/home/tabs/history_tab.dart';
-import 'package:movies_app/ui/screens/home/tabs/profile_tab/cubit/history_cubit.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -26,6 +25,7 @@ class _HomeScreenState extends State<HomeScreen> {
     context.read<MovieBloc>().add(FetchMoviesEvent());
     // });
   }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(

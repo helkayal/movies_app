@@ -105,10 +105,10 @@ class _ForgetPasswordViewState extends State<ForgetPasswordView> {
               ),
 
               SizedBox(height: height * 0.02),
-
             ],
           ),
         ),
       ),
     );
-  }}
+  }
+}

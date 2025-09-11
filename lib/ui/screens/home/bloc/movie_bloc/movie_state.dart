@@ -22,13 +22,15 @@ class MovieSuccess extends MovieState {
 class MovieDetailsSuccess extends MovieState {
   final Movie movie;
   final List<Movie> suggestedMovies;
-  const MovieDetailsSuccess({required this.movie,required this.suggestedMovies});
+  const MovieDetailsSuccess({
+    required this.movie,
+    required this.suggestedMovies,
+  });
   @override
-  List<Object> get props => [movie,suggestedMovies];
+  List<Object> get props => [movie, suggestedMovies];
 }
 
 //get suggested movies
-
 
 //Shared
 final class MovieInitial extends MovieState {}

@@ -1,4 +1,3 @@
-
 import 'package:movies_app/data/model/movie_data_model.dart';
 
 class MovieRepository {

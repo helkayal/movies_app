@@ -48,9 +48,7 @@ class RegisterScreen extends StatelessWidget {
             ).showSnackBar(SnackBar(content: Text(state.error)));
           }
         },
-        child:  RegisterView(
-          onLocaleChange: onLocaleChange ?? (_) {},
-        ),
+        child: RegisterView(onLocaleChange: onLocaleChange ?? (_) {}),
       ),
     );
   }
