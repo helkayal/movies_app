@@ -59,8 +59,8 @@ class AuthApis {
           'avaterId': avaterId,
         },
       );
-      print("Status code: ${response.statusCode}");
-      print("Response data: ${response.data}");
+      // print("Status code: ${response.statusCode}");
+      // print("Response data: ${response.data}");
 
       final body = response.data as Map<String, dynamic>? ?? {};
       await _saveTokenIfExists(body);

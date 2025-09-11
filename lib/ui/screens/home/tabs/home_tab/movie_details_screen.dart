@@ -63,7 +63,15 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<MovieDetailsBloc, MovieDetailsState>(
+    return BlocConsumer<MovieDetailsBloc, MovieDetailsState>(
+      listener: (context, state) {
+        if (state is MovieDetailsNull) {
+          context.showSnackBar("Not Available Now!");
+          Future.delayed(Duration(milliseconds: 200), () {
+            Navigator.pop(context);
+          });
+        }
+      },
       builder: (context, state) {
         if (state is MovieDetailsError) {
           return Center(

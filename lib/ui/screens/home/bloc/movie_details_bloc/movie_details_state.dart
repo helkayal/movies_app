@@ -11,6 +11,7 @@ abstract class MovieDetailsState extends Equatable {
 class MovieDetailsInitial extends MovieDetailsState {}
 
 class MovieDetailsLoading extends MovieDetailsState {}
+class MovieDetailsNull extends MovieDetailsState {}
 
 class MovieDetailsSuccess extends MovieDetailsState {
   final Movie movie;

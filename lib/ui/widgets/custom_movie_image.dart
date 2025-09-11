@@ -13,7 +13,7 @@ import 'package:movies_app/ui/screens/home/tabs/profile_tab/cubit/history_cubit.
 class CustomMovieImage extends StatelessWidget {
   final double? width;
   final double? height;
-  final Movie movieDetails;
+  final Movie? movieDetails;
   final EdgeInsetsGeometry? margin;
   const CustomMovieImage({
     super.key,
@@ -30,7 +30,7 @@ class CustomMovieImage extends StatelessWidget {
         _onMoviePressed(context, movieDetails);
       },
       child: CachedNetworkImage(
-        imageUrl: movieDetails.mediumCoverImage ?? '',
+        imageUrl: movieDetails?.mediumCoverImage ?? AppAssets.defaultMovieImage,
         imageBuilder: (context, imageProvider) => Container(
           clipBehavior: Clip.antiAlias,
           width: width,
@@ -54,7 +54,7 @@ class CustomMovieImage extends StatelessWidget {
               child: Row(
                 children: [
                   Text(
-                    movieDetails.rating.toString(),
+                    movieDetails?.rating.toString() ?? '0.0',
                     style: TextStyle(color: AppColors.white, fontSize: 16),
                   ),
                   Expanded(child: Image.asset(AppAssets.star)),
@@ -89,7 +89,7 @@ class CustomMovieImage extends StatelessWidget {
 
 //THE FUNCTION THAT WILL TAKE THE MOVIE ID AND NAVIGATE
 // i ADDED HERE CAUSE IT'S THE MAIN WIDGET NOT GRIDE VIEW OR LIST VIEW
-void _onMoviePressed(BuildContext context, Movie movie) {
+void _onMoviePressed(BuildContext context, Movie? movie) {
   final historyCubit = context.read<HistoryCubit>();
 
   Navigator.push(
@@ -98,7 +98,7 @@ void _onMoviePressed(BuildContext context, Movie movie) {
       builder: (_) => BlocProvider(
         create: (_) =>
             MovieDetailsBloc()..add(GetMovieDetails(movieId: movie.id!)),
-        child: MovieDetailsScreen(movieId: movie.id!),
+        child: MovieDetailsScreen(movieId: movie!.id!),
       ),
     ),
   ).then((_) {

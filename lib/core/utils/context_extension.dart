@@ -10,11 +10,10 @@ extension ContextX on BuildContext {
   void showSnackBar(String message, {bool isError = false}) {
     ScaffoldMessenger.of(this).showSnackBar(
       SnackBar(
+        duration: Duration(milliseconds: 500),
         content: Text(
           message,
-          style: AppTextStyles.whiteRegular16.copyWith(
-            color: AppColors.darkGrey,
-          ),
+          style: AppTextStyles.blackBold20.copyWith(fontSize: 16)
         ),
         backgroundColor: isError ? AppColors.red : AppColors.yellow,
       ),

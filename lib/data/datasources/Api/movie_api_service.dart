@@ -124,7 +124,7 @@ class ApiService {
   }
 
   // ✅ Get movie details (returns Movie)
-  static Future<Movie> getMovieDetails({required int movieId}) async {
+  static Future<Movie?> getMovieDetails({required int movieId}) async {
     try {
       var response = await http.get(
         Uri.parse(
@@ -133,7 +133,7 @@ class ApiService {
       );
 
       if (response.body.isEmpty) {
-        throw Exception('Empty response from server');
+        return null;
       }
 
       var json = jsonDecode(response.body);

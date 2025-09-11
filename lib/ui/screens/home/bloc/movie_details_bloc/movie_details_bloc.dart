@@ -14,20 +14,25 @@ class MovieDetailsBloc extends Bloc<MovieDetailsEvent, MovieDetailsState> {
     GetMovieDetails event,
     Emitter<MovieDetailsState> emit,
   ) async {
-    emit(MovieDetailsLoading());
     try {
-      final Movie movie = await ApiService.getMovieDetails(
+      final Movie? movie = await ApiService.getMovieDetails(
         movieId: event.movieId,
       );
+      print('################################$movie');
+      if(movie == null ){
+        emit(MovieDetailsNull());
+        return;
+      }
+      emit(MovieDetailsLoading());
       final List<Movie> suggestedMovies = await ApiService.getMovieSuggestions(
         movieId: event.movieId,
       );
-
-      emit(MovieDetailsSuccess(movie: movie, suggestedMovies: suggestedMovies));
-
+      emit(
+        MovieDetailsSuccess(movie: movie, suggestedMovies: suggestedMovies),
+      );
       //Save into history
       await HistoryService.addToHistory(movie);
-    } catch (e) {
+        } catch (e) {
       emit(MovieDetailsError(message: e.toString()));
     }
   }
