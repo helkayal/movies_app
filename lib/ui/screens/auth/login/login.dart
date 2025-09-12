@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:movies_app/core/utils/context_extension.dart';
 import '../../../../core/utils/constants/app_routes.dart';
 import '../../../../data/datasources/Api/authapi.dart';
 import '../../../../data/datasources/Api/dioclient.dart';
@@ -19,13 +20,9 @@ class LoginScreen extends StatelessWidget {
           if (state is LoginSuccess) {
             Navigator.pushReplacement(context, AppRoutes.home);
           } else if (state is AuthFailure) {
-            ScaffoldMessenger.of(
-              context,
-            ).showSnackBar(SnackBar(content: Text(state.error)));
+            context.showSnackBar(state.error);
           } else if (state is AuthSuccessMessage) {
-            ScaffoldMessenger.of(
-              context,
-            ).showSnackBar(SnackBar(content: Text(state.message)));
+            context.showSnackBar(state.message);
           }
         },
         builder: (context, state) {

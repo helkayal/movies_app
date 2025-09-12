@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:movies_app/data/helper/dio_error_handler.dart';
 
 Map<String, dynamic> handleDioResponse(Response response) {
   if (response.statusCode == 200 || response.statusCode == 201) {
@@ -10,10 +11,17 @@ Map<String, dynamic> handleDioResponse(Response response) {
   }
 }
 
-void handleDioError(DioException e) {
+String handleDioError(DioException e) {
   if (e.response != null) {
-    throw Exception('${e.response?.data["message"]}');
+    // Try to extract message from backend
+    final message = e.response?.data["message"] ?? e.message;
+    return message.toString();
+  } else if (e.type == DioExceptionType.connectionTimeout ||
+      e.type == DioExceptionType.receiveTimeout) {
+    return "Connection timeout. Please check your internet.";
+  } else if (e.type == DioExceptionType.badResponse) {
+    return "Server error. Please try again later.";
   } else {
-    throw Exception('Something went wrong');
+    return "Something went wrong. Please try again.";
   }
 }

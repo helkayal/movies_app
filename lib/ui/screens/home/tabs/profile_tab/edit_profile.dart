@@ -1,4 +1,5 @@
 import 'package:movies_app/core/utils/constants/imports.dart';
+import 'package:movies_app/ui/widgets/language_switcher.dart';
 
 import '../../../../../l10n/app_localizations.dart';
 
@@ -109,6 +110,12 @@ class _EditProfileState extends State<EditProfile> {
                   controller: oldPasswordController,
                   prefixIcon: Image.asset(AppAssets.lock),
                   isPassword: true,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return loc.enterPassword;
+                    }
+                    return null;
+                  },
                 ),
                 const SizedBox(height: 10),
                 CustomTextField(
@@ -116,6 +123,12 @@ class _EditProfileState extends State<EditProfile> {
                   controller: newPasswordController,
                   prefixIcon: Image.asset(AppAssets.lock),
                   isPassword: true,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return loc.enterPassword;
+                    }
+                    return null;
+                  },
                 ),
                 const SizedBox(height: 20),
                 CustomButton(
@@ -155,25 +168,17 @@ class _EditProfileState extends State<EditProfile> {
       body: BlocConsumer<ProfileCubit, ProfileStates>(
         listener: (context, state) {
           if (state is ProfileUpdated) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text(loc.profileUpdatedSuccessfully)),
-            );
+            context.showSnackBar(loc.profileUpdatedSuccessfully);
             Navigator.pop(context, true);
           } else if (state is ProfileDeleted) {
             Navigator.push(context, AppRoutes.login);
           } else if (state is PasswordResetSuccess) {
-            ScaffoldMessenger.of(
-              context,
-            ).showSnackBar(SnackBar(content: Text(loc.passwordChangedSuccess)));
+            context.showSnackBar(loc.passwordChangedSuccess);
             Navigator.pushReplacement(context, AppRoutes.login);
           } else if (state is ProfileError) {
-            ScaffoldMessenger.of(
-              context,
-            ).showSnackBar(SnackBar(content: Text(state.message)));
+            context.showSnackBar(state.message);
           } else if (state is PasswordResetError) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text("${loc.error}: ${state.message}")),
-            );
+            context.showSnackBar("${loc.error}: ${state.message}");
           } else if (state is ProfileLoaded) {
             nameController.text = state.user.name;
             emailController.text = state.user.email;
@@ -187,69 +192,84 @@ class _EditProfileState extends State<EditProfile> {
               child: CircularProgressIndicator(color: AppColors.yellow),
             );
           }
-
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Center(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 40),
-                  child: GestureDetector(
-                    onTap: _showAvatarPicker,
-                    child: CircleAvatar(
-                      radius: context.width * 0.15,
-                      backgroundImage: AssetImage(
-                        avatars[selectedAvatarId - 1],
+          return SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Center(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 40),
+                    child: GestureDetector(
+                      onTap: _showAvatarPicker,
+                      child: CircleAvatar(
+                        radius: context.width * 0.15,
+                        backgroundImage: AssetImage(
+                          avatars[selectedAvatarId - 1],
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
-              CustomTextField(
-                hint: loc.name,
-                controller: nameController,
-                prefixIcon: Image.asset(AppAssets.name),
-              ),
-              const SizedBox(height: 10),
-              CustomTextField(
-                hint: 'Email',
-                controller: emailController,
-                prefixIcon: Image.asset(AppAssets.email),
-              ),
-              const SizedBox(height: 10),
-              CustomTextField(
-                hint: loc.phone,
-                controller: phoneController,
-                prefixIcon: Image.asset(AppAssets.call),
-              ),
-              const SizedBox(height: 20),
-              InkWell(
-                onTap: _showResetPasswordSheet,
-                child: Text(
-                  loc.resetPassword,
-                  style: AppTextStyles.whiteRegular20,
+                CustomTextField(
+                  hint: loc.name,
+                  controller: nameController,
+                  prefixIcon: Image.asset(AppAssets.name),
                 ),
-              ),
-              const Spacer(),
-              CustomButton(
-                text: loc.deleteAccount,
-                onClick: () => context.read<ProfileCubit>().deleteProfile(),
-                backgroundColor: AppColors.red,
-                textColor: AppColors.white,
-                borderColor: AppColors.red,
-              ),
-              const SizedBox(height: 20),
-              CustomButton(
-                text: loc.updateData,
-                onClick: () => context.read<ProfileCubit>().updateProfile(
-                  name: nameController.text,
-                  email: emailController.text,
-                  avatar: selectedAvatarId,
-                  phone: phoneController.text,
+                const SizedBox(height: 10),
+                CustomTextField(
+                  hint: 'Email',
+                  controller: emailController,
+                  prefixIcon: Image.asset(AppAssets.email),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return loc.enterEmail;
+                    }
+                    return null;
+                  },
                 ),
-              ),
-              const SizedBox(height: 40),
-            ],
+                const SizedBox(height: 10),
+                CustomTextField(
+                  hint: loc.phone,
+                  controller: phoneController,
+                  prefixIcon: Image.asset(AppAssets.call),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return loc.enterPhone;
+                    }
+                    return null;
+                  },
+                ),
+                const SizedBox(height: 20),
+                InkWell(
+                  onTap: _showResetPasswordSheet,
+                  child: Text(
+                    loc.resetPassword,
+                    style: AppTextStyles.whiteRegular20,
+                  ),
+                ),
+                const SizedBox(height: 40),
+                Center(child: LanguageSwitcher()),
+                const SizedBox(height: 20),
+                CustomButton(
+                  text: loc.deleteAccount,
+                  onClick: () => context.read<ProfileCubit>().deleteProfile(),
+                  backgroundColor: AppColors.red,
+                  textColor: AppColors.white,
+                  borderColor: AppColors.red,
+                ),
+                const SizedBox(height: 20),
+                CustomButton(
+                  text: loc.updateData,
+                  onClick: () => context.read<ProfileCubit>().updateProfile(
+                    name: nameController.text,
+                    email: emailController.text,
+                    avatar: selectedAvatarId,
+                    phone: phoneController.text,
+                  ),
+                ),
+                const SizedBox(height: 40),
+              ],
+            ),
           );
         },
       ),

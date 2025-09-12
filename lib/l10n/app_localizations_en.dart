@@ -128,4 +128,19 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get reset => 'Reset';
+
+  @override
+  String get invalidEmail => 'invalid Email';
+
+  @override
+  String get enterPhone => 'enter Phone';
+
+  @override
+  String get enterName => 'enter Name';
+
+  @override
+  String get enterPassword => 'enter Password';
+
+  @override
+  String get enterConfirmPassword => 'enter Confirm Password';
 }
