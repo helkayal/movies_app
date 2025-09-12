@@ -337,6 +337,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Reset'**
   String get reset;
+
+  /// No description provided for @invalidEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'invalid Email'**
+  String get invalidEmail;
+
+  /// No description provided for @enterPhone.
+  ///
+  /// In en, this message translates to:
+  /// **'enter Phone'**
+  String get enterPhone;
+
+  /// No description provided for @enterName.
+  ///
+  /// In en, this message translates to:
+  /// **'enter Name'**
+  String get enterName;
+
+  /// No description provided for @enterPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'enter Password'**
+  String get enterPassword;
+
+  /// No description provided for @enterConfirmPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'enter Confirm Password'**
+  String get enterConfirmPassword;
 }
 
 class _AppLocalizationsDelegate

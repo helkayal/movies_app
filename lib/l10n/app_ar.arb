@@ -39,6 +39,11 @@
   "genres": "الأنواع",
   "cast": "الممثلون",
   "passwordChangedSuccess": "تم تغيير كلمة المرور بنجاح، يرجى تسجيل الدخول مرة أخرى",
-    "resetPassword": "إعادة تعيين كلمة المرور",
-    "reset": "إعادة تعيين"
+  "resetPassword": "إعادة تعيين كلمة المرور",
+  "reset": "إعادة تعيين",
+  "invalidEmail":"بريد إلكتروني غير صالح",
+  "enterPhone":"أدخل رقم الهاتف",
+  "enterName":"أدخل الاسم",
+  "enterPassword":"أدخل كلمة المرور",
+  "enterConfirmPassword":"أدخل تأكيد كلمة المرور"
 }
