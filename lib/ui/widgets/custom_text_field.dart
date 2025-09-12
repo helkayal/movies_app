@@ -8,6 +8,7 @@ class CustomTextField extends StatefulWidget {
   final bool isPassword;
   final int minLines;
   final Function(String value)? onChanged;
+  final String? Function(String?)? validator;
   final TextEditingController? controller;
 
   const CustomTextField({
@@ -20,6 +21,7 @@ class CustomTextField extends StatefulWidget {
     this.controller,
     this.minLines = 1,
     this.onChanged,
+    this.validator,
   });
 
   @override
@@ -75,8 +77,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
       obscureText: widget.isPassword ? obscureText : false,
       style: AppTextStyles.whiteRegular20,
       cursorColor: AppColors.yellow,
-      validator: (value) =>
-          value == null || value.isEmpty ? "Please enter ${widget.hint}" : null,
+      validator: widget.validator,
     );
   }
 }

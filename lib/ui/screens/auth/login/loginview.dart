@@ -47,6 +47,12 @@ class _LoginViewState extends State<LoginView> {
                     hint: loc.email,
                     controller: emailController,
                     prefixIcon: Image.asset(AppAssets.email),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return loc.enterEmail;
+                      }
+                      return null;
+                    },
                   ),
                 ),
               ),
@@ -62,6 +68,12 @@ class _LoginViewState extends State<LoginView> {
                     controller: passwordController,
                     prefixIcon: Image.asset(AppAssets.lock),
                     isPassword: true,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return loc.enterPassword;
+                      }
+                      return null;
+                    },
                   ),
                 ),
               ),

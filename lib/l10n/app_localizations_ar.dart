@@ -128,4 +128,19 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get reset => 'إعادة تعيين';
+
+  @override
+  String get invalidEmail => 'بريد إلكتروني غير صالح';
+
+  @override
+  String get enterPhone => 'أدخل رقم الهاتف';
+
+  @override
+  String get enterName => 'أدخل الاسم';
+
+  @override
+  String get enterPassword => 'أدخل كلمة المرور';
+
+  @override
+  String get enterConfirmPassword => 'أدخل تأكيد كلمة المرور';
 }
