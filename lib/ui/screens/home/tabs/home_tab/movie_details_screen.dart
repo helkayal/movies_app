@@ -68,7 +68,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
         if (state is MovieDetailsNull) {
           context.showSnackBar("Not Available Now!");
           Future.delayed(Duration(milliseconds: 200), () {
-            Navigator.pop(context);
+            if (context.mounted) Navigator.pop(context);
           });
         }
       },

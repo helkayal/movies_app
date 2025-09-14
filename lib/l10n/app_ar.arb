@@ -49,5 +49,6 @@
   "invalidPhone": "ادخل كود الدوله ولا يقل عن ١١ رقم",
   "invalidPassword":"ادخل كلمه مرور قويه",
   "oldPassword" : "كلمة المرور الحالية ",
-  "newPassword" : "كلمة المرور الجديده "
+  "newPassword" : "كلمة المرور الجديده ",
+  "passwordResetSuccessfully" : "تم تغيير كلمةالمرور بنجاح"
 }

@@ -155,4 +155,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get newPassword => 'كلمة المرور الجديده ';
+
+  @override
+  String get passwordResetSuccessfully => 'تم تغيير كلمةالمرور بنجاح';
 }
