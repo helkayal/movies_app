@@ -1,6 +1,4 @@
 import 'package:movies_app/core/utils/constants/imports.dart';
-import 'package:movies_app/ui/screens/home/tabs/profile_tab/cubit/reset_password_cubit.dart';
-import 'package:movies_app/ui/screens/home/tabs/profile_tab/cubit/reset_password_states.dart';
 import 'package:movies_app/ui/widgets/language_switcher.dart';
 
 import '../../../../../l10n/app_localizations.dart';
