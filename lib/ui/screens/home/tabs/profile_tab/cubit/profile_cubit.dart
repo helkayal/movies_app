@@ -101,24 +101,6 @@ class ProfileCubit extends Cubit<ProfileStates> {
     }
   }
 
-  Future<void> resetPassword({
-    required String oldPassword,
-    required String newPassword,
-  }) async {
-    emit(ProfileLoading());
-    try {
-      final repository = await _initRepository();
-      await repository.resetPassword(
-        oldPassword: oldPassword,
-        newPassword: newPassword,
-      );
-      emit(PasswordResetSuccess());
-    } catch (e) {
-      final errorMessage = e.toString().replaceFirst("Exception: ", "");
-      emit(PasswordResetError(errorMessage));
-    }
-  }
-
   String _extractErrorMessage(dynamic error) {
     try {
       final errorStr = error.toString();

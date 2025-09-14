@@ -156,4 +156,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get newPassword => 'New Password';
+
+  @override
+  String get passwordResetSuccessfully => 'Password changed successfully';
 }

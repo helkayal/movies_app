@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:movies_app/data/helper/dio_error_handler.dart';
 
 Map<String, dynamic> handleDioResponse(Response response) {
   if (response.statusCode == 200 || response.statusCode == 201) {
