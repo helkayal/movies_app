@@ -7,7 +7,7 @@ class MovieDetailsImageSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      constraints: BoxConstraints(maxHeight: context.height * 0.66),
+      constraints: BoxConstraints(maxHeight: context.height * 0.68),
       decoration: BoxDecoration(
         image: DecorationImage(
           image: NetworkImage(movie?.largeCoverImage ?? ''),

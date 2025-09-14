@@ -45,5 +45,9 @@
   "enterPhone":"enter Phone",
   "enterName":"enter Name",
   "enterPassword":"enter Password",
-  "enterConfirmPassword":"enter Confirm Password"
+  "enterConfirmPassword":"enter Confirm Password",
+  "invalidPhone":"Phone number must start with country code and contain 11 digits",
+  "invalidPassword":"please enter a strong password",
+  "oldPassword" : "Current Password",
+  "newPassword" : "New Password"
 }

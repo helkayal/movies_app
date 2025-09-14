@@ -143,4 +143,17 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get enterConfirmPassword => 'enter Confirm Password';
+
+  @override
+  String get invalidPhone =>
+      'Phone number must start with country code and contain 11 digits';
+
+  @override
+  String get invalidPassword => 'please enter a strong password';
+
+  @override
+  String get oldPassword => 'Current Password';
+
+  @override
+  String get newPassword => 'New Password';
 }

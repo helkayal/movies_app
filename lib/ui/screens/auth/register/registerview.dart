@@ -393,7 +393,7 @@ class _RegisterViewState extends State<RegisterView> {
               // name
               CustomTextField(
                 hint: loc.name,
-                prefixIcon: Image.asset(AppAssets.name, scale: 20),
+                prefixIcon: Image.asset(AppAssets.name),
                 controller: nameController,
                 isPassword: false,
                 validator: (value) {
@@ -408,7 +408,7 @@ class _RegisterViewState extends State<RegisterView> {
               // email
               CustomTextField(
                 hint: loc.email,
-                prefixIcon: Image.asset(AppAssets.email, scale: 20),
+                prefixIcon: Image.asset(AppAssets.email),
                 controller: emailController,
                 isPassword: false,
                 validator: (value) {
@@ -425,19 +425,19 @@ class _RegisterViewState extends State<RegisterView> {
               // password
               CustomTextField(
                 hint: loc.password,
-                prefixIcon: Image.asset(AppAssets.lock, scale: 20),
+                prefixIcon: Image.asset(AppAssets.lock),
                 controller: passwordController,
                 isPassword: true,
                 validator: (value) {
+                  final passwordRegex = RegExp(
+                    r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$',
+                  );
                   if (value == null || value.isEmpty) {
                     return loc.enterPassword;
                   }
-                  // if (!RegExp(r'^[A-Z]').hasMatch(value)) {
-                  //   return "Password must start with a capital letter";
-                  // }
-                  // if (!value.endsWith('@')) {
-                  //   return "Password must end with @";
-                  // }
+                  if (!passwordRegex.hasMatch(value)) {
+                    return loc.invalidPassword;
+                  }
                   return null;
                 },
               ),
@@ -447,7 +447,7 @@ class _RegisterViewState extends State<RegisterView> {
               // confirm password
               CustomTextField(
                 hint: loc.confirmPassword,
-                prefixIcon: Image.asset(AppAssets.lock, scale: 20),
+                prefixIcon: Image.asset(AppAssets.lock),
                 controller: confirmPasswordController,
                 isPassword: true,
                 validator: (value) {
@@ -466,16 +466,15 @@ class _RegisterViewState extends State<RegisterView> {
               // phone
               CustomTextField(
                 hint: loc.phoneNumber,
-                prefixIcon: Image.asset(AppAssets.call, scale: 20),
+                prefixIcon: Image.asset(AppAssets.call),
                 controller: phoneController,
                 isPassword: false,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return loc.enterPhone;
+                  } else if (!RegExp(r'^\+\d{11,}$').hasMatch(value)) {
+                    return loc.invalidPhone;
                   }
-                  // else if (!RegExp(r'^\+2\d{10,12}$').hasMatch(value)) {
-                  //   return "Phone number must start with +2 and contain 10–12 digits after it";
-                  // }
                   return null;
                 },
               ),

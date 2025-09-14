@@ -5,7 +5,13 @@ import 'package:movies_app/ui/screens/auth/local_provider/local_provider.dart';
 import 'package:provider/provider.dart';
 
 class LanguageSwitcher extends StatefulWidget {
-  const LanguageSwitcher({super.key});
+  final double heightRatio;
+  final double widthRatio;
+  const LanguageSwitcher({
+    super.key,
+    this.heightRatio = 0.05,
+    this.widthRatio = 0.25,
+  });
 
   @override
   State<LanguageSwitcher> createState() => _LanguageSwitcherState();
@@ -30,8 +36,8 @@ class _LanguageSwitcherState extends State<LanguageSwitcher> {
       },
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 300),
-        width: width * 0.26,
-        height: height * 0.05,
+        width: width * widget.widthRatio,
+        height: height * widget.heightRatio,
         padding: const EdgeInsets.symmetric(horizontal: 6),
         decoration: BoxDecoration(
           color: AppColors.transperant,

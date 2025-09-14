@@ -143,4 +143,16 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get enterConfirmPassword => 'أدخل تأكيد كلمة المرور';
+
+  @override
+  String get invalidPhone => 'ادخل كود الدوله ولا يقل عن ١١ رقم';
+
+  @override
+  String get invalidPassword => 'ادخل كلمه مرور قويه';
+
+  @override
+  String get oldPassword => 'كلمة المرور الحالية ';
+
+  @override
+  String get newPassword => 'كلمة المرور الجديده ';
 }
