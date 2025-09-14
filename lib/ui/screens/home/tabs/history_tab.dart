@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:movies_app/core/theme/app_colors.dart';
 import 'package:movies_app/core/theme/app_text_styles.dart';
 import 'package:movies_app/core/utils/constants/app_assets.dart';
@@ -22,7 +21,7 @@ class HistoryTab extends StatelessWidget {
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            LanguageSwitcher(),
+            LanguageSwitcher(heightRatio: 0.04, widthRatio: 0.22),
             Text(loc.history, style: AppTextStyles.yelowBold20),
             IconButton(
               icon: Transform(

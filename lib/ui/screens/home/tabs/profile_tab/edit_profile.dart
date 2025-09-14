@@ -106,7 +106,7 @@ class _EditProfileState extends State<EditProfile> {
                 Text(loc.resetPassword, style: AppTextStyles.whiteRegular20),
                 const SizedBox(height: 20),
                 CustomTextField(
-                  hint: 'Old Password',
+                  hint: loc.oldPassword,
                   controller: oldPasswordController,
                   prefixIcon: Image.asset(AppAssets.lock),
                   isPassword: true,
@@ -119,7 +119,7 @@ class _EditProfileState extends State<EditProfile> {
                 ),
                 const SizedBox(height: 10),
                 CustomTextField(
-                  hint: 'New Password',
+                  hint: loc.newPassword,
                   controller: newPasswordController,
                   prefixIcon: Image.asset(AppAssets.lock),
                   isPassword: true,
@@ -132,7 +132,7 @@ class _EditProfileState extends State<EditProfile> {
                 ),
                 const SizedBox(height: 20),
                 CustomButton(
-                  text: 'Reset',
+                  text: loc.reset,
                   onClick: () {
                     if (_passwordFormKey.currentState!.validate()) {
                       context.read<ProfileCubit>().resetPassword(
