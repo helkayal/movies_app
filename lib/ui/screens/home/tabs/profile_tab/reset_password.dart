@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movies_app/core/theme/app_colors.dart';
 import 'package:movies_app/core/utils/constants/app_assets.dart';
 import 'package:movies_app/core/utils/constants/app_routes.dart';
+import 'package:movies_app/core/utils/context_extension.dart';
+import 'package:movies_app/ui/screens/home/tabs/profile_tab/cubit/profile_cubit.dart';
 import 'package:movies_app/ui/screens/home/tabs/profile_tab/cubit/reset_password_cubit.dart';
 import 'package:movies_app/ui/screens/home/tabs/profile_tab/cubit/reset_password_states.dart';
 import 'package:movies_app/ui/widgets/custom_button.dart';
@@ -24,18 +26,11 @@ class ResetPasswordScreen extends StatelessWidget {
       child: BlocConsumer<ResetPasswordCubit, ResetPasswordStates>(
         listener: (ctx, state) {
           if (state is PasswordResetSuccess) {
-            // Show success and go back to login
-            ScaffoldMessenger.of(ctx).showSnackBar(
-              SnackBar(content: Text(loc.passwordResetSuccessfully)),
-            );
+            context.showSnackBar(loc.passwordResetSuccessfully);
+            context.read<ProfileCubit>().logOut();
             Navigator.pushReplacement(context, AppRoutes.login);
           } else if (state is PasswordResetError) {
-            ScaffoldMessenger.of(ctx).showSnackBar(
-              SnackBar(
-                content: Text(state.message),
-                behavior: SnackBarBehavior.floating,
-              ),
-            );
+            context.showSnackBar(state.message);
           }
         },
         builder: (ctx, state) {
