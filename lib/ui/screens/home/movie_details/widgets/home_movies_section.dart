@@ -1,3 +1,4 @@
+import 'package:movies_app/core/l10n/app_localizations.dart';
 import 'package:movies_app/core/utils/constants/imports.dart';
 
 class HomeMoviesSection extends StatelessWidget {
@@ -14,7 +15,7 @@ class HomeMoviesSection extends StatelessWidget {
       height: context.height * 0.26,
       child: Column(
         children: [
-          seeMoreSection(sectionName: sectionName),
+          seeMoreSection(sectionName: sectionName, context: context),
           const SizedBox(height: 12),
           Expanded(
             child: ListView.builder(
@@ -35,7 +36,11 @@ class HomeMoviesSection extends StatelessWidget {
   }
 }
 
-Padding seeMoreSection({required String sectionName}) {
+Padding seeMoreSection({
+  required String sectionName,
+  required BuildContext context,
+}) {
+  var loc = AppLocalizations.of(context)!;
   return Padding(
     padding: const EdgeInsets.symmetric(horizontal: 16),
     child: Row(
@@ -50,7 +55,7 @@ Padding seeMoreSection({required String sectionName}) {
         ),
         const Spacer(),
         Text(
-          'See More',
+          loc.seeMore,
           style: TextStyle(
             color: AppColors.yellow,
             fontSize: 16,

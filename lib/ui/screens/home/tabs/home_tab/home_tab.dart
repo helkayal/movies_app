@@ -12,10 +12,10 @@ class HomeTab extends StatelessWidget {
     Future<MovieDataModel> popularMoviesList =
         MovieRepository.getMostPopularMovies();
     Future<MovieDataModel> actionMovies = MovieRepository.getSpecifiedMovies(
-      genreName: loc.action,
+      genreName: "Action",
     );
     Future<MovieDataModel> animationMovies = MovieRepository.getSpecifiedMovies(
-      genreName: loc.animation,
+      genreName: "Animation",
     );
     return SingleChildScrollView(
       child: Column(
