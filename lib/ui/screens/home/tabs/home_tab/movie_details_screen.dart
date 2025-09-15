@@ -68,7 +68,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
         if (state is MovieDetailsNull) {
           context.showSnackBar(context.loc.not_available_now);
           Future.delayed(Duration(milliseconds: 200), () {
-            Navigator.pop(context);
+            if (context.mounted) Navigator.pop(context);
           });
         }
       },
@@ -360,31 +360,27 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
     );
   }
 
-  GridView _buildMovieGenresSection(Movie movie) {
-    return GridView.builder(
-      padding: EdgeInsets.zero,
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 3,
-        mainAxisSpacing: 10,
-        crossAxisSpacing: 16,
-        childAspectRatio: 2.5,
-      ),
-      itemCount: movie.genres?.length ?? 0,
-      itemBuilder: (BuildContext context, int index) {
-        return Container(
-          alignment: Alignment.center,
-          decoration: BoxDecoration(
-            color: AppColors.darkGrey,
-            borderRadius: BorderRadius.circular(12),
-          ),
-          child: Text(
-            movie.genres![index],
-            style: AppTextStyles.whiteRegular16,
-          ),
-        );
-      },
+  Widget _buildMovieGenresSection(Movie movie) {
+    return Wrap(
+      spacing: 10, // horizontal spacing between items
+      runSpacing: 16, // vertical spacing between rows
+      children:
+          movie.genres?.map((genre) {
+            return Container(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+              decoration: BoxDecoration(
+                color: AppColors.darkGrey,
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Text(
+                genre,
+                style: AppTextStyles.whiteRegular16,
+                overflow: TextOverflow
+                    .ellipsis, // just in case text is still too long
+              ),
+            );
+          }).toList() ??
+          [],
     );
   }
 }

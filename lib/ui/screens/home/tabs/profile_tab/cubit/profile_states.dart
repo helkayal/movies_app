@@ -24,10 +24,3 @@ class ProfileError extends ProfileStates {
   final String message;
   ProfileError(this.message);
 }
-
-class PasswordResetSuccess extends ProfileStates {}
-
-class PasswordResetError extends ProfileStates {
-  final String message;
-  PasswordResetError(this.message);
-}

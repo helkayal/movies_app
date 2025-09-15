@@ -18,8 +18,6 @@ class _EditProfileState extends State<EditProfile> {
   final TextEditingController oldPasswordController = TextEditingController();
   final TextEditingController newPasswordController = TextEditingController();
 
-  final GlobalKey<FormState> _passwordFormKey = GlobalKey<FormState>();
-
   int selectedAvatarId = 1;
 
   final List<String> avatars = [
@@ -86,74 +84,6 @@ class _EditProfileState extends State<EditProfile> {
     );
   }
 
-  void _showResetPasswordSheet() {
-    showModalBottomSheet(
-      context: context,
-      backgroundColor: AppColors.black,
-      shape: const RoundedRectangleBorder(
-        side: BorderSide(color: AppColors.darkGrey, width: 2),
-        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
-      ),
-      builder: (context) {
-        final loc = AppLocalizations.of(context)!;
-        return Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Form(
-            key: _passwordFormKey,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(loc.resetPassword, style: AppTextStyles.whiteRegular20),
-                const SizedBox(height: 20),
-                CustomTextField(
-                  hint: 'Old Password',
-                  controller: oldPasswordController,
-                  prefixIcon: Image.asset(AppAssets.lock),
-                  isPassword: true,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return loc.enterPassword;
-                    }
-                    return null;
-                  },
-                ),
-                const SizedBox(height: 10),
-                CustomTextField(
-                  hint: 'New Password',
-                  controller: newPasswordController,
-                  prefixIcon: Image.asset(AppAssets.lock),
-                  isPassword: true,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return loc.enterPassword;
-                    }
-                    return null;
-                  },
-                ),
-                const SizedBox(height: 20),
-                CustomButton(
-                  text: 'Reset',
-                  onClick: () {
-                    if (_passwordFormKey.currentState!.validate()) {
-                      context.read<ProfileCubit>().resetPassword(
-                        oldPassword: oldPasswordController.text.trim(),
-                        newPassword: newPasswordController.text.trim(),
-                      );
-                      oldPasswordController.clear();
-                      newPasswordController.clear();
-                      Navigator.pop(context);
-                    }
-                  },
-                ),
-                const SizedBox(height: 20),
-              ],
-            ),
-          ),
-        );
-      },
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     final loc = AppLocalizations.of(context)!;
@@ -172,13 +102,8 @@ class _EditProfileState extends State<EditProfile> {
             Navigator.pop(context, true);
           } else if (state is ProfileDeleted) {
             Navigator.push(context, AppRoutes.login);
-          } else if (state is PasswordResetSuccess) {
-            context.showSnackBar(loc.passwordChangedSuccess);
-            Navigator.pushReplacement(context, AppRoutes.login);
           } else if (state is ProfileError) {
             context.showSnackBar(state.message);
-          } else if (state is PasswordResetError) {
-            context.showSnackBar("${loc.error}: ${state.message}");
           } else if (state is ProfileLoaded) {
             nameController.text = state.user.name;
             emailController.text = state.user.email;
@@ -241,7 +166,9 @@ class _EditProfileState extends State<EditProfile> {
                 ),
                 const SizedBox(height: 20),
                 InkWell(
-                  onTap: _showResetPasswordSheet,
+                  onTap: () {
+                    Navigator.push(context, AppRoutes.resetPassword);
+                  },
                   child: Text(
                     loc.resetPassword,
                     style: AppTextStyles.whiteRegular20,

@@ -27,12 +27,10 @@ class MovieDetailsBloc extends Bloc<MovieDetailsEvent, MovieDetailsState> {
       final List<Movie> suggestedMovies = await ApiService.getMovieSuggestions(
         movieId: event.movieId,
       );
-      emit(
-        MovieDetailsSuccess(movie: movie, suggestedMovies: suggestedMovies),
-      );
+      emit(MovieDetailsSuccess(movie: movie, suggestedMovies: suggestedMovies));
       //Save into history
       await HistoryService.addToHistory(movie);
-        } catch (e) {
+    } catch (e) {
       emit(MovieDetailsError(message: e.toString()));
     }
   }

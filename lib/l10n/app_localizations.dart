@@ -362,6 +362,36 @@ abstract class AppLocalizations {
   /// **'enter Confirm Password'**
   String get enterConfirmPassword;
 
+  /// No description provided for @invalidPhone.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone number must start with country code and contain 11 digits'**
+  String get invalidPhone;
+
+  /// No description provided for @invalidPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'please enter a strong password'**
+  String get invalidPassword;
+
+  /// No description provided for @oldPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Current Password'**
+  String get oldPassword;
+
+  /// No description provided for @newPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'New Password'**
+  String get newPassword;
+
+  /// No description provided for @passwordResetSuccessfully.
+  ///
+  /// In en, this message translates to:
+  /// **'Password changed successfully'**
+  String get passwordResetSuccessfully;
+
   /// No description provided for @popular_movies.
   ///
   /// In en, this message translates to:
