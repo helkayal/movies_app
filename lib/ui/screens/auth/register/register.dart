@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:movies_app/core/utils/context_extension.dart';
+import 'package:movies_app/core/utils/constants/context_extension.dart';
 import '../../../../data/datasources/Api/authapi.dart';
 import '../../../../data/datasources/Api/dioclient.dart';
 import '../../../../core/theme/app_colors.dart';
-import '../../../../core/utils/constants/app_routes.dart';
+import '../../../../core/routes/app_routes.dart';
 import '../authbloc/authbloc.dart';
 import '../authbloc/authstate.dart';
 import 'registerview.dart';

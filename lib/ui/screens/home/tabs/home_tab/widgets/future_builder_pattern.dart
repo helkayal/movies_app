@@ -1,5 +1,5 @@
 import 'package:movies_app/core/utils/constants/imports.dart';
-import 'package:movies_app/ui/screens/home/tabs/home_tab/widgets/home-movies_section.dart';
+import 'package:movies_app/ui/screens/home/movie_details/widgets/home_movies_section.dart';
 
 class FutureBuilderPattern extends StatelessWidget {
   const FutureBuilderPattern({

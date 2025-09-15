@@ -1,6 +1,6 @@
 import 'package:movies_app/ui/widgets/language_switcher.dart';
 import '../../../../data/datasources/google/google_auth.dart';
-import '../../../../l10n/app_localizations.dart';
+import '../../../../core/l10n/app_localizations.dart';
 import '../authbloc/authbloc.dart';
 import '../authbloc/authevent.dart';
 import '../authbloc/authstate.dart';

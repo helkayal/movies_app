@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movies_app/core/theme/app_colors.dart';
 import 'package:movies_app/core/theme/app_text_styles.dart';
-import 'package:movies_app/core/utils/constants/app_assets.dart';
-import 'package:movies_app/core/utils/context_extension.dart';
+import 'package:movies_app/core/utils/app_assets.dart';
+import 'package:movies_app/core/utils/constants/context_extension.dart';
 import 'package:movies_app/data/model/movie_data_model.dart';
 import 'package:movies_app/ui/screens/home/bloc/movie_details_bloc/movie_details_bloc.dart';
 import 'package:movies_app/ui/screens/home/bloc/movie_details_bloc/movie_details_state.dart';
-import 'package:movies_app/ui/screens/home/tabs/home_tab/widgets/movie_details_image_section.dart';
-import 'package:movies_app/ui/screens/home/tabs/home_tab/widgets/movie_details_numbers.dart';
-import 'package:movies_app/ui/screens/home/tabs/home_tab/widgets/movie_sections.dart';
-import 'package:movies_app/ui/screens/home/tabs/home_tab/widgets/screen_shot_container.dart';
+import 'package:movies_app/ui/screens/home/movie_details/widgets/movie_details_image_section.dart';
+import 'package:movies_app/ui/screens/home/movie_details/widgets/movie_details_numbers.dart';
+import 'package:movies_app/ui/screens/home/movie_details/widgets/movie_sections.dart';
+import 'package:movies_app/ui/screens/home/movie_details/widgets/screen_shot_container.dart';
 import 'package:movies_app/ui/screens/home/tabs/profile_tab/cubit/favourite_cubit.dart';
 import 'package:movies_app/ui/screens/home/tabs/profile_tab/cubit/favourite_states.dart';
 import 'package:movies_app/ui/screens/home/tabs/profile_tab/cubit/history_cubit.dart';
@@ -292,7 +292,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
     if (await canLaunchUrl(uri)) {
       await launchUrl(uri, mode: LaunchMode.externalApplication);
     } else {
-      if (mounted) {
+      if (context.mounted) {
         context.showSnackBar(
           context.loc.could_not_launch_the_link,
           isError: true,

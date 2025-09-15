@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:movies_app/core/utils/context_extension.dart';
+import 'package:movies_app/core/utils/constants/context_extension.dart';
 
 // Theme & Utils
 import '../../../../core/theme/app_colors.dart';
