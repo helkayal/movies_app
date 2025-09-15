@@ -290,12 +290,6 @@ abstract class AppLocalizations {
   /// **'Watch'**
   String get watch;
 
-  /// No description provided for @screenShots.
-  ///
-  /// In en, this message translates to:
-  /// **'ScreenShots'**
-  String get screenShots;
-
   /// No description provided for @similar.
   ///
   /// In en, this message translates to:
@@ -367,6 +361,156 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'enter Confirm Password'**
   String get enterConfirmPassword;
+
+  /// No description provided for @popular_movies.
+  ///
+  /// In en, this message translates to:
+  /// **'Popular Movies'**
+  String get popular_movies;
+
+  /// No description provided for @animation.
+  ///
+  /// In en, this message translates to:
+  /// **'Animation'**
+  String get animation;
+
+  /// No description provided for @romance.
+  ///
+  /// In en, this message translates to:
+  /// **'Romance'**
+  String get romance;
+
+  /// No description provided for @adventure.
+  ///
+  /// In en, this message translates to:
+  /// **'Adventure'**
+  String get adventure;
+
+  /// No description provided for @fantasy.
+  ///
+  /// In en, this message translates to:
+  /// **'Fantasy'**
+  String get fantasy;
+
+  /// No description provided for @horror.
+  ///
+  /// In en, this message translates to:
+  /// **'Horror'**
+  String get horror;
+
+  /// No description provided for @comedy.
+  ///
+  /// In en, this message translates to:
+  /// **'Comedy'**
+  String get comedy;
+
+  /// No description provided for @family.
+  ///
+  /// In en, this message translates to:
+  /// **'Family'**
+  String get family;
+
+  /// No description provided for @crime.
+  ///
+  /// In en, this message translates to:
+  /// **'Crime'**
+  String get crime;
+
+  /// No description provided for @thriller.
+  ///
+  /// In en, this message translates to:
+  /// **'Thriller'**
+  String get thriller;
+
+  /// No description provided for @musical.
+  ///
+  /// In en, this message translates to:
+  /// **'Musical'**
+  String get musical;
+
+  /// No description provided for @drama.
+  ///
+  /// In en, this message translates to:
+  /// **'Drama'**
+  String get drama;
+
+  /// No description provided for @sciFi.
+  ///
+  /// In en, this message translates to:
+  /// **'Sci-Fi'**
+  String get sciFi;
+
+  /// No description provided for @documentary.
+  ///
+  /// In en, this message translates to:
+  /// **'Documentary'**
+  String get documentary;
+
+  /// No description provided for @mystery.
+  ///
+  /// In en, this message translates to:
+  /// **'Mystery'**
+  String get mystery;
+
+  /// No description provided for @talkShow.
+  ///
+  /// In en, this message translates to:
+  /// **'Talk-Show'**
+  String get talkShow;
+
+  /// No description provided for @sport.
+  ///
+  /// In en, this message translates to:
+  /// **'Sport'**
+  String get sport;
+
+  /// No description provided for @screen_shots.
+  ///
+  /// In en, this message translates to:
+  /// **'Screen Shots'**
+  String get screen_shots;
+
+  /// No description provided for @no_description_available.
+  ///
+  /// In en, this message translates to:
+  /// **'No description available'**
+  String get no_description_available;
+
+  /// No description provided for @could_not_launch_the_link.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not launch the link'**
+  String get could_not_launch_the_link;
+
+  /// No description provided for @character.
+  ///
+  /// In en, this message translates to:
+  /// **'Character'**
+  String get character;
+
+  /// No description provided for @no_cast_available.
+  ///
+  /// In en, this message translates to:
+  /// **'No cast available'**
+  String get no_cast_available;
+
+  /// No description provided for @not_available_now.
+  ///
+  /// In en, this message translates to:
+  /// **'Not Available Now!'**
+  String get not_available_now;
+
+  /// No description provided for @added_to_favourites.
+  ///
+  /// In en, this message translates to:
+  /// **'Added to favourites'**
+  String get added_to_favourites;
+
+  /// No description provided for @removed_from_favourites.
+  ///
+  /// In en, this message translates to:
+  /// **'Removed from favourites'**
+  String get removed_from_favourites;
 }
 
 class _AppLocalizationsDelegate

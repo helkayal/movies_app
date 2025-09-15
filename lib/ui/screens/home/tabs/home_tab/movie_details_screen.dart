@@ -66,7 +66,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
     return BlocConsumer<MovieDetailsBloc, MovieDetailsState>(
       listener: (context, state) {
         if (state is MovieDetailsNull) {
-          context.showSnackBar("Not Available Now!");
+          context.showSnackBar(context.loc.not_available_now);
           Future.delayed(Duration(milliseconds: 200), () {
             Navigator.pop(context);
           });
@@ -133,10 +133,12 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                     listener: (context, state) {
                       if (state is FavouriteAdded) {
                         setState(() => isFav = true);
-                        context.showSnackBar("Added to favourites");
+                        context.showSnackBar(context.loc.added_to_favourites);
                       } else if (state is FavouriteRemoved) {
                         setState(() => isFav = false);
-                        context.showSnackBar("Removed from favourites");
+                        context.showSnackBar(
+                          context.loc.removed_from_favourites,
+                        );
                       } else if (state is FavouriteError) {
                         context.showSnackBar(state.message, isError: true);
                       }
@@ -187,10 +189,10 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     CustomButton(
-                      text: 'Watch',
+                      text: context.loc.watch,
                       onClick: () {
                         if (movie?.url != null) {
-                          _launchMovieUrl(movie!.url!);
+                          _launchMovieUrl(context, movie!.url!);
                         }
                       },
                       backgroundColor: AppColors.red,
@@ -203,7 +205,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
 
                     /// Screen Shots
                     MovieSections(
-                      title: 'Screen Shots',
+                      title: context.loc.screen_shots,
                       widget: ListView.builder(
                         padding: EdgeInsets.zero,
                         shrinkWrap: true,
@@ -217,7 +219,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
 
                     /// Similar Movies
                     MovieSections(
-                      title: 'Similar',
+                      title: context.loc.similar,
                       widget: CustomGrideView(
                         padding: EdgeInsets.zero,
                         shrinkWrap: true,
@@ -228,10 +230,10 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
 
                     /// Summary
                     MovieSections(
-                      title: "Summary",
+                      title: context.loc.summary,
                       widget: Text(
                         movie?.descriptionFull?.isEmpty ?? true
-                            ? 'No description available'
+                            ? context.loc.no_description_available
                             : movie!.descriptionFull!,
                         style: AppTextStyles.whiteRegular16,
                         softWrap: true,
@@ -240,13 +242,13 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
 
                     /// Cast
                     MovieSections(
-                      title: 'Cast',
+                      title: context.loc.cast,
                       widget: _buildCastSection(movie!),
                     ),
 
                     /// Genres
                     MovieSections(
-                      title: 'Genres',
+                      title: context.loc.genres,
                       widget: _buildMovieGenresSection(movie),
                     ),
                   ],
@@ -282,7 +284,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
     );
   }
 
-  Future<void> _launchMovieUrl(String url) async {
+  Future<void> _launchMovieUrl(BuildContext context, String url) async {
     if (!mounted) return;
     context.showLoading();
     final Uri uri = Uri.parse(url);
@@ -291,12 +293,23 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
       await launchUrl(uri, mode: LaunchMode.externalApplication);
     } else {
       if (mounted) {
-        context.showSnackBar("Could not launch the link", isError: true);
+        context.showSnackBar(
+          context.loc.could_not_launch_the_link,
+          isError: true,
+        );
       }
     }
   }
 
-  ListView _buildCastSection(Movie movie) {
+  Widget _buildCastSection(Movie movie) {
+    final bool hasCast = movie.cast != null && movie.cast!.isNotEmpty;
+
+    if (!hasCast) {
+      return Text(
+        context.loc.no_cast_available,
+        style: AppTextStyles.whiteRegular16,
+      );
+    }
     return ListView.builder(
       padding: EdgeInsets.zero,
       shrinkWrap: true,
@@ -330,11 +343,11 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                   spacing: 10,
                   children: [
                     Text(
-                      'Name : ${cast.name}',
+                      '${context.loc.name} : ${cast.name}',
                       style: AppTextStyles.whiteRegular16,
                     ),
                     Text(
-                      'Character : ${cast.characterName}',
+                      '${context.loc.character} : ${cast.characterName}',
                       style: AppTextStyles.whiteRegular16,
                     ),
                   ],

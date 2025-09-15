@@ -3,8 +3,7 @@ import 'package:movies_app/core/utils/constants/imports.dart';
 import '../../../../l10n/app_localizations.dart';
 
 class SearchTab extends StatefulWidget {
-  final List<Movie> movie;
-  const SearchTab({super.key, required this.movie});
+  const SearchTab({super.key, });
 
   @override
   State<SearchTab> createState() => _SearchTabState();
@@ -13,7 +12,8 @@ class SearchTab extends StatefulWidget {
 class _SearchTabState extends State<SearchTab> {
   final TextEditingController _searchController = TextEditingController();
   Timer? _debounceTimer;
-  List<Movie> searchedMovies = [];
+  List<Movie> filteredMovies = [];
+  List<Movie>? movies ;
 
   @override
   Widget build(BuildContext context) {
@@ -44,10 +44,28 @@ class _SearchTabState extends State<SearchTab> {
                 ),
               ],
             ),
-            Expanded(
-              child: searchedMovies.isEmpty
-                  ? Center(child: Image.asset(AppAssets.emptyList))
-                  : CustomGrideView(movie: searchedMovies),
+            FutureBuilder(
+              future: MovieRepository.searchForMovies(
+                query: _searchController.text,
+              ),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return SizedBox(
+                    child: Center(
+                      child: CircularProgressIndicator(color: AppColors.yellow),
+                    ),
+                  );
+                } else if (snapshot.hasData) {
+                  movies = snapshot.data?.data?.movies;
+                  return Expanded(
+                    child: _searchController.text.isEmpty
+                        ? Center(child: Image.asset(AppAssets.emptyList))
+                        : CustomGrideView(movie: filteredMovies),
+                  );
+                } else {
+                  return Text('Error : ${snapshot.error}');
+                }
+              },
             ),
           ],
         ),
@@ -61,12 +79,17 @@ class _SearchTabState extends State<SearchTab> {
       _debounceTimer?.cancel();
     }
     _debounceTimer = Timer(const Duration(milliseconds: 300), () {
-      setState(() {
-        searchedMovies = MovieRepository.addSearchedValueToSearchedList(
-          searchedMovie: value,
-          movies: widget.movie,
-        );
+      if(movies != null){
+        setState(() {
+        filteredMovies = movies!.where((movie)=> movie.title!.toLowerCase().trim().startsWith(value.toLowerCase().trim())).toList();
+        ///___________________
+        // searchedMovies = MovieRepository.addSearchedValueToSearchedList(
+        //   searchedMovie: value,
+        //   movies: widget.movie,
+        // );
       });
+      }
+      
     });
   }
 

@@ -77,7 +77,7 @@ class CustomMovieImage extends StatelessWidget {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(16),
             image: DecorationImage(
-              image: AssetImage(AppAssets.defaultImage),
+              image: NetworkImage(AppAssets.defaultMovieImage,),
               fit: BoxFit.fill,
             ),
           ),

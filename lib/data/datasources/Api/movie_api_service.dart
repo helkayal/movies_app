@@ -98,16 +98,18 @@ import 'package:movies_app/data/model/movie_data_model.dart';
 class ApiService {
   // Get all movies (unchanged)
   static Future<MovieDataModel> getMovies({
-    int limit = 100,
+    int limit = 1000,
     int page = 1,
-    String sortedBy = 'rating',
+    String sortedBy = 'year',
+    String? genre,
+    String? queryTerm, // this is for search function
   }) async {
     try {
-      var response = await http.get(
-        Uri.parse(
-          '${ApiConstants.baseUrl}${ApiConstants.movie}?limit=$limit&sort_by=$sortedBy&page=$page',
-        ),
-      );
+      String url =
+          '${ApiConstants.baseUrl}${ApiConstants.movie}?limit=$limit&sort_by=$sortedBy&page=$page';
+      if (genre != null) url += '&genre=$genre';
+      if (queryTerm != null) url += '&query_term=$queryTerm';
+      var response = await http.get(Uri.parse(url));
       var json = jsonDecode(response.body);
       if (response.statusCode == 200) {
         MovieDataModel myResponse = MovieDataModel.fromJson(json);

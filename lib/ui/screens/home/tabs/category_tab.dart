@@ -2,32 +2,56 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:movies_app/core/utils/constants/imports.dart';
 
 class CategoryTab extends StatefulWidget {
-  final List<Movie> movie;
-  const CategoryTab({super.key, required this.movie});
+  const CategoryTab({super.key});
 
   @override
   State<CategoryTab> createState() => _CategoryTabState();
 }
+//all comments are the old version of code
 
 class _CategoryTabState extends State<CategoryTab> {
   int selecteButton = 0;
-  List<Movie> movieByGenre = [];
+  // List<Movie> movieByGenre = [];
+  late Future<MovieDataModel> movies;
+  //   //علشان خاطر اجيب اول فئه كان لازم اعمل init state بتحددلى ان اول عنصر هو 0
+  //   //خصوصا ان الليست فاضيه فى الاول ولما ادوس على زرار الفئه الفانكشن الى بتجيب الافلام تشتغل مع كل زرار
+  //   // عملت ليسته جديده عشان دى الى هتخزن الافلام حسب الفئه
+  //   //ولما اقفل وافتح التابه دى هتبقى اول قيمة هى الى selected طبعا عشان ال0
   @override
-  void initState() {
-    super.initState();
-    //علشان خاطر اجيب اول فئه كان لازم اعمل init state بتحددلى ان اول عنصر هو 0
-    //خصوصا ان الليست فاضيه فى الاول ولما ادوس على زرار الفئه الفانكشن الى بتجيب الافلام تشتغل مع كل زرار
-    // عملت ليسته جديده عشان دى الى هتخزن الافلام حسب الفئه
-    //ولما اقفل وافتح التابه دى هتبقى اول قيمة هى الى selected طبعا عشان ال0
-    movieByGenre = MovieRepository.getMoviesByGenres(
-      genre: MovieRepository.getGenres(movies: widget.movie)[0],
-      movies: widget.movie,
-    );
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    movies = MovieRepository.getSpecifiedMovies(genreName: genresMap(context).keys.first);
+    
+  }
+
+  Future<MovieDataModel> _ontapGenre(String genreName) {
+    return MovieRepository.getSpecifiedMovies(genreName: genreName);
+  }
+
+  Map<String, String> genresMap(BuildContext context) {
+    return {
+      "Animation": context.loc.animation,
+      'Romance': context.loc.romance,
+      'Adventure': context.loc.adventure,
+      'Fantasy': context.loc.fantasy,
+      'Horror': context.loc.horror,
+      'Comedy': context.loc.comedy,
+      'Family': context.loc.family,
+      'Crime': context.loc.crime,
+      'Thriller': context.loc.thriller,
+      'Musical': context.loc.musical,
+      'Drama': context.loc.drama,
+      'Sci-Fi': context.loc.sciFi,
+      'Documentary': context.loc.documentary,
+      'Mystery': context.loc.mystery,
+      'Talk-Show': context.loc.talkShow,
+      'Sport': context.loc.sport,
+    };
   }
 
   @override
   Widget build(BuildContext context) {
-    List<String> genersList = MovieRepository.getGenres(movies: widget.movie);
+    // List<String> genresList = MovieRepository.getGenres(movies: widget.movie);
     return Column(
       spacing: 8,
       children: [
@@ -36,16 +60,17 @@ class _CategoryTabState extends State<CategoryTab> {
           height: 60.h,
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
-            itemCount: genersList.length,
+            itemCount: genresMap(context).length,
             itemBuilder: (context, index) {
               return InkWell(
                 onTap: () {
                   setState(() {
                     selecteButton = index;
-                    movieByGenre = MovieRepository.getMoviesByGenres(
-                      genre: genersList[index],
-                      movies: widget.movie,
-                    );
+                    movies = _ontapGenre(genresMap(context).keys.toList()[index]);
+                    // movieByGenre = MovieRepository.getMoviesByGenres(
+                    //   genre: genersList[index],
+                    //   movies: widget.movie,
+                    // );
                   });
                 },
                 child: Container(
@@ -62,7 +87,7 @@ class _CategoryTabState extends State<CategoryTab> {
                     borderRadius: BorderRadius.circular(16),
                   ),
                   child: Text(
-                    genersList[index],
+                    genresMap(context).values.toList()[index],
                     style: selecteButton == index
                         ? AppTextStyles.blackBold20
                         : AppTextStyles.yelowBold20,
@@ -75,7 +100,24 @@ class _CategoryTabState extends State<CategoryTab> {
         Expanded(
           child: Padding(
             padding: const EdgeInsets.all(16),
-            child: CustomGrideView(movie: movieByGenre),
+            child: FutureBuilder(
+              future: movies,
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Center(
+                    child: CircularProgressIndicator(color: AppColors.yellow),
+                  );
+                } else if (snapshot.hasError) {
+                  return Text("Error While fetching movies");
+                } else if (snapshot.hasData) {
+                  return CustomGrideView(
+                    movie: snapshot.data?.data?.movies ?? [],
+                  );
+                } else {
+                  return SizedBox();
+                }
+              },
+            ),
           ),
         ),
       ],

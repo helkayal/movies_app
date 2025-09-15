@@ -105,9 +105,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get watch => 'Watch';
 
   @override
-  String get screenShots => 'ScreenShots';
-
-  @override
   String get similar => 'Similar';
 
   @override
@@ -143,4 +140,79 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get enterConfirmPassword => 'enter Confirm Password';
+
+  @override
+  String get popular_movies => 'Popular Movies';
+
+  @override
+  String get animation => 'Animation';
+
+  @override
+  String get romance => 'Romance';
+
+  @override
+  String get adventure => 'Adventure';
+
+  @override
+  String get fantasy => 'Fantasy';
+
+  @override
+  String get horror => 'Horror';
+
+  @override
+  String get comedy => 'Comedy';
+
+  @override
+  String get family => 'Family';
+
+  @override
+  String get crime => 'Crime';
+
+  @override
+  String get thriller => 'Thriller';
+
+  @override
+  String get musical => 'Musical';
+
+  @override
+  String get drama => 'Drama';
+
+  @override
+  String get sciFi => 'Sci-Fi';
+
+  @override
+  String get documentary => 'Documentary';
+
+  @override
+  String get mystery => 'Mystery';
+
+  @override
+  String get talkShow => 'Talk-Show';
+
+  @override
+  String get sport => 'Sport';
+
+  @override
+  String get screen_shots => 'Screen Shots';
+
+  @override
+  String get no_description_available => 'No description available';
+
+  @override
+  String get could_not_launch_the_link => 'Could not launch the link';
+
+  @override
+  String get character => 'Character';
+
+  @override
+  String get no_cast_available => 'No cast available';
+
+  @override
+  String get not_available_now => 'Not Available Now!';
+
+  @override
+  String get added_to_favourites => 'Added to favourites';
+
+  @override
+  String get removed_from_favourites => 'Removed from favourites';
 }

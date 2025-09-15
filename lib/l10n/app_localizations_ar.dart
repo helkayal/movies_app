@@ -105,9 +105,6 @@ class AppLocalizationsAr extends AppLocalizations {
   String get watch => 'شاهد';
 
   @override
-  String get screenShots => 'لقطات الشاشة';
-
-  @override
   String get similar => 'مماثل';
 
   @override
@@ -143,4 +140,79 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get enterConfirmPassword => 'أدخل تأكيد كلمة المرور';
+
+  @override
+  String get popular_movies => 'أفلام مشهورة';
+
+  @override
+  String get animation => 'رسوم متحركة';
+
+  @override
+  String get romance => 'رومانسي';
+
+  @override
+  String get adventure => 'مغامرة';
+
+  @override
+  String get fantasy => 'فانتازيا';
+
+  @override
+  String get horror => 'رعب';
+
+  @override
+  String get comedy => 'كوميدي';
+
+  @override
+  String get family => 'عائلي';
+
+  @override
+  String get crime => 'جريمة';
+
+  @override
+  String get thriller => 'إثارة';
+
+  @override
+  String get musical => 'موسيقي';
+
+  @override
+  String get drama => 'دراما';
+
+  @override
+  String get sciFi => 'خيال علمي';
+
+  @override
+  String get documentary => 'وثائقي';
+
+  @override
+  String get mystery => 'غموض';
+
+  @override
+  String get talkShow => 'برنامج حواري';
+
+  @override
+  String get sport => 'رياضة';
+
+  @override
+  String get screen_shots => 'لقطات الشاشة';
+
+  @override
+  String get no_description_available => 'لا يوجد وصف متاح';
+
+  @override
+  String get could_not_launch_the_link => 'تعذر فتح الرابط';
+
+  @override
+  String get character => 'شخصية';
+
+  @override
+  String get no_cast_available => 'لا يوجد طاقم تمثيل متاح';
+
+  @override
+  String get not_available_now => 'غير متاح الاّن!';
+
+  @override
+  String get added_to_favourites => 'تم الإضافة إلى المفضلة';
+
+  @override
+  String get removed_from_favourites => 'تم الإزالة من المفضلة';
 }

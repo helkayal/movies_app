@@ -24,10 +24,7 @@ class ScreenShotContainer extends StatelessWidget {
           height: context.height * 0.2,
           clipBehavior: Clip.antiAlias,
           decoration: BoxDecoration(borderRadius: BorderRadius.circular(16)),
-          child: Image.asset(
-            AppAssets.defaultScreenShotImage,
-            fit: BoxFit.cover,
-          ),
+          child: Image.network(AppAssets.defaultScreenShotImage,fit: BoxFit.cover,)
         ),
       ),
     );

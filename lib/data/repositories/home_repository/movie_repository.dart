@@ -1,3 +1,4 @@
+import 'package:movies_app/data/datasources/Api/movie_api_service.dart';
 import 'package:movies_app/data/model/movie_data_model.dart';
 
 class MovieRepository {
@@ -41,5 +42,15 @@ class MovieRepository {
           )
           .toList();
     }
+  }
+  //get popular moviesby insert using sortedby الاكثر تحميلا
+  static Future<MovieDataModel> getMostPopularMovies() async {
+    return await ApiService.getMovies(sortedBy: 'download_count',limit: 20);
+  }
+  static Future<MovieDataModel> getSpecifiedMovies({required String genreName}) async {
+    return await ApiService.getMovies(genre:genreName,limit: 50,sortedBy: 'like_count');
+  }
+  static Future<MovieDataModel> searchForMovies({required String query}) async {
+    return await ApiService.getMovies(queryTerm: query,sortedBy: 'download_count');
   }
 }

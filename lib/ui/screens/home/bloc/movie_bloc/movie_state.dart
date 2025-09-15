@@ -30,8 +30,6 @@ class MovieDetailsSuccess extends MovieState {
   List<Object> get props => [movie, suggestedMovies];
 }
 
-//get suggested movies
-
 //Shared
 final class MovieInitial extends MovieState {}
 

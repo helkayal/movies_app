@@ -55,15 +55,15 @@ class _HomeScreenState extends State<HomeScreen> {
 
                 final List<Widget> screens = [
                   HomeTab(movies: movieList!),
-                  SearchTab(movie: movieList),
-                  CategoryTab(movie: movieList),
+                  SearchTab(),
+                  CategoryTab(),
                   ProfileTab(movie: movieList),
                 ];
 
                 final List<Widget> googleLoggedinScreens = [
                   HomeTab(movies: movieList),
-                  SearchTab(movie: movieList),
-                  CategoryTab(movie: movieList),
+                  SearchTab(),
+                  CategoryTab(),
                   HistoryTab(),
                 ];
 

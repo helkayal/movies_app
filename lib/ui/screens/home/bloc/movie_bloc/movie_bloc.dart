@@ -32,6 +32,12 @@ class MovieBloc extends Bloc<MovieEvent, MovieState> {
     }
   }
 
+
+
+
+
+
+
   //get movie details
   // FutureOr<void> _onGetMovieDetailsWithSuggestions(
   //   GetMovieDetails event,
