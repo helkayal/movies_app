@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:movies_app/core/utils/context_extension.dart';
-import '../../../../core/utils/constants/app_routes.dart';
+import 'package:movies_app/core/utils/constants/context_extension.dart';
+import '../../../../core/routes/app_routes.dart';
 import '../../../../data/datasources/Api/authapi.dart';
 import '../../../../data/datasources/Api/dioclient.dart';
 import '../authbloc/authbloc.dart';

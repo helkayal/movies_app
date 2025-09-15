@@ -18,8 +18,8 @@ class MovieDetailsBloc extends Bloc<MovieDetailsEvent, MovieDetailsState> {
       final Movie? movie = await ApiService.getMovieDetails(
         movieId: event.movieId,
       );
-      print('################################${movie?.id}');
-      if(movie == null || movie.id == 0){
+      // print('################################${movie?.id}');
+      if (movie == null || movie.id == 0) {
         emit(MovieDetailsNull());
         return;
       }

@@ -1,7 +1,7 @@
 import 'package:movies_app/core/utils/constants/imports.dart';
 import 'package:movies_app/ui/widgets/language_switcher.dart';
 
-import '../../../../../l10n/app_localizations.dart';
+import '../../../../../core/l10n/app_localizations.dart';
 
 class EditProfile extends StatefulWidget {
   const EditProfile({super.key});

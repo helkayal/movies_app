@@ -279,14 +279,14 @@
 // // }
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:movies_app/core/utils/constants/app_routes.dart';
-import 'package:movies_app/core/utils/context_extension.dart';
+import 'package:movies_app/core/routes/app_routes.dart';
+import 'package:movies_app/core/utils/constants/context_extension.dart';
 import 'package:movies_app/ui/widgets/custom_text_field.dart';
 import 'package:movies_app/ui/widgets/language_switcher.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
-import '../../../../core/utils/constants/app_assets.dart';
-import '../../../../l10n/app_localizations.dart';
+import '../../../../core/utils/app_assets.dart';
+import '../../../../core/l10n/app_localizations.dart';
 import '../authbloc/authbloc.dart';
 import '../authbloc/authevent.dart';
 

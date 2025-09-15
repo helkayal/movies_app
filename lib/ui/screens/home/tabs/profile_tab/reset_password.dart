@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movies_app/core/theme/app_colors.dart';
-import 'package:movies_app/core/utils/constants/app_assets.dart';
-import 'package:movies_app/core/utils/constants/app_routes.dart';
-import 'package:movies_app/core/utils/context_extension.dart';
+import 'package:movies_app/core/utils/app_assets.dart';
+import 'package:movies_app/core/routes/app_routes.dart';
+import 'package:movies_app/core/utils/constants/context_extension.dart';
 import 'package:movies_app/ui/screens/home/tabs/profile_tab/cubit/profile_cubit.dart';
 import 'package:movies_app/ui/screens/home/tabs/profile_tab/cubit/reset_password_cubit.dart';
 import 'package:movies_app/ui/screens/home/tabs/profile_tab/cubit/reset_password_states.dart';
 import 'package:movies_app/ui/widgets/custom_button.dart';
 import 'package:movies_app/ui/widgets/custom_text_field.dart';
-import '../../../../../l10n/app_localizations.dart';
+import '../../../../../core/l10n/app_localizations.dart';
 
 class ResetPasswordScreen extends StatelessWidget {
   const ResetPasswordScreen({super.key});

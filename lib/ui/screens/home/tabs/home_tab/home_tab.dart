@@ -1,5 +1,5 @@
 import 'package:movies_app/core/utils/constants/imports.dart';
-import 'package:movies_app/l10n/app_localizations.dart';
+import 'package:movies_app/core/l10n/app_localizations.dart';
 import 'package:movies_app/ui/screens/home/tabs/home_tab/widgets/future_builder_pattern.dart';
 
 class HomeTab extends StatelessWidget {
@@ -9,7 +9,8 @@ class HomeTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var loc = AppLocalizations.of(context)!;
-    Future<MovieDataModel> popularMoviesList = MovieRepository.getMostPopularMovies();
+    Future<MovieDataModel> popularMoviesList =
+        MovieRepository.getMostPopularMovies();
     Future<MovieDataModel> actionMovies = MovieRepository.getSpecifiedMovies(
       genreName: loc.action,
     );
@@ -68,15 +69,23 @@ class HomeTab extends StatelessWidget {
               },
             ),
           ),
-          FutureBuilderPattern(sectionName: loc.popular_movies,moviesList: popularMoviesList,),
+          FutureBuilderPattern(
+            sectionName: loc.popular_movies,
+            moviesList: popularMoviesList,
+          ),
           SizedBox(height: context.height * 0.02),
-          FutureBuilderPattern(sectionName: loc.action,moviesList: actionMovies,),
+          FutureBuilderPattern(
+            sectionName: loc.action,
+            moviesList: actionMovies,
+          ),
           SizedBox(height: context.height * 0.02),
-          FutureBuilderPattern(sectionName: loc.animation,moviesList: animationMovies,),
+          FutureBuilderPattern(
+            sectionName: loc.animation,
+            moviesList: animationMovies,
+          ),
           SizedBox(height: context.height * 0.05),
         ],
       ),
     );
   }
 }
-

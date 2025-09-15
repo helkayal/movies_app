@@ -2,7 +2,7 @@ import 'package:movies_app/core/utils/constants/imports.dart';
 import 'package:movies_app/ui/screens/home/tabs/profile_tab/cubit/history_states.dart';
 import 'package:movies_app/ui/screens/home/tabs/profile_tab/widgets/history_list.dart';
 
-import '../../../../../l10n/app_localizations.dart';
+import '../../../../../core/l10n/app_localizations.dart';
 
 class ProfileTab extends StatefulWidget {
   final List<Movie> movie;

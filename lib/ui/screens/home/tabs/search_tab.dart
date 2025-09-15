@@ -1,9 +1,9 @@
 import 'package:movies_app/core/utils/constants/imports.dart';
 
-import '../../../../l10n/app_localizations.dart';
+import '../../../../core/l10n/app_localizations.dart';
 
 class SearchTab extends StatefulWidget {
-  const SearchTab({super.key, });
+  const SearchTab({super.key});
 
   @override
   State<SearchTab> createState() => _SearchTabState();
@@ -13,7 +13,7 @@ class _SearchTabState extends State<SearchTab> {
   final TextEditingController _searchController = TextEditingController();
   Timer? _debounceTimer;
   List<Movie> filteredMovies = [];
-  List<Movie>? movies ;
+  List<Movie>? movies;
 
   @override
   Widget build(BuildContext context) {
@@ -79,17 +79,23 @@ class _SearchTabState extends State<SearchTab> {
       _debounceTimer?.cancel();
     }
     _debounceTimer = Timer(const Duration(milliseconds: 300), () {
-      if(movies != null){
+      if (movies != null) {
         setState(() {
-        filteredMovies = movies!.where((movie)=> movie.title!.toLowerCase().trim().startsWith(value.toLowerCase().trim())).toList();
-        ///___________________
-        // searchedMovies = MovieRepository.addSearchedValueToSearchedList(
-        //   searchedMovie: value,
-        //   movies: widget.movie,
-        // );
-      });
+          filteredMovies = movies!
+              .where(
+                (movie) => movie.title!.toLowerCase().trim().startsWith(
+                  value.toLowerCase().trim(),
+                ),
+              )
+              .toList();
+
+          ///___________________
+          // searchedMovies = MovieRepository.addSearchedValueToSearchedList(
+          //   searchedMovie: value,
+          //   movies: widget.movie,
+          // );
+        });
       }
-      
     });
   }
 

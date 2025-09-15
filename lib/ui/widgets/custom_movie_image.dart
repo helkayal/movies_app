@@ -2,12 +2,12 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movies_app/core/theme/app_colors.dart';
-import 'package:movies_app/core/utils/constants/app_assets.dart';
-import 'package:movies_app/core/utils/context_extension.dart';
+import 'package:movies_app/core/utils/app_assets.dart';
+import 'package:movies_app/core/utils/constants/context_extension.dart';
 import 'package:movies_app/data/model/movie_data_model.dart';
 import 'package:movies_app/ui/screens/home/bloc/movie_details_bloc/movie_details_bloc.dart';
 import 'package:movies_app/ui/screens/home/bloc/movie_details_bloc/movie_details_event.dart';
-import 'package:movies_app/ui/screens/home/tabs/home_tab/movie_details_screen.dart';
+import 'package:movies_app/ui/screens/home/movie_details/movie_details_screen.dart';
 import 'package:movies_app/ui/screens/home/tabs/profile_tab/cubit/history_cubit.dart';
 
 class CustomMovieImage extends StatelessWidget {
@@ -77,7 +77,7 @@ class CustomMovieImage extends StatelessWidget {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(16),
             image: DecorationImage(
-              image: NetworkImage(AppAssets.defaultMovieImage,),
+              image: NetworkImage(AppAssets.defaultMovieImage),
               fit: BoxFit.fill,
             ),
           ),

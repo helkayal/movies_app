@@ -21,7 +21,7 @@ import 'package:movies_app/data/datasources/Api/dioclient.dart';
 // localization
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'l10n/app_localizations.dart';
+import 'core/l10n/app_localizations.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
